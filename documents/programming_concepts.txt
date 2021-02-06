@@ -1,0 +1,77 @@
+object oriented: 2 
+data structures: 4
+functional: 6 
+algorithms: 7 
+structs: 4 
+writing code, coding: 3
+variables: 3
+
+API: 11 
+networking: 5
+operands: 6 
+assignment operation: 5 
+
+deletion: 8 
+construction (of an object): 10 
+opening a file: 10 
+closing a file: 1 
+
+a REST API: 4 
+
+database: 5 
+reading from a database: 12 
+writing to a database: 8 
+
+reading a file: 5 
+performing a calculation: 5 
+____________________ 
+
+
+abstraction: 12
+multithreading: 6 
+
+machine learning: 10 
+NLP: 4 
+_________________ 
+error checking: 5 
+exception handling: 8 
+
+data types: 1 
+____________ 
+inputing something to a function: 2
+returning something from a function: 4 ... 
+
+___________ 
+for loops: 12 
+loops in general: 4 
+while loops: 1 
+___________ 
+if statements: 10 
+performance optimization: 11 
+_________________ 
+nested structures: 1 
+primitive types: 5
+____________________________
+storing something in memory: 2
+retrieving something from memory: 5 
+_________________________
+organizing memory: 10 
+sorting: 1 
+_______________ 
+CPU processing: 6 
+long term storage: 1 
+moving something into ram: 8 
+writing something out to RAM: 3 
+writing something out to disk: 11 
+taking in input: 10 
+producing output: 2 
+reading a program: 2 
+______________________ 
+fetching things for the CPU: 12
+storing something that was processed: 2 
+moving to the next instruction: 5 
+the control structure in the CPU: 3 
+doing an assigned operation: 6 
+sending data to an address: 9 
+________________________________________ 
+

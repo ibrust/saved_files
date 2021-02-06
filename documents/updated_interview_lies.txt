@@ -1,0 +1,13 @@
+ELEVATOR SPEECH: 
+So I'm Ian Rust, I'm an IOS developer. I have about 6 years of experience and 5 apps published on the app store. I've managed teams of other engineers and come up with project designs and implemented them. I've worked in a large industry environment and worked with all the standard industry tools - git, JIRA, jenkins, testing, CI/CD pipeline, etc. I have a wide variety of experience. So I've worked with networking, streaming video, I've done UI work, localization & accessibility related work, I've work with a custom device - so I setup the bluetooth low energy connection to it, I also designed a color management system for interfacing with it. I've worked on a subscriptoin news app, I've implemented targetted articles and push notifications (AWS) with machine learning. I'm also good with code optimization, especially in objective-C. I've worked in core graphics in my own personal time - I've created a few graphics applications. So that's basically my experience. 
+__________________________________________
+MVVM
+MVVM is an architectural design pattern, a kind of declarative upgrade to MVC. So it has a view model rather than a controller. Like traditional controllers, the view model is responsible for converting & exposing data from the model in such a way that the data is presentable to the view. 
+
+Now, unlike an MVC controller, MVVM uses data binding. So a views properties are bound in the view model, and the view model is an abstraction of the view that exposes these public properties and commands. This automates communication between the view and its bound properties - if the bound properties update, the view updates. It also achieves this loose coupling between the views and the bound properties in the view model. 
+The view model is also thought of as a state of the data in the model. So declarative data and command-binding they both characterize MVVM. This allows for a very declarative approach to UI. 
+This sets up this reactive framework where the model drives operations, and it this eliminates the need for application logic that directly manipulates the view. And this also promotes looser coupling with the view.
+
+So given this model driven reactive design, the view model makes available intent functions which are... loosely coupled from the views. The views can call these and effect the model, this in turn updates the model and propagates those updates throughout the application. So you have this very reactive UI. And this is kind of a functional declarative approach to UI. 
+
+So this architecture is typically implemented alongside functional reactive frameworks, although it can be implemented in your typical imperative frameworks as well. 

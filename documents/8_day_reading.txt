@@ -1,0 +1,28 @@
+long term read: advanced ios6 cookbook - 72 
+
+8 day read: 
+5) *go4 - 34
+7) *core data book - 29 
+4) *software systems architecture - 88 
+3) *professional ios networking - 23
+
+quick read: 
+10) *mastering linux network administration - 58 
+
+__________________________
+6) *git book - 37 
+8) *combine - 38 
+2) *push notifications - 97 
+9) *rest book - 35
+
+11) *graphql - 98 
+1) *objc ranch - 91  
+
+biggest problems: 
+combine - 6 
+git - 65 
+core ios cookbook - 67
+design patterns go4 - 3 
+unit test frameworks - 22 
+implementing modern devops - 93
+test driven dev - 65

@@ -1,0 +1,196 @@
+Javascript techs to learn in order (2019ish): angular.js, maria, vue.js, node.js, react.js, agility.js, ember.js ->> others
+
+most employable languages: 
+python > sql > swift 
+
+languages best for my career going forward: 
+php > go > python
+
+my favorite languages: 
+python > swift > java 
+
+languages I'll most excel at: 
+javascript > c > go 
+
+language most taking off: 
+c# > java > javascript > php 
+
+languages slowing down: 
+go > sql > python > php
+
+best future in for me: 
+python
+
+best next languages for personal development: 
+php > c# > c++ > c > python > sql 
+
+best language to go in depth with after preliminary learning: 
+c# > sql > java > c++
+
+ultimate direction to go for next job in 6 months: 
+c++ > javascript > go
+
+biggest lapse in my knowledge: 
+c# > javascript
+
+most money to be made by me: 
+python > kotlin > c#
+
+most underrated language: 
+php, kotlin, go
+
+most overrated language: 
+c++, sql
+
+languages i'll most enjoy learning at the present time: 
+javascript > go > c#
+
+best outcome if i learn at the moment: 
+go > python > c > java
+------------------------------------------
+best to study a particular topic with:
+
+database: c# 
+servers: go
+distributed systems: typescript
+CGI: python
+
+multithreading: swift 
+networking: swift > java 
+web tech: php 
+mvc frameworks: java 
+machine learning: c++ 
+
+GIS: javascript 
+full stack development: javascript 
+front end: go 
+security: go 
+graphics: go 
+
+NLP: go 
+hacking: SQL
+microservices: php
+entrepreneurial: python
+backend: php
+
+cloud: c++, c#
+amazon web services: c
+gaming: c#
+OS: swift 
+algorithms: kotlin 
+----------------------------------
+ultimate language for a topic: 
+CGI: python
+NLP: c
+networking: python 
+web tech: python
+MVC framework: c++, c (apparently) 
+GIS: c++ 
+machine learning: python 
+multithreading: javascript 
+database: java 
+full stack dev: java 
+hacking: swift 
+front end: kotlin 
+security: c++
+graphics: python 
+microservices: c
+
+entrepreneurial: java
+backend: sql, php
+cloud: swift, java
+amazon web services: javascript
+gaming: php
+OS: swift 
+algorithms: go
+
+most rising market: 
+c# > java > c++ 
+
+most falling market: 
+javascript > sql > kotlin
+
+language that will most enhance my python skills by proxy: 
+javascript > C > C# 
+
+language that will make me most useful on the job: 
+sql > python 
+
+languages that attract the most skilled developers: 
+php > java > c++ 
+
+languages that attract least skilled developers: 
+go > sql > python 
+
+languages best for writing a successful web app in: 
+php > sql > kotlin > python 
+
+languages not to write a web app in: 
+go > java > javascript 
+
+most overrated language: 
+java > c# > swift
+
+most underrated language: 
+python > c++ > php 
+
+language that can "do it all", most tools I can use: 
+c# > php > go 
+
+best direction to go: 
+python 
+
+best direction to go long term: 
+java > python > go 
+
+languages I'll most beat others in: 
+java > swift > kotlin > go 
+
+direction I'll make the most money the fastest: 
+java > php 
+
+direction i'll make biggest money in long term: 
+javascript > java > c 
+
+direction i'll make least money in long term: 
+go > java > python 
+
+direction I'll most enjoy in life: 
+kotlin > go > c# > sql
+
+direction I'll least enjoy in life: 
+swift > c > c# > c++ 
+
+best immediate direction for entrepreneurial application: 
+javascript > sql > kotlin > c
+
+best language to write my music thing in: 
+go > kotlin > swift > php 
+
+language that next big thing will most be in: 
+python > sql > kotlin > c > swift 
+
+ultimate knowledge once I'm qualified: 
+c# > javascript > php 
+
+biggest deficiencies I'll face: 
+c++ > python 
+
+long term job security ideal languages: 
+go > swift > c# 
+
+worst job security languages: 
+go > c > javascript > php > c++ > python 
+
+my best career (again): 
+python > c++ > sql > java 
+
+my worst career: 
+java > sql > go > c# 
+
+career I'd most want to have: 
+c# > sql > python > java 
+
+best job prospects overall over the next 20 years: 
+c > java > c# > php 
+

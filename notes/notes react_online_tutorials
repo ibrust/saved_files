@@ -1,0 +1,147 @@
+-install chromes extension "react developer tools" to debug react applications in chrome 
+-www.create-react-app.dev has an application called 'create react app' that sets up a development environment for react
+_____________________________________________________________________________________________________________________________ 
+GENERAL OVERVIEW: 
+-react is a framework for creating UIs. you can use react on the full UI or just certain parts 
+-it's component-based: you create components, i.e. search component, signup component. React inserts the components into the DOM 
+-you don't create an HTML page for the componnets,  you write the HTML with the javascript using JSX. JSX allows you to combine HTML with javascript 
+_____________________________________________________________________________________________________________________________
+REACT SETUP: 
+
+-two ways to setup react: include react & babel in the HTML head, or npm install react, babel & webpack 
+-to setup react / babel quickly by including it in the head: 
+    <!DOCTYPE html> 
+    <html> 
+    <head> 
+        <meta charset="UTF-8" /> 
+        <script src="build/react.js"></script> 
+        <script src="build/react-dom.js"></script> 
+        <script src="https://unpkg.com/babel-core{version}/browser.min.js"></script>    <--! get the correct version of babel -->
+    </head> 
+    <body> 
+        ...
+        <script type="text/babel">                                      <--! embedded script --> 
+            /* react code */ 
+        </script>
+        ... 
+        <script type="text/babel" src="script.js"></script>             <--! external script --> 
+
+    </body> 
+    </html>
+
+-to npm install react, babel & webpack (this will need to be updated for newer versions): 
+
+    < npm init                                                      // initialize a package.json file to keep track of all the dependencies 
+    < npm install react react-dom --save                            // not sure why we used --save instead of -save here ...
+    < npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev         // commenters say the way to install babel has changed. 
+                                                        // old way was: npm install babel-core babel-loader babel-preset-es2015 babel-preset-react --save-dev
+    < npm install webpack webpack-dev-server --save-dev                                             // save-dev only saves it as a developer dependency 
+
+    // now, create a file named webpack.config file in the root level directory of the project. this controls how babel converts modern js into vanilla js
+    // watch a webpack tutorial for more information on this 
+    // webpack will look at all the source javascript, combine it all into one file to reduce HTTP requests, and transform the code into vanilla js. 
+    // it will export all the code into one file whose location we specify, and also look at the css and use style loaders (explained later)
+    webpack.config.js: 
+        var path = require("path");                 // gets the path module provided by node.js, allows us to get current directory & other things 
+
+        module.exports = {
+            entry: path.resolve(__dirname, "src") + "/app/index.js",    // looks for src folder within current directory.. then goes into app/index.js
+                                                                        // the entry point is the first javascript file or root javascript file 
+                                                                        // webpack will look at this file and bring all its includes together in one file 
+            output: {                                                   // the output file that's produced by bundling all the js files 
+                path.resolve(__dirname, "dist") + "/app",               // the new directory, automatically generated, where the new file will go 
+                filename: "output.js",                                  // the new files name 
+                publicPath: "/app/"                                     // allow you to only reference index.js within index.js using /app/, not src or dist
+            },                                                          // for compatibility as the new file is placed into a different folder, it seems?
+            module: {                                                   // module is for configuring babel & css
+                loaders: [                                              // array of loaders; here we configure all the loaders that we install. 
+                                                                        // someone in commeonts said this needs to be changed from "loaders" to "rules"
+                    {                                                   // babel loader which transpiles the modern .js files to old compatible javascript
+                        test: /\.js$/,                                  // regex which specifies which files we want this loader to work on 
+                        include: path.resolve(__dirname, "src"),        // limits which directory we want to run the loader in. any js in this folder will be run on 
+                        loader: 'babel-loader', 
+                        query: {
+                            presets: ['@babel/react', '@babel/preset-env']   // the loader will take all react and javascript code and convert it to old compatible javascript
+                                                                             // commenter said to update presets, old version was: presets: ['react', 'es2015']
+                        }
+                    },
+                    {
+                        test: /\.css$/,
+                        loader: "style-loader!css-loader"               // style loader and css loader piped together 
+                    }
+                ]
+            }
+        }
+
+    -to run webpack you can use the command prompt or use package.json to create a script to run it 
+        // run in command line 
+        < webpack -d && webpack-dev-server --content-base src/ --inline --hot --port 3000     
+
+        // run using package.json script 
+        package.json: 
+            ... 
+            "scripts": {                        
+                "start": "npm run build", 
+                "build": "webpack -d && webpack-dev-server --content-base src/ --inline --hot --port 3000"
+            }
+        < npm start 
+
+    -content-base src/ tells npm where the index.js is located (because it isn't in the project root) 
+    -inline and hot are for hot reloading
+
+    -in HTML files you will link to the new compiled file, not the original index.js file 
+    -make sure your IDE is not hiding the newly generated files - some IDEs like Atom do this automatically 
+
+_____________________________________________________________________________________________________________________________
+REACT COMPONENTS: 
+-most react code is in components 
+-components can be nested within other components 
+-the following demonstrates how to create a react component and add it to an html file: 
+
+    index.js: 
+        var react = require("react"); 
+        var react_DOM = require("react-dom"); 
+
+        // create a component. you can do this with either react or ES6 classes, apparently. this is the react way of doing it 
+        var blog_list = react.createClass({             // the object argument is used to initialize the class
+            render: function(){                         // this function returns some JSX (or HTML). render is the only required property 
+                return{
+                    <div>   // note that react expects all the HTML returned wrapped in 1 parent tag 
+                        <h1> JSX allows us to write HTML right in javascript </h1>      
+                        <h2> JSX is using javascript behind the scenes to dynamically create these elements (i.e. createElement) </h2>
+                    </div> 
+                }
+            }
+        }); 
+        // tell react to insert the component into blog_list_wrapper 
+        react_DOM.render(<blog_list />, document.getElementById("blog_list_wrapper"));      // notice you put the class component into HTML tags ... 
+
+    index.html: 
+        <!DOCTYPE html> 
+        <html> 
+        <head>
+            <meta charset="UTF-8" />
+        </head>
+        <body>
+            <div id="blog_list_wrapper"></div>
+            <script src="/app/output.js"></script>
+        </body>
+        </html>
+
+_____________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

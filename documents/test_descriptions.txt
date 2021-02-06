@@ -1,0 +1,3 @@
+In the FeiyuON app we used Appium w/ our CI on AWS, and BDD. To test the bluetooth connection and the color space being reduced, the image scaled and other things I used XCUITest. Otherwise mostly I used XCTest and I just had a 1 to 1 mapping of all the classes I used and used my own mock objects to test them in various ways. 
+
+On the DAZN app we were using google cloud platform for automation. So I used mostly XCTest for unit tests. For testing the asynchronous code I did use XCTestException and I just created a mock service and injected it into the test object.

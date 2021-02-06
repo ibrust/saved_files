@@ -1,0 +1,147 @@
+PATTERNS to include in a compound design pattern book (75 compound design patterns. these 75 patterns account for about 38% of patterns you will use in real coding, apparently. another 21% are just single patterns. there are some unnamed patterns, too...): 
+	from the previous tests (6 noteworthy pairs > 3 common important pairs > 1 most innovative pair): 
+
+		!?chain of responsibility | prototype | 	So with this... I think you're going to be propagating a request along the chain, and the first object that respond to it... 
+							you will, lets say, set up a connection with that thing using the prototype pattern. So the object that responded would be the input. 
+							And the prototype outputs... lets say a connection with the thing that responded. Interesting. 
+							We can call this... a "construction request"? what about "construction signal"? construction event? 
+							When would you use this? it's almost like a reverse work queue, isn't it...?
+							but it's strange this would be implemented with chain of responsibility, isn't it...? instead of something like a notification? 
+							maybe it actually would just be a signal, not up a chain but throughout the application...? that anyone could respond to? I duno. 
+							It resembles the cache traversal patterns in the flyweight, really. But I don't think that's the point of this. 
+							It's more asking... for an example of something to construct with? I don't know. A construction request or something. 
+							Isn't that what an object caching request is though? Except this is... a prototype cache? No... it doesn't seem to be that. 
+							It seems more that it's a request looking for a valid object to use in construction. Alot like the caching policy, but it wants 
+							To find the right object. That has good indicators for it, that explanation. But I'm still missing something... 
+							I think it's close though. cuz you're looking for this object to create, it's alot like that ...
+							Yeah I think that's mostly it. There might be some more details but I think that's mostly it. 
+							
+		factory method  | factory method  | 	<- is this just an abstract factory? or something else, like just a program with many factories...?
+		
+		mediator  | factory method  | 		<- the most sophisticated pair, apparently. conditionally construct and use an object? 
+		prototype  | mediator  |
+
+		bridge  | chain of responsibility  | 
+		observer  | iterator  | 				<- observe an array or collection
+		prototype  | abstract factory  | 
+		command  | observer  | 				<- like a callback issued in response to observation...? or observing a command?
+	
+for the book & in general (20):
+ 
+		command  | interpreter  | 			<- seems like a typical interface? not sure...
+		composite  | builder  | 			<- also fairly easy to figure out accurately  
+		singleton  | singleton  | 			<- a useful pattern, apparently. however multiple singletones interact
+
+		prototype  | composite  |  	<- another decent starting point, but hard to accurately figure out also  
+
+		proxy  | command  | 
+
+		prototype  | observer  |	<- another decent starting point. construct the object based on what you observe elsewhere, using the observed data to construct it?
+		interpreter  | strategy  |	<- start your analysis here, it's the easiest to start w/ 
+
+		builder  | adapter  | 
+
+_____________________________________________________________
+
+
+	<5 more pairs>
+
+
+		Need 5 more here
+
+__________________________
+	triplets to include (20 most generally worthy): 
+		bridge  | template method  | prototype  | 
+		observer  | singleton  | observer  | 		<- maybe a global broadcaster?
+		strategy  | proxy  | bridge  |
+
+		?visitor  | observer  | builder  | 
+		
+		adapter  | singleton  | facade  |
+		
+		observer  | memento  | singleton  | 		<- maybe a global broadcaster that actually transmits data? 
+		iterator  | mediator  | composite  | 
+		
+		!interpreter  | visitor  | interpreter  | 	<- !!this is a remark on how the change of a visitor can change the interpretation of a language. 
+								    For example.... a * b + c can mean 2 different things depending on the visitor. correct? 
+								    When would you actually use this...? And it appears this is the correct interpretation of this pattern. 
+									we'll call this... the "context interpreter"...? what about "context manipulator...?" 
+									as the visitor changes the context? meh. 
+									So a statement could be interpreted in this way or that way, and can vary depending on the visitor. 
+									how to interpret it...? which visitor to use? 
+									you could almost... use this with machine learning? to actually calibrate the interpretation...? hmm.... 
+									there's actually a different parse tree associated with these two different contextual interpretations. 											Hmm... you could use this ability to generate different parse trees, couldn't you? 
+									this is actually quite fascinating.
+								"context manipulator" will be the name... it refers more to the visitors ability to change the contextual interpretation
+		
+		singleton  | iterator  | singleton  | 
+		
+		composite  | mediator  | facade  | 
+		strategy  | command  | abstract factory  |  
+		bridge  | template method  | interpreter  | 
+
+		adapter  | singleton  | template method  | 
+		abstract factory  | observer  | observer  | 
+		
+
+		observer  | factory method  | facade  | 
+		
+
+		command  | prototype  | facade  | 
+		adapter  | adapter  | factory method  | 
+
+		memento  | proxy  | memento  | 
+		builder  | chain of responsibility  | facade  | 
+		factory method  | factory method  | adapter  | 
+		
+	
+		!template method  | iterator  | visitor  | 	Very interesting. So I think this one is quite obvious - you can iterate over a varied structure, but the iterator will 
+								have to be iterating over type any - it'll have to be a sort of template type in a sense (a general type), and then you need 
+								a visitor to actually do things to the objects you're iterating over, depending on the object. 	
+								so we will call this... "general list mutator"...? or something? 
+
+
+
+<25 more triplets>	
+
+	need 25 more here 
+
+
+	quadruplets to include (10): 
+		prototype  | proxy  | observer  | chain of responsibility  | 
+		state  | iterator  | facade  | memento  | 
+		state  | decorator  | mediator  | visitor  | 
+		composite  | template method  | chain of responsibility  | template method  |	<- seems like a response chain where different objects respond in different ways?? 
+		command  | chain of responsibility  | facade  | composite  |  <- might this be the propagation of a signal that you can trigger through a composite structure? 
+											it's almost like blocks... all the blocks below get the signal? 
+											or just the root node triggers the signal? probably both are useful
+
+		chain of responsibility  | interpreter  | chain of responsibility  | strategy  |
+		prototype  | state  | decorator  | strategy  | 	
+		iterator  | interpreter  | adapter  | abstract factory  |
+		iterator  | builder  | facade  | facade  | 
+		builder  | factory method  | decorator  | state  | 
+		
+	pentuples to include (5): 
+		command  | interpreter  | decorator  | chain of responsibility  | command  | 	<- seems like an interface that decorates a structure of propagated commands 
+		visitor  | adapter  | decorator  | factory method  | flyweight  | 
+		state  | visitor  | memento  | adapter  | strategy  | 
+		abstract factory  | flyweight  | bridge  | facade  | mediator  | 
+		bridge  | decorator  | abstract factory  | singleton  | flyweight  | 
+		
+		
+______________________________________________ 
+7 extra delegation patterns: 
+
+	Delegation | Abstract Factory 
+ 	Delegation | Template Method 
+
+ 	Delegation | Interpreter | Template Method 
+ 	Delegation | Command | Memento 
+ 	Delegation | Strategy | Mediator 
+ 	Delegation | Adapter | Strategy 
+ 	Delegation | Interpreter | Iterator 
+
+
+
+

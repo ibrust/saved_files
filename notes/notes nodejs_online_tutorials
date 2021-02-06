@@ -1,0 +1,573 @@
+> will mean a terminal prompt throughout
+
+-to check the version of node: 
+    > node -v
+
+-to run a javascript script using node: 
+    > node script.js 
+
+-node uses the V8 engine, which chrome also uses 
+-V8 is written in C++, and can actually be embedded into any C++ application. So V8 is embedded in node.js 
+-node.js also written in C++. 
+-node.js passes the javascript code into the V8 engine, and converted into machine code by V8. 
+
+-There are other parts to node.js than the V8 engine. The rest of node hooks into the javascript V8 engine and adds additional features to it. 
+-For example, originally V8 was not designed to deal with lower level operations, but C++ was. Node.js passes on many of C++'s low level features to javascript. 
+
+-In normal javascript written in the browser you have a global object, aka the Window object. It has properties like alert, settimeout, etc. 
+-the node global object is a different object, but also gives access to a variety of methods, many of which correspond but some that don't: settimeout, setinterval, setimmediate, require(), cleartimeout, clearinterval, clearimmediate, console, exports, module, process, global, __dirname, __filename, Buffer 
+
+-console.log() will output to the terminal 
+
+-to output your current directory / the current scripts filename: 
+    console.log(__dirname); 
+    console.log(__filename);
+
+-use module.exports and require() in node.js to export / include a file:
+    script1.js: 
+        var func = function(){
+            ...
+        }
+        var func2 = function(number){
+            ...
+        }
+        var value1 = 3.14; 
+        module.exports.func = func;                     // set module.exports to whatever you want to export 
+        module.exports.func2 = funct2;
+        module.exports.value1 = value1; 
+    script2.js:
+        let mod = require("pathname");                  // returns the module.exports object
+        mod.func(); 
+        mod.funct2(mod.value1); 
+
+-alternative ways to write module.exports: 
+    script1.js:                                         // asign module.exports directly to the anonymous functions 
+        module.exports.func = function(){
+            ...
+        }
+        module.exports.func2 = function(){
+            ...
+        }
+        module.exports.value1 = 3.14; 
+    _________________________________________________________________
+    script1.js:                                         // use object literal notation to assign module.exports
+        var func = function(){
+            ...
+        }
+        var func2 = function(number){
+            ...
+        }
+        var value1 = 3.14;
+
+        module.exports = {
+            func: func, 
+            func2: func2, 
+            value1: value1
+        }
+    _________________________________________________________________ 
+
+-node.js ships with a variety of modules which you can include with require. To include these you don't use the path, you just use the name
+-you can create your own custom events using the events modules event emitter in node.js. 
+-the util module allows you to inherit things. If a function or object inherits the event emitter it can use the custom events defined by the emitter. 
+
+    var events = require('events');                                 // events module
+    var util = require('util');                                     // util module
+    
+    var event_emitter = new events.EventEmitter();                  // the event emitter is used to create custom events 
+
+    event_emitter.on("new_event1", function(parameters){            // create a custom event 
+        ... (code for what the event does)
+    });
+    event_emitter.emit("new_event1", param1, param2, ...);          // trigger the event 
+   
+    var anonymous_func = function(param1){
+        this.value1 = param1; 
+    }
+
+    util.inherits(anonymous_func, events.EventEmitter);             // cause anonymous_func to inherit the event emitter, gaining access to custom events 
+
+    anonymous_func.on("new_event2", function(parameters){           // create a 2nd custom event, this time off a function object  
+        ... (code for what the event does)
+    });
+
+    anonymous_func.emit("new_event2", param1, param2, ...);         // emit the event 
+                                                                    // it isn't clear from the video whether I could call new_event1 off this - test it
+    _________________________________________________________________ 
+
+-node.js has a module called fs that's used for file & directory handling:
+
+    var fs = require('fs'); 
+
+    // synchronous read / write methods 
+    var results = fs.readFileSync("path", "utf8"); 
+    fs.writeFileSync("new_file.txt", results);                      // create a new file & write the results to it 
+
+    // asynchronous read / write methods 
+    fs.readFile("path", "utf8", function(e, results){
+        fs.writeFile("new_file2.txt", results); 
+    });
+
+    // delete files - typically you want to verify that the file exists first, but not in this example     
+    fs.unlink("new_file.txt");
+
+    // synchronously create / delete a directory
+    fs.mkdirSync("directory_name");
+    fs.rmdirSync("directory_name");
+    
+    // asynchronously create / delete a directory 
+    fs.mkdir("directory_name", function(){
+        ... file handling code that uses the directory
+    });
+    fs.rmdir("directory_name");         // the directory must be empty before this can be used
+    _________________________________________________________________ 
+
+-to create a server in node.js, use the http module: 
+
+    var http = require('http'); 
+    var server = http.createServer(function(request, response){                 // whenever a request is made, this callback fires
+        // create your response headers using the response parameter 
+        console.log("request was made from URL: ", request.url);                // this property tells you which pages URL the request is for
+        response.writeHead(200, {'Content-Type': 'text/plain'});                // status / headers (this one is just for plain text, not HTML)
+        response.end("plain text response");                                    // end the response, passing the response information (plain text)
+    });
+
+    server.listen(3000, ip_address);                    // start listening for any request on port 3000 @ the given IP. any page request will be caught
+                                                        // IP address can be localhost or your IP depending
+    console.log("listening on port 3000"); 
+    _________________________________________________________________ 
+
+-with the fs module you can create streams to read/write files or send/receive HTTP messages in node.js, which can improve performance
+-there are 3 kinds of streams: writable, readable, and duplex streams (duplex can both read and write) 
+-reading stream: the server is reading data sent from the client 
+-writing stream: the server is sending data to the client 
+
+    var fs = require('fs'); 
+    var http = require('http'); 
+
+    var read_stream = fs.createReadStream(__dirname + "/filename.txt", "utf8");          // creates a readable stream to read the file
+                                                                                        // the data will be passed to read_stream in chunks 
+    var write_stream = fs.createWriteStream(__dirname = "new_filename.txt", "utf8");
+
+    read_stream.on("data", function(data_chunk){        // a data event is triggered when a chunk of data is received (it's a custom event) 
+        write_stream.write(data_chunk);                 // this method splits the data up, in contrast with earlier read/write methods 
+    });
+    _________________________________________________________________ 
+
+-pipes are an easier way of setting up a read & write transfer stream like you see above
+-you always pipe from a readable stream to a writable stream 
+
+    var fs = require('fs'); 
+    var http = require('http'); 
+
+    var read_stream = fs.createReadStream(__dirname + "/filename.txt", "utf8");          // creates a readable stream to read the file
+                                                                                        // the data will be passed to read_stream in chunks 
+    var write_stream = fs.createWriteStream(__dirname = "new_filename.txt", "utf8");
+
+    read_stream.pipe(write_stream);                             // this pipe does the same thing as the previous code, but in 1 line 
+
+    _________________________________________________________________ 
+
+-in the server created above, the response parameter is actually a write stream object. You can pipe the response to the client: 
+
+    var http = require('http'); 
+    var fs = require('fs');
+    
+    var server = http.createServer(function(request, response){                     // whenever a request is made, this callback fires
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        var read_stream = fs.createReadStream(__dirname + "/filename.txt", "utf8");  // does this have to be in here? it fires every time? he put it here...
+        read_stream.pipe(response);
+    });
+
+    server.listen(3000, ip_address);
+__________________________________________________________________________________________________________________________________________ 
+-example of how to send HTML to a browser:
+    index.html: 
+        <!DOCTYPE.html> 
+        <html> 
+        <head>
+            <style> 
+                body{background: blue; font-family: courier; color: #fff324}
+                h1{font-size: 48px; text-transform: uppercase; text-align: center}
+            </style>
+        </head> 
+        <body>
+            <h1> text content </h1> 
+        </body> 
+        </html>
+
+    server.js: 
+        var http = require('http'); 
+        var fs = require('fs');
+    
+        var server = http.createServer(function(request, response){ 
+            response.writeHead(200, {'Content-Type': 'text/html'});
+            var read_stream = fs.createReadStream(__dirname + "/index", "utf8");
+            read_stream.pipe(response);
+        });
+
+        server.listen(3000, ip_address);
+
+    < node server.js 
+__________________________________________________________________________________________________________________________________________ 
+
+-to send a JSON response:
+    server.js: 
+        var http = require('http'); 
+        var fs = require('fs');
+    
+        var server = http.createServer(function(request, response){ 
+
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            json_object = {
+                field1: value, 
+                field2: value2
+            }
+            response.end(JSON.stringify(json_object));      // .end expects either a string or a buffer. in this case we serialize the object 
+        });
+
+        server.listen(3000, ip_address);
+__________________________________________________________________________________________________________________________________________
+-you can route requests using request.url 
+-express is a package that does this faster, but this is the original way to do it: 
+    server.js: 
+        var http = require('http'); 
+        var fs = require('fs');
+    
+        var server = http.createServer(function(request, response){  
+            if (request.url === "/home" || "request.url === "/"){
+                response.writeHead(200, {"Content-Type": "text/html"}); 
+                fs.createReadStream(__dirname + "/index").pipe(response);      // even faster way of piping the response 
+            } else if (request.url === "/contact"){
+                response.writeHead(200, {"Content-Type": "text/html"}); 
+                fs.createReadStream(__dirname + "/contact").pipe(response);
+            } else if (requeset.rul === "/api"){
+                var json_object = {
+                    "field1": "value1", 
+                    "field2": "value2"
+                }
+                response.writeHead(200, {"Content-Type": "application/json"});
+                response.end(JSON.stringify(json_object));
+            } else {                                                                // custom 404 not found page 
+                response.writeHead(404, {"Content-Type": "text/html"});
+                fs.createReadStream(__dirname + "/not_found").pipe(response);
+            }
+        }
+        server.listen(3000, ip_address);
+__________________________________________________________________________________________________________________________________________
+-go to https://www.npmjs.com/ to search for npm packages 
+-to install a package you typically move to the projects directory and type: 
+    < node install package_name 
+
+-to uninstall the package: 
+    < node uninstall package_name 
+
+-node installs packages, along with their various dependencies, within a given projects directory 
+
+-package.json is a file that keep tracks of all package dependencies for the project, and other info about the project
+-to create a package.json file: 
+    < npm init                                  // answer a series of questions about the project. 
+    < name: project_name 
+    ... 
+
+-when you install a package in your project you can use -save as an argument, which will update the package as a dependency in package.json: 
+    < npm install express -save  
+
+-to install the list of dependencies in package.json: 
+    < npm install 
+
+-if you uninstall a package it appears you'll need to delete it from the dependency list in package.json 
+__________________________________________________________________________________________________________________________________________
+
+-nodemon is a package used in development. it monitors your application files, and if you make a change in one of the application core files it restarts the server automatically for you. allows for automatic page refresh
+-to install nodemon globally on your computer: 
+    < npm install -g nodemon 
+
+-installing globally means it installs it on your whole computer, not just within the project. 
+
+-to use nodemon, run the application using nodemon itself: 
+    < nodemon script                                                // notice you don't need the .js extension, apparently ... 
+    < rs                                                            // restarts the server 
+__________________________________________________________________________________________________________________________________________
+
+-express is a simpler routing system that integrates easily with templating engines, and contains a middleware framework that other packages can extend
+
+    var express = require("express"); 
+    var express_application = express();                    // this is the "express application object" you'll use to listen / handle requests, apparently
+
+    // respond to a get request for a text string
+    express_application.get("/text_string", function(request, response){            // express has enhanced the request / response objects        
+        response.send("this is a textstring");              // send is a method of express, which automatically detects the content type of what you send 
+    });                                                     // in this case you're sending a string
+
+    // respond to a get request for index.html 
+    express_application.get("/index", function(request, response){
+        response.sendFile(__dirname + "/index.html");       // youtuber used sendFile to send HTML - I don't know why he used it over send(), read the docs 
+    });
+    
+    // what if you want to respond to URLs with dynamic information in the URL, like an id? you use route placeholders: 
+    express_application.get("/profile/:id", function(request, response){    // notice this is a URI parameter instead of a query string 
+        response("requested profile with ID: " + request.params.id);        // the placeholder is in params 
+    });
+
+    express_application.listen(port_number);                // start listening on a port 
+
+-apparently URI parameters are used to get a unique resource, while query parameters filter a resource. I'm not sure if there's a meaningful difference, honestly. They're just redundant, arbitrary syntax conventions that do the same thing at the end of the day 
+__________________________________________________________________________________________________________________________________________ 
+-there are many templating engines (aka view engines), the youtuber recommended EJS to start w/ because it's simple and lightweight
+-note that ejs looks in the "/views" folder for templates by default, so you should create one and put your views in it 
+
+    < npm install ejs -save 
+
+    server.js:
+        var express = require("express"); 
+        var express_application = express(); 
+        
+        express_application.set("view engine", "ejs");      // tell express what view engine you are using 
+
+        // if the page is a template, use the render() method instead of the send() or sendFile() method 
+        express_application.get("/index/:value1", function(request, response){
+            var value2 = 1000;                                      // you can pass any kind of data to the template 
+            var array1 = [1, 2, 3, 4, 5]; 
+            response.render("test_view", {                          // 2nd parameter is an object containing the data to pass to the template
+                field1: request.params.value1, 
+                field2: value2, 
+                array1: array1
+            });          
+        });
+
+        express_application.listen(port_number); 
+
+    views/test_view.ejs: 
+        <!DOCTYPE.html> 
+        <html> 
+        <head>
+            <style> 
+                body{background: blue; font-family: courier; color: #fff324}
+                h1{font-size: 48px; text-transform: uppercase; text-align: center}
+            </style>
+        </head> 
+        <body>
+            <h1> text content w/ custom data: <%= field1 %> </h1>                   <--! <%= is for outputting data --> 
+            <h2> <%= field2 %> </h2> 
+            <h3>                                                                    <--! <% is for outputting code, apparently  --> 
+                <ul> 
+                    <% array1.forEach(function(element){ %>                         <--! inserting JS is very similar to PHPs mixed HTML coding style --> 
+                        <li> <%= element %> </li>                                   <--! This JS is running on the server, not in the browser -->  
+                    <% } %>
+                </ul> 
+            </h3> 
+        </body> 
+        </html> 
+
+    < node server.js 
+__________________________________________________________________________________________________________________________________________ 
+
+-partial views allow you to use view inheritance. you can include a partial view within another view 
+-to include a partial view within a view: 
+
+    <%- include('views/partial_view.ejs'); %>
+
+__________________________________________________________________________________________________________________________________________ 
+SERVING STATIC FILES & MIDDLEWARE 
+-if you try to include a static file while using node.js (for example, include a static stylesheet in your HTML file using <link href="path" ... />) you have to prepare your server to handle that request. That's a request like any other request. 
+-express provides middleware to serve static files 
+-middleware is the code that runs between the request and the response 
+-to create middleware in express: 
+
+    var express = require("express"); 
+    var express_application = express();
+
+    express_application.set("view engine", "ejs");
+
+    // if you don't specify a pathname (aka a route) the middleware will be used on every request made 
+    express_application.use("pathname", function(request, response, next){
+        console.log("middleware running"); 
+        next();         // next is used to go to the next piece of middleware or get method whose path applies to the route
+    });
+
+    // express comes with some predefined middleware to do common things. express.static serves static files (like style sheets): 
+    express_application.use("route", express.static("static_file_folder"));
+
+    express_application.get("/index/:value1", function(request, response){
+        var value2 = 1000; 
+        var array1 = [1, 2, 3, 4, 5]; 
+        response.render("test_view", { 
+            field1: request.params.value1, 
+            field2: value2, 
+            array1: array1
+        });          
+    });
+
+    express_application.listen(port_number);
+__________________________________________________________________________________________________________________________________________
+QUERY STRINGS: 
+
+-expresses request object handles all the parsing of an included query string automatically. 
+
+    express_application.get("/index/:value1", function(request, response){
+        let key1 = request.query.key1; 
+        let key2 = request.query.key2; 
+
+        response.render("test_view", { 
+            key1: key1, 
+            key2: key2, 
+            full_query: request.query
+        });          
+    });
+
+__________________________________________________________________________________________________________________________________________
+HANDLING POST REQUESTS:
+
+-to parse POST data with express you need to install a module called "bodyparser": 
+
+    < npm install body-parser -save
+
+    form.html: 
+        <form id="form1" method="POST" action="form_handler"> 
+            <input type="text" name="text_input" value=" />
+        </form> 
+
+    server.js:
+        var express = require("express"); 
+        var body_parser = require("body-parser"); 
+
+        var express_application = express();
+        express_application.set("view engine", "ejs");
+
+        // parser for the POST data. This parser is a piece of middleware. if you want to parse json data, use: var json_parser = body_parser.json(); 
+        var url_encoded_parser = body_parser.urlencoded({extended: false}); 
+
+        // you pass that middleware as the 2nd parameter of the post method. this is a different syntax than with get/use. the parser runs automatically.
+        express_application.post("/form_handler", url_encoded_parser, function(request, response){
+            response.render("thank_you_page.html", {post_data: request.body});          // the parsed data can now be accessed off request.body 
+        });
+
+        express_application.listen(port_number);
+__________________________________________________________________________________________________________________________________________
+DEMO APPLICATION: 
+
+server.js: 
+    var express = require("express"); 
+    express_obj = express(); 
+
+    var blog_controller = require("./blog_controller");     // you don't add the .js extension with require, apparently ... 
+
+    express_obj.set("view engine", "ejs"); 
+    express_obj.use(express.static("./statics"));           // notice the lack of the 1st argument for path. it makes this middleware apply to all paths 
+
+    blog_controller(express_obj);                           // fire the controllers 
+
+    express_obj.listen(3000); 
+    console.log("listening on port 3000\n"); 
+
+
+blog_controller.js:         // in MVC, the controller will contain code to manipulate data, handle routes, etc.
+
+    module.exports = function(express_obj){
+
+        var dummy_data = {
+            field1: 1, 
+            field2: 2, 
+            field3: 3
+        } 
+        
+        express_obj.get("/blog", function(request, response){
+            response.render("/view", dummy_data);                               // pass in the view name. note you don't need the .ejs extension 
+        });
+        express_obj.post("/blog", function(request, response){
+            
+        });
+        express_obj.delete("/blog", function(request, response){                // another HTTP request type - you can handle all the HTTP requests
+            
+        });
+
+    }
+
+view.ejs: 
+
+    <html> 
+    <head>
+        <link href="/statics/styles.css" rel="stylesheet" type="text/css" /> 
+    </head> 
+    <body> 
+        <div id="blog_wrapper"> 
+            <form method="POST"> 
+                <input type="text" name="title" placeholder="title" />
+                <button type="submit">Submit</button>  
+            </form> 
+            <ul id="blog_post_list"> 
+                <% for (let i = 0; i < dummy_data.length; i++){ %> 
+                    <li> <%= dummy_data[i]; %> </li> 
+                <% } %>
+            </ul>
+        </div>
+    </body>
+    </html>
+
+-to finish application, pick up @ ninjas tutorial #34
+__________________________________________________________________________________________________________________________________________
+MONGODB: 
+
+-the author uses a package called "mongoose" to interact with MongoDB: 
+    < npm install mongoose -save 
+
+-though you can download MongoDB, he used www.mlab.com which is a cloud host for a MongoDB database. 
+-each record in MongoDB appears to be a JSON object 
+
+    var mongoose = require("mongoose"); 
+
+    var example_db_string = "mongodb://username:password@databaseurl.mlab.com:12345/tablename";         // string for www.mlab.com
+    mongoose.connect(example_db_string);                                                                // connect to database
+
+    var table_schema = new mongoose.Schema({                                                            // create a table schema (like a blueprint) 
+        field1: String 
+    });
+    var table_model = mongoose.model("table_name", table_schema);                                       // create a model based on that schema 
+
+    // now we can create items & push them to the database 
+    var item1 = table_model({field1: "string1"});                   // you've created an item of this model type, next save it to the database 
+    item1.save(function(error){
+        if (error){
+            throw error; 
+        }
+        else{
+            console.log("item saved to database"); 
+        }
+    }); 
+
+    // to retrieve items from the database, do the following: 
+    table_model.find({}, function(error, data){                // empty object as 1st argument will retrieve all items in the database
+        if (error){
+            throw error;
+        }
+        else{
+            console.log("data retrieved: ", data); 
+        }
+    });   
+
+    // to delete an item from the database 
+    table_model.find({field1: "string1"}).remove(function(error, data){      // not sure what data is for - is that the deleted data? 
+        if (error){
+            throw error;
+        }
+    });
+
+-the object passed to find() is used to filter queries by field. for detailed queries, use regular expressions as the values corresponding to the fields 
+-bear in mind that regex's will slow down the query 
+-there are also mongodb comparators for filtering queries
+-you can also limit the number of returned results, or get the count of the total results found: 
+    table_model.find({int_field : {gt : 100}}).limit(10);          // gt is greater than. search for field values greater than 100, & limit results to 10
+    table_model.find({}).count(); 
+
+-find() supports more operations, including multiple arguments, read for more details 
+
+
+__________________________________________________________________________________________________________________________________________
+FURTHER RESEARCH:
+-MongoDB more detail  
+-MEAN stack (mongodb, express, angular, node)
+-Unit testing with Mocha 
+-Websockets 
+-ninjas node auth playlist 
+-
+

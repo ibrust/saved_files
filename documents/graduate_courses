@@ -1,0 +1,82 @@
+**CSCI 5250 - Computer Graphics				<-highest chance of getting B, so be careful
+**CSCI 5360 - Intelligent Robot Systems			<-best course
+**CSCI 5560 - Database Management Systems 		<-worst professor
+*CSCI 5800 - Software Testing
+
+
+**CSCI 6050 - Computer Systems Fundamentals
+**CSCI 6180 - Software Design and Development 		<-important course for future use
+*CSCI 6250 - Advanced Operating Systems 		<-most dispensible course
+*CSCI 6260 - Advanced Computer Graphics 		<-another great course, also an easier course according to me, professor not great at teaching 
+
+*CSCI 6100 - Analysis of Algorithms 			<-also important to pre study, and 2nd hardest rated by me 
+*CSCI 6450 - Operating System Design 			<-hardest course
+*CSCI 6700 - Selected Topics in Software Engineering 	<-favorite course, also an easier course according to me, though I didn't enjoy it, but need to learn 
+?**CSCI 6430 - Selected Topics in Parallelism 		<-most important to pre study, also my personal hardest course. take it next spring? best performance though, apparently. 
+
+
+~try to take the networking 5000 level class in the summer and pay out of pocket, if it's available; then take the 6000 level networking class
+but to do this, you have to move up software testing... replace parallelism with software testing~
+
+
+____
+notes: 
+
+*ALREADY TOOK PARALLELISM? FIND OUT*
+If so... take networking? And you could replace one more thing and take the second networking class.... but you need to replace a 5000 level course. maybe replace software testing? Meh... you need software testing. what about intelligent robots...? Even though it's the best course, it also lends itself to self-study ... because it's not essential. meh. 
+
+
+
+I don't see anything on security - so probably I should read a text on security at some point
+
+self study & cut list: neural nets, AI, networking (strongly emphasize: books, programming, opencourseware, others), web technologies?
+
+first semester potential picks: computer system fundamentals, intelligent robot systems, database management system
+second semester potential picks: analysis of algorithms (difficult), software design & development, parallelism, advanced operating systems, database management system
+
+probably need to work graphics in there somewhere
+
+
+tentative semester 1 schedule: computer system fundamentals, intelligent robot systems, computer graphics
+tentative semester 2 schedule: software design & development, database management systems, software testing
+tentative summer schedule:     networking 5000 (or other available course...?)
+tentative semester 3 schedule: advanced computer graphics, advanced operating systems, **analysis of algorithms
+tentative semester 4 schedule: networking 6000, operating system design, selected topics in software engineering
+
+~don't forget to prepare for: computer graphics 1, operating system design~
+
+1st summer prep: *software design & development, intelligent robot systems, database management systems
+2nd summer prep: *operating system design, advanced computer graphics, software testing, *software engineering topics, analysis of algorithms
+
+best classes to put off to 2nd year: Advanced Computer Graphics, Selected Topics in Parallelism, Software Testing, Intelligent Robot Systems, Operating System Design, Software Design and Development
+
+prestudy: algorithms, parallelism, intelligent robot systems, database management system, advanced computer graphics, advanced operating systems
+
+________________________
+
+Another option: dispense w/ algorithms and computer systems fundamentals, and add the 2 networking classes. this might work if you can find what book computer systems fundamentals uses... but the problem here is you need more 6000 level classes. perhaps take 1 more course over summer & graduate in the summer? 
+_______________________________
+
+some general studying ideas: 
+classes to get book & read prior for (highest to lowest priority): intelligent robot systems, software design & development, selected topics in software engineering, advanced operating systems, database management systems, advanced computer graphics, analysis of algorithms
+
+classes to study C for: software design & development
+classes to study C# for: advanced computer graphics, selected topics in parallelism apparently
+classes to study C++ for: intelligent robot systems
+classes to study python for: advanced operating system but not completely necessary, still why not
+classes to study javascript for: advanced computer graphics, parallelism again but not sure why
+classes to study networking for: computer graphics apparently
+classes to study php for: software design & development
+classes to study prolog for: advanced computer graphics, software design & development
+
+
+__________________________
+
+tentative semester 1 schedule: computer system fundamentals, intelligent robot systems, software design & development
+		books: deep C secrets (computer systems) / C reference / C STL / TRex book, OO design book / linux tiger book (software design), probably just get the robot book
+tentative semester 2 schedule: computer graphics, database management systems, **Selected Topics in Parallelism
+		books: hennesy architecture / computer graphics tiger (computer graphics), pthreads book / database book (database) / muroch MySQL, butlers parallelism book / berkley parallelism book for fun 
+tentative semester 3 schedule: advanced computer graphics, advanced operating systems, **analysis of algorithms
+		books: unit testing book (comp graphics), unix network programming sockets book  (advanced os), probably buy the analysis of algorithms book 
+tentative semester 4 schedule: software testing, operating system design, selected topics in software engineering
+		books: sarkars software engineering book, advanced programming in unix environment / unit testing (software testing), compiler construction / UML modeling (os design class)...

@@ -1,0 +1,10 @@
+php projects worth considering: 
+
+web reports / dashboards. wordpress plugin "user insights" or something. you can integrate this into various areas of the wordpress site, apparently. reports...
+
+legacy apps and mobile integration...? 
+forms, gets... bring unique data to the frontend layer. not sure what he's saying. number 5...
+
+converting old wordpress websites. 
+...?
+

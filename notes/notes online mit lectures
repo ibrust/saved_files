@@ -1,0 +1,39 @@
+Introduction to Electrical Engineering and Computer Science I 
+
+-state machines are a good way to model processes (rather than problems with definite answers) 
+-state machines also work very well with modular design like OO 
+-recursion can actually be used to simplify problems by approaching the base case (though you probably need to read about scheme to master this skill)
+-another value of recursion is it allows you to add cases fairly easily - you can further specialize the answer easily 
+-the teacher had his class write a program that implemented state machines, which was an interesting idea because it actually directly implements OO design 
+
+-"proportional controller" - where the input is proportionate to the output; or in the case of robots, the command is proportionate to the response (i.e. slowing down as you approach a wall)
+-signals & systems approach: characterize your system by the way it transforms an input signal (the thing you have control over) into an output signal. 
+-you're basically turning a system into a function, where a signal is the input / output. you can do this with almost anything that you can quantify, apparently 
+-you can chain these input/output signals as well 
+-you must distinguish continuous time (CT) and discrete time (DT) with respect to these signals 
+
+-difference equations are the DT analog of differential equations (in CT systems), and used to represent DT systems 
+-there's also a delta function, which is a discrete time signal. this is the input signal to the system 
+-given a delta function (which defines x across a range), you can then use a difference equation to calculate the systems output signal (y)
+
+-you can also represent systems as a block diagram, which illustrates signal flow paths. it's a symbolic representation of the difference equation 
+-block diagrams are slightly different than difference equations: they should be started in a state, "at rest", where all the outputs / delays are initially 0 
+-block diagrams are imperative, in contrast to difference equations which are declarative. block diagrams demonstrate the process, in other words 
+
+-Y=RX     R is rightshift the signal by 1, Y is the continuum of discrete outputs, X is the continuum of discrete inputs 
+-Y=(R-1)X  is another operator expressions. these try to "operate on" X to get the output Y, using various operators (like R) 
+-with operator expressions, you're creating an algebra that does what difference equations do, so you can reason about them using a kind of algebra
+-Y=(R-1)(R-1)X = (R^2 -2R + 2)X     this is chaining 2 block diagrams together then doing algebra on them
+-so with operator expressions they contain the "process" information of block diagrams combined with the mathematical declarative style of difference equations 
+-notice the operator expressions are reasoned about as if they are polynomials. thus you are reasoning about circuits as if they are polynomials 
+
+-he distinguishes between feedforward & feedback systems (acyclic vs cyclic systems) 
+-in operator expressions for feedback systems you'll have an operator applied to the output, apparently. this makes the it decarative, not imperative, apparently 
+-apparently there is an imperative way to figure out these problems, they just take an infinite number of delays (potentially)... Y=(1+R+R^2+R^3...)X is the form
+-1/(1-R) = 1 + R + R^2 + R^3 ... so this is a taylor series or something. 
+
+-feedback is pervasive in almost all natural and artificial systems 
+-with feedback, transient inputs generate persistent outputs 
+-Y=(P0(R)-1)X       P0 is the constant before R, which determines in what direction the signal converges. this is called the "pole" 
+
+-left off at lecture 5 or 6 or something 

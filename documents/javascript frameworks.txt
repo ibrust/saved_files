@@ -1,0 +1,27 @@
+the big 3: 
+react, angular, vue
+
+historically significant: 
+angularJS, backbone, ember
+
+notable: 
+polymer, reasonML, Preact
+
+rest of the pack: 
+slim.js
+TSERS
+Etch
+cycle.js
+surplus
+AppRun
+DoneJS
+Dojo
+Stem JS
+Vidom
+
+
+additional things to look into: 
+webix
+mithril
+meteor
+

@@ -1,0 +1,12 @@
+1st interview - pair programming debug session. it's app... there's 5 bugs you have to try to debug them all. 
+simplified version of an ecommerce app. first it wont compile. you have to make it compile. 
+second problem is a multithreading issue where it should crash almost immediately when it starts. so fixing that. 
+there should be another issue where there's an infinite load spinner you need to get rid of for a correct check. 
+
+2nd interview - different developer. take that same application and implement a brand new feature. so far they have always requested the same feature: the scroll down to manually refresh the page. so you need to be able to add in a refresh spinner, and have that trigger a brand new data pull on the API request. 
+
+lastly will be an interview with their tech lead / manager. you, your background experience, how you handle certain situations... 
+greatest technical difficulty faced. 
+then he's gona.... a few possibilities. 
+they'll go into a what if scenario. we had to walk through some kind of ?calendar? app and talking on a high level of you'd architect a calendar application. now it may not be exactly that but it's gona be architecting some kind of design, best practices of modularity for some kind of app. 
+___________________________________________

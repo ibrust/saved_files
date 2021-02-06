@@ -1,0 +1,3 @@
+https://github.com/shashankpali/EZYGradientView
+https://github.com/IFTTT/jot
+https://github.com/mpw/MPWDrawingContext <- wow, same guy that wrote my performance book! wrote his own graphics context!
