@@ -1,22 +1,22 @@
 long term read: advanced ios6 cookbook - 72 
 
 8 day read: 
-5) *go4 - 34
-7) *core data book - 29 
-4) *software systems architecture - 88 
-3) *professional ios networking - 23
+C 5) *go4 - 34		
+D 7) *core data book - 29 - goal: 50%	
+4) *software systems architecture - 88  - goal: 26%
+B 3) *professional ios networking - 23 - goal: 27% 
 
 quick read: 
 10) *mastering linux network administration - 58 
 
 __________________________
-6) *git book - 37 
-8) *combine - 38 
-2) *push notifications - 97 
-9) *rest book - 35
+6) *git book - 37 - goal of remaining: 84%
+8) *combine - 38 - goal: 74% 
+2) *push notifications - 97 - goal: 88% 
+9) *rest book - 35 - goal: 76% 
 
-11) *graphql - 98 
-1) *objc ranch - 91  
+11) *graphql - 98 - goal: 42%
+A 1) *objc ranch - 91 - goal remaining: 98%
 
 biggest problems: 
 combine - 6 

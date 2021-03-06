@@ -206,7 +206,10 @@ ________________________________________________________________________________
 -it isn't clear how this command interacts with staged changes - whether it reverts the file to the added state or the initial commit state
   < git checkout HEAD file_name         (overwrite the working tree with the current commits version of the file? Or is it the staging area that overwrites? author isn't clear)
   OR
-  < git checkout -- file_name           (I just added this myself, but it should work)
+  < git checkout -- file_name 
+
+-you can use the . for the file_name to restore the working tree to the current commit: 
+  git checkout -- . 
 
 -the author has a diagram where reset is used before checkout to completely return to the initial commit state. It isn't clear whether this is necessary for a complete wipe, but worth remembering
 -the -- is not mandatory in 99% of cases, you could just do git reset file_name. It's required if you have a file & branch with the same name; -- specifies to work with files
@@ -277,23 +280,43 @@ ________________________________________________________________________________
 -there's more complexity to this process - find additional resources for more details
 ________________________________________________________________________________________________
 -you can also merge branches in git
- < git merge target_branch
+  < git merge target_branch
+
+-note, the above will merge all the commits of the target branch into the current branch 
+-usually you want to squash the commits in the target branch before merging, so that you only merge 1 commit into the master: 
+  < git merge --squash target_branch 
+
+-also note that, after the merge, you will need to commit it! importnat info this book did not mention. 
+________________________________________________________________________________________________
 
 -when merging branches, if there are no conflicts, git will simply move the target branch to the top of the origin branch and the operation will be finished
-
--when merging conflicts occur, git guides in assembling a new commit called a "merge commit". the shell prompt will contain the word MERGING in it during this time
--type "git diff" to examine the conflicts. you'll see separators denote the areas where the merge conflicts occur
+-when merging conflicts occur, git is supposed to guide in assembling a new commit called a "merge commit". the shell prompt should (but doesn't?) contain the word MERGING
+-apparently you can type "git diff" to examine the conflicts. you'll see separators denote the areas where the merge conflicts occur
 -to fix the merge you must edit the file appropriately (however you wish to resolve the conflict), and then add and commit it in the typical way
 -after the merge is finished, the resulting HEAD commit will have 2 parents for the 2 branches that were merged. In this way git remembers that you merged the two branches
+
+-I think git has been changed with new ways of doing these merges. there is one command that opens a UI (though it wasn't helpful in my case): 
+  < git mergetool 
 
 -there is another merge scenario called "fast forwarding", where the items in one branch are directly behind the items of another
 -In such a scenario, git simply moves the label of the branch that's behind to the top, alongside the label of the branch that's in front
 -in these cases there will not even be a "merge commit" created, it isn't necessary. But some people want a merge commit created even in this case, so there's a special command:
   < git merge --no-ff target_branch
--git will open VIM and ask you to specify a commit message afterwards
--though not preferred, this method is not without any merit - you will be able to see a merge occurred on your graph (if that's useful). but the graph will be more complicated.
+-git will open VIM and ask you to specify a commit message afterwards, apparently (though the author has bee wrong many times, so we'll see if this happes)
+-though not commonly used, with the above method you will be able to see a merge occurred on your graph (if that's useful). but the graph will be more complicated.
 
--note the author undid all these merges repeatedly, very easily, with the simple command: git reset --hard HEAD^
+-note the author undid all these merges repeatedly, after they finished, with the simple command: 
+  < git reset --hard HEAD^
+
+-to select one version of a file over another during a merge conflict (maybe the file is giant and you don't want to edit it): 
+  to select the other file: 
+    < git reset -- filename 
+    < git checkout MERGE_HEAD -- filename 
+  to select your file: 
+    < git reset -- filename 
+    < git checkout ORIG_HEAD -- filename
+
+-*It still isn't clear how to properly abort a merge while it's in progress. there was git reset --abort, and some other commands, but they didn't seem to work very well. 
 ________________________________________________________________________________________________
 
 -sometimes you don't want to merge branches, but just apply certain changes from a commit to another branch. this is common if you fixed a bug in a side branch, for example
@@ -327,6 +350,9 @@ ________________________________________________________________________________
 
 -git will only send reachable, changed objects to the remote
 -usually a copy of a remote repository is managed as a bare repository
+
+-sometimes you have to force push if your repo has gotten out of sync with the remote repo: 
+  < git push -f remote_repo target_branch 
 
 -you won't typically work directly on a bare repository. it contains only the .git folder; it doesn't have a checked out working tree or a HEAD reference.
 -the author says instead the remote repository is the one that's normally configured with working trees, staging areas, etc.
@@ -402,9 +428,70 @@ ________________________________________________________________________________
 -to make a pull request go onto github, to your forked repo, and press 'new pull request'. Note: pull requests can only be made from separate branches (new branches? author sucks).
 ________________________________________________________________________________________________
 
+-the git config command edits some of gits internal configuration files
+-there are 3 configuration levels, in order from broadest to most local: system, global (only for one user), repository 
+-each configuration level has its own configuration files  
+-configurations specified at lower levels are used preferentially over configurations at the levels above 
+
+-system level configurations effect every user on the system
+-global level configurations effect a specific user globally 
+-repository level configurations effect only that repository 
+
+-the system config file is at: 
+  windows: C:\Program Files\Git\etc\gitconfig
+  Linux: /etc/gitconfig 
+  MacOS: /usr/local/git/etc/gitconfig 
+-system wide configurations are edited using the --system option and requires admin privileges 
+
+-the global config file is at: 
+  windows: C:\Users\<username>\.gitconfig 
+  linux: ~/.gitconfig 
+  MacOS: ~.gitconfig 
+-global configurations are edited using --global 
+
+-the repository config file is at: 
+  windows: C:\<repository_folder>\.git\config 
+  linux: ~/<repository_folder>/.git/config 
+  MacOS: ~/<repository_folder>/.git/config 
+-repository configurations are edited using --local or, if you don't specify an option, they will default to being repository level 
+
+-to list all currently in use configurations: 
+  < git config --list 
+
+-you can filter this list: 
+  < git config --list --system        (show only system configurations in use) 
+  < git config --list --global        (show only user level configurations in use) 
+  < git config --list --local 
+
+-you can also directly edit the configuration files (sometimes people from stackoverflow will reference lines from these files instead of a config command)
+________________________________________________________________________________________________
+-you can configure git to autocorrect
+-git implements autocorrect strangely: it opens up a VIM editor after you enter the mistake, informs you of the mistake, and counts down until correcting it (unless you ctrl+C out)
+  < git config --global help.autocorrect 10           <- autocorrect commands. 10 is how many tenths of a second git will wait before suggesting a correction. 
+
+-look in the config file and you'll see the following: 
+  [help]
+    autocorrect = 10 
+-git config file commands are in the form: section.parameter_name (i.e. help.autocorrect) 
+
+-remember git push without further specification will send all local commits & related objects that haven't been uploaded to the remote repo
+-you can override this default git push behavior, making it safer and causing it to never do this: 
+  < git config --global push.default nothing                (do nothing with the default push command)
+-now you'll have to use the form that specifies the branches: 
+  < git push -u remote_repo local_branch_name 
+
+-
+
+
 
 
 
 
 
 ________________________________________________________________________________________________
+MISC: 
+-to show the files you've changed between commits: 
+  < git diff --name-only HEAD HEAD~3                // to know how far back you want to look use git log
+
+
+
