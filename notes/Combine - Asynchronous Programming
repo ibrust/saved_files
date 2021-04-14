@@ -1,0 +1,121 @@
+import UIKit
+import Combine
+
+func example(of description: String, action: () -> Void) {
+    print("\n---- Example of: ", description, "----")
+    action()
+}
+
+var subscriptions = Set<AnyCancellable>()
+
+// so this function is a bridge between combine and notifications. you're publishing this specific notification. you can think of publishers like notifications apparently
+example(of: "publisher - notification/publisher bridge function"){
+    let the_notification = Notification.Name("custom_notification")
+    // returns a publisher that emits events when notifications occur - this is the bridge function
+    let the_publisher = NotificationCenter.default.publisher(for: the_notification, object: nil)
+    
+    // now this is just some standard notification code
+    let center = NotificationCenter.default
+    let observer = center.addObserver(
+        forName: the_notification,
+        object: nil,
+        queue: nil,
+        using: { current_notification in
+            print("notification received", current_notification)
+        }
+    )
+    // so this will be the notification center generating the output, we haven't actually used the publisher / subscriber yet
+    center.post(name: the_notification, object: nil)
+    center.removeObserver(observer)
+}
+
+
+example(of: "subscriber - sink, way to attach a subscriber with closures "){
+    let the_notification = Notification.Name("the_notification")
+    let the_publisher = NotificationCenter.default.publisher(for: the_notification, object: nil)
+    let center = NotificationCenter.default
+    
+    let the_subscription = the_publisher.sink { _ in
+        print("Notification received from publisher by subscriber.")
+    }
+    center.post(name: the_notification, object: nil)
+    the_subscription.cancel()       // notice how this time instead of unobserving you cancel the subscription
+    // subscribers return an "AnyCancellable" type, which conforms to
+    // the Cancelable protocol and have a cancel() method which unsubscribes
+    // from the publisher. if you dont call cancel() it'll remain subscribed until
+    // the publisher completes or the subscriber is deallocated otherwise
+}
+
+example(of: "Just - publish primitive, emit to a subscriber only once"){
+    let just = Just("my name is jonas, I'm carrying the wheel")
+    _ = just.sink(
+        receiveCompletion: {
+            print("received completion from just.sink: ", $0)
+        },
+        receiveValue: {
+            print("received value from just.sink: ", $0)
+        }
+    )
+    _ = just.sink(
+        receiveCompletion: {
+            print("received completion from the second just.sink: ", $0)
+        },
+        receiveValue: {
+            print("received value from the second just.sink: ", $0)
+        }
+    )
+}
+
+
+example(of: "assign(to:on:) - assign the received value to a KVO compliant property; alternative to sink, apparently"){
+    class some_object {
+        var value: String = "" {
+            didSet {
+                print(value)
+            }
+        }
+    }
+    let the_object = some_object()
+    let the_publisher = ["cat", "rat", "bat", "dat"].publisher
+    
+    // _ is ignoring the return value of the subscription
+    _ = the_publisher.assign(to: \.value, on: the_object)
+
+}
+
+// the connection between the publisher & subscriber is a "subscription".
+// Subscription is a protocol that conforms to Cancellable and has a function "request" in it. "request" is called to indicate the subscriber is willing to receive more values, up until a max or unlimited amount (prevents flooding of the subscriber)
+// the Subscriber protocol (different from Subscription) also has a few receive functions. one of them, inwhich the publisher calls on the subbscriber to send it a new value, returns a Subscribers.Demand object. Though the max amount of values willing to be received is specified when initially calling request, this demand object can apparently increase the max amount by a specified amount (it can only increase the max, never decrease).
+
+example(of: "conforming to subscriber protocol w/ 3 functions; implementing custom subscriber: "){
+    // even a range has a publisher property that returns a publisher...
+    let publisher = (1...6).publisher
+    
+    // thi sis the class conforming to the Subscriber protocol... now it can subscribe
+    final class IntSubscriber: Subscriber {
+        typealias Input = Int
+        typealias Failure = Never
+        
+        func receive(subscription: Subscription) {
+            subscription.request(.max(3))
+        }
+        
+        func receive(_ input: Int) -> Subscribers.Demand {
+            print("Received value", input)
+            return .none
+        }
+        
+        func receive(completion: Subscribers.Completion<Never>){
+            print("Received completion", completion)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
