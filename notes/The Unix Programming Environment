@@ -1,0 +1,27 @@
+------------------------------------CHAPTER 1---------------------------------------
+control characters for the terminal: 
+    ctrl+d - tells a program there's no more input 
+    ctrl+g - rings a bell 
+    ctrl+i - tab 
+    ctrl+m - alternative to the enter key 
+    ctrl+c 
+    ctrl+u - line kill (discards the line of input)
+    ctrl+s - suspend a processes output (not sure of the details). useful for preventing something important from going offscreen, apparently
+    ctrl+q - resume a processes output (again not sure of the details)
+
+
+misc UNIX terminal commands: 
+    date
+    who                 - who is using the computer
+    who am i            - your username 
+    mail                - can read mail apparently. not sure what email system is being used here 
+        ?                   - move to next message in mail
+        ? d                 - delete current message 
+        mail username       - send mail to a user 
+        ctrl-d              - end viewing mail 
+
+you can type-ahead while a prior command is running; your input may appear interleaved with output, but the system will interpret your command correctly 
+
+
+
+-page 8, 'logging out'
