@@ -47,6 +47,57 @@ ______________________________________________________
     wc <file1> <file2>          - print line, word, & character counts of file(s)
         69760  140992 1998523 schema.json
 
+    tail -<number> <file>       - print the last <number> lines of a file, or default of 10 
+    tail +<number> <file>       - print the remainder of the file starting at line <number> 
 
+    sort <filename>             - sorts the lines in the file alphabetically & prints them 
 
--page 18, after wc 
+common sort options: 
+    -r                              - reverse sort order 
+    -n                              - sort in numerical order, ignoring blanks 
+    -nr 
+    -f, --ignore-case               - ignore case when sorting 
+    -b, --ignore-leading-blanks     - ignore leading blank characters 
+    -R, --random-sort               - random permutation of the inputs except that equal keys sort together. the hash function used for comparison is chosen randomly 
+______________________________________________________
+
+    grep <pattern> <file ...>       - searches a file for a regex pattern, prints each lines occurrence
+    grep -v <pattern> <file ...>    - searches for all lines without the pattern 
+
+more noteworthy grep options (from the man page of a BSD system): 
+    -R, -r                      - recursively search subdirectories listed 
+    --include-dir               - if -R is specified (for recursive), only directories matching a given filename pattern are searched. 
+    --exclude-dir               - if -R is specified it excludes directories matching a given filename pattern from the search. 
+                                    --exclude-dir patterns take priority over --include-dir 
+    --include                   - if specified it includes directories matching a given filename pattern from the search. 
+    --exclude                   - if specified it excludes directories matching a given filename pattern from the search. 
+                                    --exclude patterns take priority over --include 
+    -w, --word-regex            - the expression is searched for as a word (as if surrounded by [[:<:]] and [[:>:]])
+    -E                          - interprets pattern as an extended regex - i.e. force grep to behave as egrep (why not just use egrep?)
+    -e, --regexp=<pattern>      - specify a pattern used during the search 
+    -S                          - if -R is specified, all symbolic links are followed. The default is to not follow symbolic links 
+    -s                          - silent mode. nonexistent and unreadable files are ignored & their error messages suppressed 
+    -A <number>                 - print <number> lines of trailing context for each match 
+    -C <number>                 - print <number> lines of leading AND trailing context for each match 
+    -U, --binary                - search binary files, but do not attempt to print them
+    -m <number>                 - stop reading the file after <number> matches 
+
+there's also a zgrep series of functions that accept files compressed with gzip() or compress()
+GREP_OPTIONS environment variable can be used to specify default options 
+grep exits with 0 if it found lines, 1 if it found nothing, >1 for error 
+
+    grep "ian" <file>                   - find all occurrences of my name in a file
+    grep "\.jpg" <file>                 - quotation marks prevent shell from misinterpreting the pattern
+    grep -v -e "foo" -e "bar <file>     - find all lines that don't contain foo or bar 
+    egrep "19|20|25" <file>             - simple regex, look for any of those numbers 
+
+______________________________________________________
+
+    cmp [options] <file1> <file2>       - compare 2 files byte by byte 
+
+noteworthy cmp options: 
+    -b, --print-bytes           - print differing bytes 
+    -l, --verbose               - output byte numbers & values for differing bytes 
+    -n <limit>                  - compare at most <limit> bytes 
+    -s, --silent                - output nothing, yield exit status only 
+
