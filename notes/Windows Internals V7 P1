@@ -1,0 +1,124 @@
+--------------CHAPTER 1-------------------------------------------------------------------
+download sysinternals tools at: http://www.microsoft.com/technet/sysinternals
+there are also many tools included in the Windows SDK (including debugging tools): https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/
+add all these various tools to your path after installation
+
+commands that show windows version: 
+    ver 
+    winver          - launches screen with detailed information (build number, currently installed patch) 
+
+-windows 10 marked the completion of "OneCore" - the same windows kernel runs on a wide variety of devices. this started w/ windows 8 
+-there may be some variance in registry settings between devices, but the OneCore kernel is the same 
+
+-Windows API - the user level API (note: these are not the system calls, they're user-level)
+-The old Windows API consisted of C functions. some newer APIs use COM 
+-with COM (components object model), clients communicate with objects (sometimes called COM server objects) through an API. 
+    COM APIs define a group of methods w/ their own virtual table for dispatch (C++ compilers do something similar for virtual functions)
+    The virtual design avoids name conflicts, an advantage over the older C API. You can call COM methods from many different programming languages 
+    COM objects are dynamically loaded rather than statically linked 
+
+-COM Servers refer to DLLs (dynamic link library) or EXEs where the COM classes are implemented 
+-COM has other features: security, process management, & more. 
+-details about the Windows API & about COM are beyond this book. other books cover them in detail 
+
+-the Windows Runtime (WinRT) is a programming environment that facilitates programs running on different devices. 
+-WinRT is an API built on top of COM. It also extends COM itself with modern features (like complete access to type metadata). Looks similar to UIKit / SwiftUI 
+-WinRT is targetted at app development - cross platform development distinct from traditional windows desktop applications
+
+-Desktop apps can still use a subset of WinRT, and cross-platform apps can still use a subset of Win32 (the old Windows API) and COM
+
+-.NET is a separate, older framework which includes the CLR (common language runtime) and FCL (framework class library)
+-.NET provides a runtime that supports languages like C++, C#, Visual Basic, F#
+-The structure of .NET is built something like this: 
+    .NET Application (EXE) 
+    FCL (DLLs) 
+    CLR (COM DLL Server) 
+    Windows API DLLs 
+    Windows Kernel 
+
+-.NET languages can consume WinRT APIs via special extensions - C++/CX, WinJS, .NET's COM interop layer
+-apparently you can use HTML in constructing Windows Apps as well, and these apps run client side similar to nodeJS 
+
+-There are also a variety of kernel functions. Some are callable (system calls), others are only used by the kernel internally 
+
+-Windows services - these are processes started by the Windows service control manager. 
+    For example, the Task Scheduler runs in a user-mode process that supports the schtasks command 
+
+-DLLs (dynamic linked library): a typical library of binary that can be dynamically loaded by an application 
+    Dynamic libraries have the advantage over Static ones that multiple applications can use them and only one in-memory copy is needed 
+    note: .NET assemblies are compiled DLLs but without any unmanaged exported functions. Instead, the CLR parses compiled metadata to access them
+
+-handles are the Windows equivalent of UNIX file descriptors 
+
+-processes have a security context. This is an ~access token~ that identifies the user, security groups, privileges, attributes, claims, 
+    capabilities, User Account Control (UAC) virtualization state, session, and limited user account state associated with the process, 
+    as well as the AppContainer identifier and its related sandboxing information 
+______________________
+-a faster way to open the task manager is: 
+    ctrl + shift + esc 
+    click 'more details' for the full list of tabs 
+
+-using tabs in the Task Manager: 
+    Processes: 
+        right click the header to show / hide different columns (like PID)
+        the left arrows that expand the process show the visible windows that have been created by it 
+    Details: this tab also shows processes, but provides more detail - more diverse columns
+        right click a process for a detailed list of actions
+        right click the header to show / hide different columns. There are many more columns available here 
+    
+    some key columns to look for: threads, handles, status
+        threads: the # of threads in each process 
+        handles: number of handles opened by threads in the process 
+        status: running, suspended, or not responding  
+
+-status works the following way: 
+    non-UI programs: 
+        these will typically be running, even if waiting on IO. They can be programmatically suspended 
+    UI programs: 
+        running means the UI is responding / waiting for input. 
+        WinRT apps move to suspended after exiting the foreground for 5 seconds. programs can be suspended programmatically as well
+        status becomes not responding if the application doesn't check its UI input queue for 5 seconds
+
+-if the process (or the thread that owns the window) is busy with CPU-intensive work or waiting on IO this can cause the status to be not responding
+
+-while every process has a parent, processes are not termintaed when their parent terminates. Nothing relies on a process having an active parent 
+-the creator process is not always the parent - in some cases, an intermediate broker process is the creator but the parent is what shares the handles / memory 
+
+-in the windows debugger tools (part of the SDK), find tlist.exe. run the following command to show a tree of parent / child process relationships (w/ PIDs):
+    tlist /t 
+
+-sysinternals process explorer (procexp.exe) can be used for detailed analysis of processes 
+
+-procexp.exe is more powerful than other process analysis tools. it can examine things such as: 
+    the process security toen (lists of gorups, privileges, the virtualization state)
+    highlighting to show changes in the process, thread, DLLs, and handles list 
+    lists services inside service-hosting processes
+    other process attributes, such as mitigation policies and their process protection level 
+    processes that are part of a job, job details 
+    processes hosting .NET apps & .NET-specific details, such as the list of AppDomains, loaded assemblies, and CLR performance counters 
+    processes that host the Windows Runtime (immersive processes) 
+    complete list of memory mapped files (not just DLLs) 
+    ability to suspend or kill a process or thread 
+    CPU consumption over time 
+
+procexp.exe also provides access to information: 
+    process tree 
+    open handles of a process, including unnamed handles 
+    list of DLLs (and memory mapped files) in a process 
+    thread activity in a process 
+    user-mode and kernel-mode thread stacks, including the mapping of addresses to names using the dbhhelp.dll that comes with the debugging tools for windows 
+    more accurate CPU utilization percentage 
+    integrity level (?)
+    memory manager details such as peak commit charge and internal memory paged and non-paged pool limits (?) 
+
+I'm sure we will cover alot of this throughout the book 
+______________________
+-quickly open a terminal: 
+    winkey + R 
+    enter 'cmd'
+
+-quickly open a 2nd terminal from terminal: 
+    start cmd 
+
+-
+
