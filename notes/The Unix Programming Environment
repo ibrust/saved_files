@@ -9,19 +9,44 @@ control characters for the terminal:
     ctrl+s - suspend a processes output (not sure of the details). useful for preventing something important from going offscreen, apparently
     ctrl+q - resume a processes output (again not sure of the details)
 
-
+______________________________________________________
 misc UNIX terminal commands: 
     date
     who                 - who is using the computer
     who am i            - your username 
-    mail                - can read mail apparently. not sure what email system is being used here 
-        ?                   - move to next message in mail
-        ? d                 - delete current message 
-        mail username       - send mail to a user 
-        ctrl-d              - end viewing mail 
+    mail                - can read mail apparently. not sure what email system is being used here. there are details if you're ever interested
 
 you can type-ahead while a prior command is running; your input may appear interleaved with output, but the system will interpret your command correctly 
+______________________________________________________
+    ls -t               - list files since last modified 
+    ls -l               - longer descriptions of files 
+    ls -t -l            
+    ls -tl              - you can combine multiple options 
+
+    ls -u               - sort by last access time, newest first
+    ls -lu              - show access time and sort by name; 
+    ls -lut             - sort by and show access time; 
+
+    ls -U               - use file creation time instead of last access time
+
+    ls -l <filename>    - long description of a specific file 
+
+in the output below: 
+    ls -l 
+    total 4296
+    drwxr-xr-x@   6 vn51hvk  staff      192 May  4 00:23 Walmart.xcodeproj
+    drwxr-xr-x    4 vn51hvk  staff      128 May  3 20:51 Carthage
+
+    total indicates the # of disk blocks the files take up (a disk block is something like 1-4kb, depends on system)
+    the second # indicates how many links to the file there are 
+______________________________________________________
+
+    cat <file1> <file2>         - cat can concatenate multiple files & print their contents 
+    less <filename>             - show the file in a scrollable form
+
+    wc <file1> <file2>          - print line, word, & character counts of file(s)
+        69760  140992 1998523 schema.json
 
 
 
--page 8, 'logging out'
+-page 18, after wc 
