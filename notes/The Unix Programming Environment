@@ -101,6 +101,7 @@ ______________________________________________________
 
     wc <file1> <file2>          - print line, word, & character counts of file(s)
         69760  140992 1998523 schema.json
+    wc -l                       - print only line counts 
 
     tail -<number> <file>       - print the last <number> lines of a file, or default of 10 
     tail +<number> <file>       - print the remainder of the file starting at line <number> 
@@ -167,7 +168,7 @@ noteworthy diff commands:
     -i, --ignore-case           - ignore case in comparison 
     --from-file=<file1>         - compare <file1> to all operands. <file1> can be a directory 
     --to-file=<file2>           - compare <file2> to all operands. <file2> can be a directory 
-    -t                          - expand tabs to spaces in output (mysterious that this was selected. does it avoid tabs vs spacing diff issues, too?)
+    -t                          - expand tabs to spaces in output (mysterious that this was selected. does it avoid tabs vs spacing diff issues, ...? Doesn't read like it)
     -u <number>                 - output <number> (default 3) lines of unified context 
     -r                          - recursively compare any subdirectories found 
     --label <label>             - use <label> instead of filename 
@@ -175,7 +176,7 @@ noteworthy diff commands:
     -b, --ignore-space-change   - ignore spaces in the amount of whitespace
 
 if the input file is "-" diff will read that file from stdin instead
-regarding the mysterious -t option, apparently the spacing between columns is 8 spaces with -t on. tabs may also be toow ide. 
+regarding the mysterious -t option, apparently the spacing between columns is 8 spaces with -t on. tabs may also be too wide. 
 they suggested this command to reduce tabs to 4 spaces:
     diff -t <(expand -t4 file1.txt) <(expand -t4 file2.txt)
 
@@ -183,9 +184,70 @@ ______________________________________________________
 
 in UNIX it's a "rule" that wherever you can use a filename you can use a pathname (whether it's practical or always supported I'm not sure)
 
-when you run a command by typing its name UNIX first searches the current directory, then /bin and /usr/bin 
+when you run a command by typing its name, UNIX first searches the current directory, then /bin and /usr/bin
 these various UNIX user-level programs (ls, who, etc.) are located in /bin 
 
 ______________________________________________________
 
--page 25, changing directories
+the shell supports regex's for use in filename matching
+
+    cat *.txt           - cat any .txt file
+    ls S*
+    ls [a-z]*           - list any file starting w/ lowercase letters 
+    ls ?                - list files with 1 character of any type in the name 
+    ls '?'              - bypass regex shell interpretation, list file named "?" (is that even a valid name?)
+    ls \?               - bypass regex shell interpretation
+    ls /usr/*/file      - regex's can be used within pathnames as well. * won't do a recursive search of folders, only on the level it's specified 
+
+
+the use of ls * also lists directory contents. It seems there is a special format ls uses for printing a directory 
+
+______________________________________________________
+
+    cd                  - cd by itself returns you to your personal directory located in /usr 
+
+    rmdir <directory>   - this will only remove an empty directory 
+
+    pr <file>           - this prepares a file for printing by adding footers, headers, margins, & formatted text. read about its various options if you want to use it 
+
+    echo "print this"   - the echo command just outputs the argument to the console 
+
+______________________________________________________
+
+output redirection w/ > will overwrite the contents of old files, so beware
+to append to the file, use >> instead of > 
+
+    cat file1 > file2                       - file1 overwrites file2
+    cat file1 >> file2                      - file1 is appended to file2 
+
+there's also input redirection, where the program will use the file as input: 
+
+    program.py < inputfile 
+
+io redirection is the shell changing stdin of the program. 
+UNIX user-level programs default to using stdin if no filenames are specified as arguments. 
+if filenames are specified they're opened & read instead (and there may be a list of files) 
+
+one technique is to chain commands using temp files
+
+    who > temp 
+    sort < temp                             - display the sorted list of users 
+
+pipes implement the same behavior without you having to create the temporary file yourself
+
+    who | sort                              - display the sorted list of users 
+
+pipes are just a chain of one programs output into another programs input
+the programs in a pipe all run simultaneously
+stderr was created to avoid passing errors along the pipeline. stderr isn't rerouted by pipes and is still printed to the terminal
+
+______________________________________________________
+
+separate two commands by semicolon (;) for the shell to run them sequentially: 
+
+    who; date 
+
+run a process in the backgorund using ampersand (&) 
+it's often useful to combine this with > to redirect output into a file - so that its output wont interrupt you when it finishes running 
+
+    wc /* > wc.out &
