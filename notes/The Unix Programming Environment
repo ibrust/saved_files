@@ -1,4 +1,6 @@
 ------------------------------------CHAPTER 1---------------------------------------
+my testing in this book was conducted on a BSD system (Darwin, Mac OS X Catalina)
+
 control characters for the terminal: 
     ctrl+d - tells a program there's no more input 
     ctrl+g - rings a bell 
@@ -18,27 +20,77 @@ misc UNIX terminal commands:
 
 you can type-ahead while a prior command is running; your input may appear interleaved with output, but the system will interpret your command correctly 
 ______________________________________________________
-    ls -t               - list files since last modified 
-    ls -l               - longer descriptions of files 
-    ls -t -l            
-    ls -tl              - you can combine multiple options 
+ls is an important UNIX function, and has about 40 commands, most of which are worth knowing:
+    ls -l               - long description: file mode, # of links, owner name, group name, # of bytes, month/day/hour/minute last modified, pathname 
+                            for directories it also lists the total blocks used by files within on a separate line 
+    ls -l <filename>    - long description of a specific file
+    ls -l -t            
+    ls -lt              - you can combine multiple options 
 
-    ls -u               - sort by last access time, newest first
-    ls -lu              - show access time and sort by name; 
-    ls -lut             - sort by and show access time; 
+                // SORTING OPTIONS 
+    ls -t               - sort by time last modified
+    ls -rt              - reverses the order of a sort 
+    ls -u               - sort by time of last access 
+    ls -U               - sort by file creation time 
+    ls -S               - sort by size 
+    ls -c               - sort by time when file status was last changed 
 
-    ls -U               - use file creation time instead of last access time
+                // DIRECTORY RELATED OPTIONS 
+    ls <pathname>       - you can specify a path instead of a file 
+    ls -R               - recursively list subdirectories 
+    ls -d               - directories are listed as plain files (not searched recursively) 
+    ls -A               - list all entries except for . and .. (this is always set for the superuser) 
+    ls -a               - include directory entries whose name begins with a dot (.) 
 
-    ls -l <filename>    - long description of a specific file 
+                // SYMBOLIC LINK HANDLING 
+                // -H, -L, and -P all override one another - the last one specified is the one used 
+    ls -H               - symbolic links on the command line are followed. this option is assumed none if -F, -d, or -l are specified 
+    ls -L               - follow all symbolic links to final target. list the file or directory rather than the link itsel
+    ls -P               - list the link itself rather than the object the link references 
 
-in the output below: 
+                // OUTPUT FORMATTING OPTIONS
+                // -1, -C, -x, and -l override one another - the last one specified is used
+    ls -C               - force multi-column output (the default behavior if output is to a terminal). note: overrides -l 
+    ls -x               - same as -C, but columns are filled in horizontally instead of vertically (test it and look). note: overrides -l 
+    ls -1               - force output to be one entry per line (the default if output is NOT to a terminal). note: overrides -l 
+
+                // -B, -q, and -w override one another - the last one specified is used
+    ls -B               - force printing of non-printable characters in file names 
+    ls -q               - force printing of non graphic characters to be ? (the default behavior if output is to a terminal)
+    ls -v               - force unedited printing of non-graphic characters (the default behavior if output is NOT to a terminal) 
+    ls -w               - force raw printing of non-graphic characters (the default behavior if output is NOT to a terminal) 
+
+                // FILE ANNOTATION OPTIONS 
+    ls -p               - display '/' after each directory path 
+    ls -F               - display '/' after each directory path, * after each executable, @ after each link, = after each socket, % after each whiteout, | after each FIFO 
+    ls -%               - display '%' after dataless files (whiteout?), and don't materialize dataless directories when listing them 
+
+                // LONG FORMAT SPECIFIC OPTIONS 
+    ls -lh              - use suffixes for unit sizes (i.e. kilobyte, megabyte) (must combine with -l)
+    ls -lO              - include the file flags (must combine with -l)
+    ls -l@              - display extended attribute keys and sizes (must combine with -l)
+    ls -le              - print the access control list (ACL) associated with the file, if present (must combine with -l)
+    ls -lo              - omit group id (must combine with -l)
+    ls -lT              - display complete date/time information (must combine with -l)
+
+                // MISC OPTIONS
+    ls -i               - print the inode# for each file 
+    ls -G               - enable colored output (equivalent to defining CLICOLOR in the environment)
+    ls -m               - stream output, listing files in CSV format 
+    ls -n               - display user or group names as numbers rather than converting them to names. this turns on long priting (-l) automatically 
+
+    ls -s               - display the # of blocks used by each file in units of BLOCKSIZE (environment variable) or 512 bytes by default. 
+    ls -ks              - combined with -s, prints the file sizes in kb instead (so this overrides BLOCKSIZE or the default 512)
+
+some example commands: 
+    ls /                - output everything in the root directory 
+    ls /usr             - list what's in the /usr directory
+    
     ls -l 
     total 4296
     drwxr-xr-x@   6 vn51hvk  staff      192 May  4 00:23 Walmart.xcodeproj
     drwxr-xr-x    4 vn51hvk  staff      128 May  3 20:51 Carthage
 
-    total indicates the # of disk blocks the files take up (a disk block is something like 1-4kb, depends on system)
-    the second # indicates how many links to the file there are 
 ______________________________________________________
 
     cat <file1> <file2>         - cat can concatenate multiple files & print their contents 
@@ -64,7 +116,7 @@ ______________________________________________________
     grep <pattern> <file ...>       - searches a file for a regex pattern, prints each lines occurrence
     grep -v <pattern> <file ...>    - searches for all lines without the pattern 
 
-more noteworthy grep options (from the man page of a BSD system): 
+more noteworthy grep options: 
     -R, -r                      - recursively search subdirectories listed 
     --include-dir               - if -R is specified (for recursive), only directories matching a given filename pattern are searched. 
     --exclude-dir               - if -R is specified it excludes directories matching a given filename pattern from the search. 
@@ -93,6 +145,9 @@ grep exits with 0 if it found lines, 1 if it found nothing, >1 for error
 
 ______________________________________________________
 
+cmp and diff are two commands used for comparing files. cmp works on binary, and is typically used to check that the files are the same. It's also faster than diff. 
+diff works only on text and by default it prints out the line differences
+
     cmp [options] <file1> <file2>       - compare 2 files byte by byte 
 
 noteworthy cmp options: 
@@ -100,4 +155,24 @@ noteworthy cmp options:
     -l, --verbose               - output byte numbers & values for differing bytes 
     -n <limit>                  - compare at most <limit> bytes 
     -s, --silent                - output nothing, yield exit status only 
+
+
+    diff [options] <file1> <file2> 
+
+noteworthy diff commands: 
+
+    -i, --ignore-case           - ignore case in comparison 
+    --from-file=<file1>         - compare <file2> to all operands. <file1> can be a directory 
+    --to-file=<file2>           - compare <file2> to all operands. <file2> can be a directory 
+    -t                          - expand tabs to spaces in output (not sure why this is useful but we'll see)
+    -u <number>                 - output <number> (default 3) lines of unified context 
+    -r                          - recursively compare any subdirectories found 
+    --label <label>             - use <label> instead of filename 
+    -w, --ignore-all-space      - ignore all whitespace 
+    -b, --ignore-space-change   - ignore spaces in the amount of whitespace
+
+if the input file is "-" diff will read that file from stdin instead
+
+______________________________________________________
+
 
