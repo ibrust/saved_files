@@ -165,9 +165,9 @@ noteworthy cmp options:
 noteworthy diff commands: 
 
     -i, --ignore-case           - ignore case in comparison 
-    --from-file=<file1>         - compare <file2> to all operands. <file1> can be a directory 
+    --from-file=<file1>         - compare <file1> to all operands. <file1> can be a directory 
     --to-file=<file2>           - compare <file2> to all operands. <file2> can be a directory 
-    -t                          - expand tabs to spaces in output (not sure why this is useful but we'll see)
+    -t                          - expand tabs to spaces in output (mysterious that this was selected. does it avoid tabs vs spacing diff issues, too?)
     -u <number>                 - output <number> (default 3) lines of unified context 
     -r                          - recursively compare any subdirectories found 
     --label <label>             - use <label> instead of filename 
@@ -175,6 +175,9 @@ noteworthy diff commands:
     -b, --ignore-space-change   - ignore spaces in the amount of whitespace
 
 if the input file is "-" diff will read that file from stdin instead
+regarding the mysterious -t option, apparently the spacing between columns is 8 spaces with -t on. tabs may also be toow ide. 
+they suggested this command to reduce tabs to 4 spaces:
+    diff -t <(expand -t4 file1.txt) <(expand -t4 file2.txt)
 
 ______________________________________________________
 
