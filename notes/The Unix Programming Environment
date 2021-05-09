@@ -21,8 +21,11 @@ misc UNIX terminal commands:
 you can type-ahead while a prior command is running; your input may appear interleaved with output, but the system will interpret your command correctly 
 ______________________________________________________
 ls is an important UNIX function, and has about 40 commands, most of which are worth knowing:
-    ls -l               - long description: file mode, # of links, owner name, group name, # of bytes, month/day/hour/minute last modified, pathname 
-                            for directories it also lists the total blocks used by files within on a separate line 
+    ls [options] [file/path]
+    ls                  - list files in current directory 
+    ls <filename>       - list a specific file 
+    ls -l               - long description format: file mode | # of links | owner name | group name | file size | month/day/hour/minute last modified | pathname 
+                                for directories it also lists the total blocks used by files within on a separate line 
     ls -l <filename>    - long description of a specific file
     ls -l -t            
     ls -lt              - you can combine multiple options 
@@ -36,7 +39,7 @@ ls is an important UNIX function, and has about 40 commands, most of which are w
     ls -c               - sort by time when file status was last changed 
 
                 // DIRECTORY RELATED OPTIONS 
-    ls <pathname>       - you can specify a path instead of a file 
+    ls <pathname>       - list files at a specific path 
     ls -R               - recursively list subdirectories 
     ls -d               - directories are listed as plain files (not searched recursively) 
     ls -A               - list all entries except for . and .. (this is always set for the superuser) 
@@ -175,4 +178,11 @@ if the input file is "-" diff will read that file from stdin instead
 
 ______________________________________________________
 
+in UNIX it's a "rule" that wherever you can use a filename you can use a pathname (whether it's practical or always supported I'm not sure)
 
+when you run a command by typing its name UNIX first searches the current directory, then /bin and /usr/bin 
+these various UNIX user-level programs (ls, who, etc.) are located in /bin 
+
+______________________________________________________
+
+-page 25, changing directories
