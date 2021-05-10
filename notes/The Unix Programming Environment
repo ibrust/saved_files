@@ -1,4 +1,6 @@
+------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 1---------------------------------------
+------------------------------------------------------------------------------------
 my testing in this book was conducted on a BSD system (Darwin, Mac OS X Catalina)
 
 control characters for the terminal: 
@@ -282,9 +284,9 @@ ______________________________________________________
 
 search for files with the find command: 
 
-    find [-L | -P] [-Edsx] [-f path] [expression (primaries + operands)]
+    find [-L | -P] [-Edsx] [-f path] [expression]
 
-the search expression is composed of primaries and operands, listed below 
+the search expression is composed of primaries and operands. operands are standard logical operands used on the primaries
 
             // OPTIONS 
     -f                  - specify a file hierarchy to search 
@@ -298,10 +300,36 @@ the search expression is composed of primaries and operands, listed below
     -P                  - use symbolic links for evaluating the search criteria, rather than the files they resolve to (this is the default)
 
             // PRIMARIES 
-
+    -name <filename>            - find the filename. remember you can use UNIX shell pattern matching in the filename 
+    -atime <number>             - file was accessed <number> days prior. you can change it from days to another metric, like minutes 
+    -mtime <number>             - file was modified <number> days prior 
+    -size <number>              - specifies the file is <number> blocks in size  
+    -user <name>                - specifies the files owner is user <name> 
+    -group <name>               - specifies the files group is group <name> 
+    -type <filetype>            - specifies the files type is: f=regular file, d=directory, l=symbolic link, p=FIFO, & more 
+    -exec <utility> <arguments ...>         - true if the <utility> program returns 0 value as its exit status 
+    -execdir <utility> <arguments ...> {}   - same as exec, except that {} is replaced with as many pathnames as possible for each invocation of <utility>
+    -xattrname <name>                       - true if the file has an extended attribute with the specified <name> (what are extended attributes?)
+    -print                      - always true, prints the pathname of current file to stdout 
+    -newerXY <file>             - true if file is newer than the evaluated XY parameters. XY are replaced with a, b, c, or m: 
+                                            a (last access time) | b (inode creation time) | c (change time) | m (modification time) 
+    -prune                      - don't descend into subdirectories 
 
             // OPERANDS 
-    
+    \! <expression>                                         - negation. notice \ is necessary to escape the character at the command line 
+    -not <expression>                                       - another way of doing negation 
+    <expression> -and <expression> 
+    <expression> <expression>                               - another way of doing and - it's considered to be implied when expressions are neighboring 
+    <expression> -or <expression>   
+    \( <expression \)                                       - you can use parenthesis
+
+some examples: 
+    find /bin -newerct '1 minute ago' -print
+            Print out a list of all the files in bin whose inode change time is more recent than the current time minus one minute.
+    find / \! \( -newer file1 -user wnj \) -print
+            Print out a list of all the files which are not both newer than file1 and owned by user "wnj"
+    find / \( -mtime +7 -atime +30 \)
+            find all files modified more than 7 days ago and accessed more than 30 days ago
 ______________________________________________________
 
 the stty command can be used to configure the terminal, but it's complicated. read the man page for more details 
@@ -312,8 +340,30 @@ examples of what you might put in .profile:
     who | wc -l                 - tell you how many users are logged into your system 
     /usr/games/fortune          - draw a fortune cookie (not there on Mac)
 
-many properties of the shell are set by shell variables, and you can change their values 
+many properties of the shell are set by shell variables, and you can change their values
 
+    PS1="$: "                   - PS1 is the shells prompt character 
+    HOME                        - HOME is the name of your home directory. changing it breaks some applications, best to just leave it unless you really look into things 
+    PATH=.:/bin:/usr/bin:/usr/ian/games         - PATH is probably the most important shell variable
 
+remember "." is the current directory; thus we are setting the current directory as first in the search path 
+It was at one point common practice to set the path in .profile. I'm not sure how commonm that is any more, or if the other variables should be set in .profile either. 
+another way of setting path is using the current value: 
 
-______________________________________________________
+    PATH=$PATH:/usr/ian/games       - invoke the shell variables using $ 
+
+you can et new shell variables to avoid typing redundant commands: 
+
+    games=/usr/ian/games 
+    cd $games
+
+if you want to use these shell variables in programs you must export them: 
+
+    export PATH                     - you don't use the $ syntax with export apparently 
+
+there are many more commands in the manual, at some point you should explore the manual and see what else you can find. 
+
+------------------------------------------------------------------------------------
+------------------------------------CHAPTER 2---------------------------------------
+------------------------------------------------------------------------------------
+page 41 
