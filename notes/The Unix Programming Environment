@@ -248,6 +248,72 @@ separate two commands by semicolon (;) for the shell to run them sequentially:
     who; date 
 
 run a process in the backgorund using ampersand (&) 
-it's often useful to combine this with > to redirect output into a file - so that its output wont interrupt you when it finishes running 
+the command will run as a separate process from the shell, in the background, with its own PID. the PID is printed after running the command 
+w/ one ampersand (&), all commands in a pipeline will run on separate processes in the background. However, only one PID (the last process) will be printed to the terminal 
+it's often useful to combine this with > to redirect output into a file - so that its output wont interrupt you while you're doing other things 
 
-    wc /* > wc.out &
+    ls -R /* > output &                     - list every single file in the file system 
+    pr file1 | sort &                       - pr & sort both run on their own separate background processes 
+
+if you need to terminate the background process: 
+
+    ps                              - ps shows PIDs of all processes that have controlling terminals. top, in contrast, shows all processes in real time 
+    kill <PID> 
+
+to wait for all background processes started w ampersand (&) to finish: 
+
+    wait                            - if wait doesn't return immediately, background processes are still running
+
+if you close the terminal its children will also be killed - including any background processes. to prevent this use the nohup command (no hangup)
+this command doesn't appear to work in mac OS, but it may work on other systems: 
+
+    nohup ls -R /* > output & 
+
+to run your command at lower scheduling priority (so it won't block other commands), use nice. nohup automatically calls nice: 
+
+    nice <command> & 
+
+you can also tell multiple commands to run at a specific time in the future using the at command 
+it's often useful to combine at with an input redirected file containing a list of commands: 
+
+    at 3am < file_listing_commands 
+
+______________________________________________________
+
+search for files with the find command: 
+
+    find [-L | -P] [-Edsx] [-f path] [expression (primaries + operands)]
+
+the search expression is composed of primaries and operands, listed below 
+
+            // OPTIONS 
+    -f                  - specify a file hierarchy to search 
+
+    -E                  - use extended regex's rather than regular regex's 
+    -d                  - cause find to do a post-order search or directories (preorder is the default) 
+    -s                  - cause find to search the directories in alphabetical order 
+    -x                  - prevent find from descending into directories with a device number different than where the search began (so no mounted filesystem search, etc.)
+
+    -L                  - use the file symbolic links resolve to for evaluating the search criteria, rather than the link itself
+    -P                  - use symbolic links for evaluating the search criteria, rather than the files they resolve to (this is the default)
+
+            // PRIMARIES 
+
+
+            // OPERANDS 
+    
+______________________________________________________
+
+the stty command can be used to configure the terminal, but it's complicated. read the man page for more details 
+
+on UNIX you can specify configuration commands to run upon startup in the .profile file. this is not available on Mac it seems, and I'm not sure which versions have it. 
+examples of what you might put in .profile: 
+
+    who | wc -l                 - tell you how many users are logged into your system 
+    /usr/games/fortune          - draw a fortune cookie (not there on Mac)
+
+many properties of the shell are set by shell variables, and you can change their values 
+
+
+
+______________________________________________________
