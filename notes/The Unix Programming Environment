@@ -4,7 +4,7 @@
 my testing in this book was conducted on a BSD system (Darwin, Mac OS X Catalina)
 
 control characters for the terminal: 
-    ctrl+d - tells a program there's no more input 
+    ctrl+d - the shell instructs the running process that input is ended. it will actually terminate the shell process itself if you use it at the shell prompt 
     ctrl+g - rings a bell 
     ctrl+i - tab 
     ctrl+m - alternative to the enter key 
@@ -366,4 +366,50 @@ there are many more commands in the manual, at some point you should explore the
 ------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 2---------------------------------------
 ------------------------------------------------------------------------------------
-page 41 
+the od command will print the bytes in a file: 
+
+    od -cx <file>
+
+    -c              - interpret the bytes as characters 
+    -x              - print hex numbers below the bytes 
+    -b              - print octal numbers below the bytes 
+
+-the terminal interprets special characters & adjusts its output (i.e. newlines \n, tabs \t, backspace \b, carriage return \r)
+-if you print a file to terminal that contains a backspace character (\b, octal 10) it will actually erase the next character in the file that's output 
+-od may be useful for finding strange characters such as these 
+
+-the terminal can optionally extend tabs to a certain number of spaces. use stty to turn this feature on: 
+    stty oxtabs             - expand tabs to spaces 
+    stty -oxtabs            - do not expand tabs to spaces 
+
+-to turn raw mode on and off you need to save the initial state of the terminal, apparently turning this off is buggy (in Mac OS, anyway): 
+
+    save_state=$(stty -g)               - save terminals original state
+    stty raw                            - turn on raw mode 
+    ...
+    stty "$save_state"                  - restore terminal to state before raw mode 
+
+-similarly the terminal driver echoes the ENTER key as \n + \r, but stores only \n on input. On output, \n is expanded back to \r + \n. 
+    Thus your files only contain what you put in them, no additional characters 
+
+-some non-UNIX systems store the \n + \r (the terminal needs this apparently), 
+    others store a 'record' at the end of each line that contains information like the lines character count 
+
+-in UNIX, all files are ultimately accessed through read(), which returns 0 when the end of the file is reached. 
+    Thus there need be no special character denoting EOF in UNIX.
+
+______________________________________________________
+
+-the UNIX system doesn't know what filetype a file is, but it can take an educated guess with the file command: 
+
+    file <file1> <file2>            - ascertain & list the types of files (as best as possible) 
+
+-the file command doesn't base its guess off file exensions. It reads the first few hundred bytes of the file & tries to guess what it is.
+-part of why UNIX doesn't track the file types more carefully is it doesn't want to force programs to handle files differently based on their type 
+-inspired by UNIX, the author gives general advice to think carefully before using non-textual file representations when designing programs 
+
+
+
+
+
+page 48, section 2.3
