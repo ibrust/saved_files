@@ -408,8 +408,66 @@ ______________________________________________________
 -part of why UNIX doesn't track the file types more carefully is it doesn't want to force programs to handle files differently based on their type 
 -inspired by UNIX, the author gives general advice to think carefully before using non-textual file representations when designing programs 
 
+-the current directory is an attribute of a process 
+
+-/bin and /usr/bin is supposed to contain binary; /usr/src is supposed to contain source code; /usr/src/cmd is supposed to contain source for UNIX commands. 
+    /usr is often the top directory of the users file system. you can put your own projects in /usr/src and /usr/src/cmd 
+
+-the du (disk usage) command outputs the total disk blocks used by files in a directory: 
+
+    du 
+    du -a                                       - this recursively searches subdirectories and outputs all files / directories 
+    du -a | grep <filename>                     - this is a scrappy way of searching for a file which demonstrates grep & pipes, but you'd prefer find
+
+-the superuser (with login name root) can access any file regardless of permissions 
+-there used to be a crypt command that you could filter data through & prevent superuser from accessing, but it was considered too weak and 
+    UNIX did away with it, but never replaced it 
+
+-/etc/passwd traditionally contains the username/password entries of the format: username | encrypted-password | uid | groupid | misc | login-directory | shell 
+
+    grep -w <username> /etc/passwd
+
+-the first character in a permission field indicate the type of file: 
+
+    -rwxr-sr--          <- the first char is -, so it's a regular file 
+    drw-r--r--          <- the first char is d, so it's a directory 
+
+-the next three 3-character chunks indicate owner, group, & general access permissions 
+-the x is executable permissions. the s (the set-uid bit) also executes, but it sets permissions equal to that of the owner when it executes
+-avoid allowing write permissions for programs when the setuid bit is set - setuid will elevate permissions during execution,
+    if the user can overwrite the file and then execute it this is problematic
+
+-to change your password there's a command passwd (located in bin/passwd): 
+
+    passwd 
+    ... 
+
+-rights to remove a file are determined by the directory permissions, not permissions on the file. However, if you try to remove a protected file UNIX 
+    will prompt you for confirmation. the -f flag to rm suppresses this confirmation message: 
+
+    rm -Rf <directory>              - removes all files in a directory, suppresses confirmation messages 
+    rm -Ri <directory>              - prompts before removing subdirectories (so you can specify which subdirectories to remove). Not sure how it mixes with -f 
+
+-execute permissions in a directory mean the right to execute a search in the directory for a file 
+
+    --x             <- with these directory permissions, users can access any file they know about, but can't run ls on it or read it to see what's in there 
+    r--             <- with these directory permissions, users can run ls & see what's in the directory, but not use the contents 
+
+-chmod takes an octal number. you figure out the mode by adding 4 for read, 2 for write, & 1 for execute
+-chmod can also take a +/= argument to set global permissions 
+
+    chmod 777 <filename>            - all permissions 
+    chmod +x <filename>             - enable execution for everyone 
+    chmod -w <filename>             - disable write for everyone 
+
+-only the owner or superuser can change file permissions 
+-if a directory grants write permissions to a user they can delete the files, however, so beware who gets write permissions 
+-the permissions information is stored in the files inode
+
+______________________________________________________
+
+page 57, inodes 
 
 
 
 
-page 48, section 2.3
