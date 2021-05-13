@@ -513,7 +513,15 @@ top level directories and their purpose (bearing in mind this is an old book):
     /tmp        - repository for temporary files created during execution of programs. /tmp is cleaned automatically when the system starts, 
                     which makes using it advantageous for programs - you won't leave old files behind on system crash or accidentally 
                     overwrite existing ones. /tmp is also often arranged on the disk for fast disk access 
-    /
+    /usr        - this is actually the user-level files, it doesn't always contain the system users files (though it sometimes does) 
+    /usr/bin    - user-level binary executables (executables considered less critical). Some systems have done away with this and put everything in /bin 
+    /usr/temp   - similar to /usr/bin - less critical temporary files 
+
+explore your machines file system, especially /usr, to get familiar with it - locations vary 
+
+______________________________________________________
+
+-page 65, 2.7 devices 
 
 ______________________________________________________
 
