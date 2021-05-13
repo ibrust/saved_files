@@ -34,11 +34,11 @@ ls is an important UNIX function, and has about 40 commands, most of which are w
 
                 // SORTING OPTIONS 
     ls -t               - sort by time last modified
-    ls -rt              - reverses the order of a sort 
-    ls -u               - sort by time of last access 
-    ls -U               - sort by file creation time 
+    ls -rt              - reverses the order of a sort (combines with -t or -S)
+    ls -ut              - sort by time of last access (combines with -t)
+    ls -Ut              - sort by file creation time (combines with -t)
     ls -S               - sort by size 
-    ls -c               - sort by time when file status was last changed 
+    ls -ct              - sort by time when file status was last changed (combines with -t)
 
                 // DIRECTORY RELATED OPTIONS 
     ls <pathname>       - list files at a specific path 
@@ -366,13 +366,13 @@ there are many more commands in the manual, at some point you should explore the
 ------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 2---------------------------------------
 ------------------------------------------------------------------------------------
-the od command will print the bytes in a file: 
+the od command will print the bytes in a file (they may have changed it to byte-pairs): 
 
     od -cx <file>
 
     -c              - interpret the bytes as characters 
     -x              - print hex numbers below the bytes 
-    -b              - print octal numbers below the bytes 
+    -b              - print octal numbers below the bytes
 
 -the terminal interprets special characters & adjusts its output (i.e. newlines \n, tabs \t, backspace \b, carriage return \r)
 -if you print a file to terminal that contains a backspace character (\b, octal 10) it will actually erase the next character in the file that's output 
@@ -462,12 +462,58 @@ ______________________________________________________
 
 -only the owner or superuser can change file permissions 
 -if a directory grants write permissions to a user they can delete the files, however, so beware who gets write permissions 
--the permissions information is stored in the files inode
 
 ______________________________________________________
 
-page 57, inodes 
+-the permissions information is stored in the files inode
+-the inode also contains 3 times:
 
+    ls -lu <file>                   <- time file was last used
+    ls -lt <file>                   <- time file was last modified
+    ls -lc <file>                   <- time inode was last changed (like by changing permissions)
 
+-the first two bytes in a directory entry are the inode number. this is the only link between a filename and its contents: 
 
+    ls -i                           <- display inode numbers of files 
+
+-at some point (around 1995) many UNIX systems stopped allowing directories to be read as files, so you can't use od to show the directories bytes any longer
+-regardless, the term 'link' refers to these 2 bytes linking the filename to the inode (and hence the file itself) 
+-the rm command only removes the link. it's only when the link count reduces to 0 the inode (the file) gets cleaned up
+
+-the ln command creates a link to an existing file: 
+
+    ln <old_file> <new_link> 
+
+-you can create links to files to call them by different names. for example: 
+
+    sudo ln /bin/ls /bin/list               - refer to ls via list (assuming you have access to modify the bin directory)
+
+-cp makes a separate copy of a file 
+-mv changes the directory entry name, and possibly moves it to a different directory  
+
+-mv and cp can move or copy multiple files / directories into a target directory. the last argument is the target directory: 
+
+    mv <file1> <directory1> <file2> ... <target_directory> 
+
+-cp will not descend into subdirectories unless -R is specified 
+
+    cp -R <directory1> .            - copy entire directory tree into current location 
+
+______________________________________________________
+
+top level directories and their purpose (bearing in mind this is an old book): 
+
+    /bin        - binary executables 
+    /dev        - device drivers 
+    /boot       - runs during the bootstrap startup process 
+    /etc        - various administrative files (et cetera)
+    /etc/rc     - file of shell commands that's executed after the system bootstraps (may have changed)
+    /etc/group  - lists members of each group 
+    /lib        - contains mainly parts of the C compiler (may have changed)
+    /tmp        - repository for temporary files created during execution of programs. /tmp is cleaned automatically when the system starts, 
+                    which makes using it advantageous for programs - you won't leave old files behind on system crash or accidentally 
+                    overwrite existing ones. /tmp is also often arranged on the disk for fast disk access 
+    /
+
+______________________________________________________
 

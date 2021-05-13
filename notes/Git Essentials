@@ -480,18 +480,13 @@ ________________________________________________________________________________
 -now you'll have to use the form that specifies the branches: 
   < git push -u remote_repo local_branch_name 
 
--
 
 
-
-
-
+-page forgotten
 
 
 ________________________________________________________________________________________________
 MISC: 
 -to show the files you've changed between commits: 
   < git diff --name-only HEAD HEAD~3                // to know how far back you want to look use git log
-
-
 
