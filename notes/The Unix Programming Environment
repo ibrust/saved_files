@@ -544,9 +544,80 @@ ______________________________________________________
 -to suppress output you can redirect it into /dev/null (as the mint script does) 
 -a common use of /dev/null is to reduce clutter to output only messages from stderr (diagnostics or errors) - it does not suppress stderr
 
-    time egrep -R * /usr > /dev/null             - look at all the access errors when traversing the file system, & output the time it takes 
+    time egrep -R * /usr > /dev/null             - look at all the access errors when traversing the user file system, & output the time it takes 
 
 ------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 3---------------------------------------
 ------------------------------------------------------------------------------------
 
+-the shell has 3 terminating characters: &, ;, return  
+-pipes | have higher precedence than the semicolons (;) in the shell.  You can also group commands with parenthesis: 
+
+    date; cat file1 | wc                    - only who is piped into wc 
+    (date; cat file1) | wc                  - the output of date & who is concatenated into a single stream, and this stream is piped into wc 
+
+-data flowing through a pipe can be tapped midstream and saved into a file while not interrupting the stream: 
+
+    (date; cat file1) | tea file1 | wc      - the tee command taps into the pipe & routes it into a file 
+
+-with the sleep command you can run commands in the future pretty easily: 
+
+    (sleep 3600; python program.py) &       - sleep 3600 seconds (1 hour). apparently & has higher precedence than ;, so the parenthesis are required here 
+    cat file1 | wc &                        - pipes | are commands, so & applies to the whole command - no parenthesis required 
+
+    (sleep 5; date) & date                  - combined use of & with proceeding commands 
+
+-since <, >, |, ;, & are not arguments but they're interpeted by the shell, strange syntax still works: 
+
+    echo "text" > temp 
+    > temp echo "text"              - both these commands do the same th ing. > temp reroutes the shells stdout to temp - both commands are interpreted and then execute 
+
+______________________________________________________
+
+-there are other metacharacters interpreted by the shell: 
+    *               - match any # of characters 
+    ?               - match a single character
+    [abc]           - match any single character in the set 
+    <<str           - here document: standard input follows. str is any string, and used for termination - the next occurrence of str terminates the document 
+    (...)           - runs commands in ... in a subshell 
+    {...}           - runs commands in ... in the current shell (rarely used) 
+    '...'           - run commands inside ... and insert their output where '...' is 
+    c1 && c2        - run c1, if successful run c2 
+    c1 || c2        - run c1, if unsuccessful run c2
+    $1, $2 etc.     - $1...$9 replaced by arguments to the shell script 
+    var=value       - assign to shell variable var 
+    $var            - value of shell variable var 
+    ${var}          - value of shell variable var - avoids confusion when concatenated with text
+
+-to escape the metacharacters use quotes or backslash (\)
+-the shell interprts $, '...', and \ within double quotes, but not single quotes. so beware when escaping metacharacters 
+
+    echo "$(echo "here")"               - outputs here
+    echo '$(echo "there")'              - outputs '$(echo "there")' 
+
+-quoted strings can contain newlines: 
+    
+    echo 'hello 
+    there'
+
+-the secondary prompt, default '> ', is displayed when you need to complete a command. It's stored in the shell environment variable PS2 
+
+-backslash (\) at the end of a line allows the line to be continued - so you can pass long command lines to the shell 
+-note that the newline is discarded when preceded by a backslash, but retained when quotes are used 
+
+-echo prints a trailing newline by default, but this can be disabled in a few ways: 
+
+    echo -n "output text"               - disable trailing newline 
+    echo "output text\c"                - disable trailing newline 
+
+______________________________________________________
+
+
+
+
+
+
+
+______________________________________________________
+
+-page 80, section 3.3
