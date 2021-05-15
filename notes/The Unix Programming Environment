@@ -521,7 +521,32 @@ explore your machines file system, especially /usr, to get familiar with it - lo
 
 ______________________________________________________
 
--page 65, 2.7 devices 
+-inodes on peripheral devices have their first permission bit set to b (block) or c (character) 
 
-______________________________________________________
+    ls -l /dev 
+
+-the author talks about how a disc is partitioned into different sections. in his example, 1 section is the root (kernel) file system 
+    & the other is the user file system. the user file system is mounted onto the root (kernel) system. 
+    Why are they kept separate? For historical reasons and ease of maintenance, he says. I don't know if this is still the case. 
+
+-the file systems are mounted to the root filesystem during the bootstrapping phase 
+-it is not possible to make a link across 2 file systems (the system may be unmounted and the link would become invalid)
+
+-filesystems have a limited size (# of blocks & inodes):
+
+    df                  - prints out the available space on all the filesystems
+
+-/dev/tty is your currently active terminal. you can actually route output to this terminal & it will show up
+    /dev/tty is especially useful if a program needs to output to the terminal while its stdout is connected with something else 
+
+    date > /dev/tty     - displays date 
+
+-to suppress output you can redirect it into /dev/null (as the mint script does) 
+-a common use of /dev/null is to reduce clutter to output only messages from stderr (diagnostics or errors) - it does not suppress stderr
+
+    time egrep -R * /usr > /dev/null             - look at all the access errors when traversing the file system, & output the time it takes 
+
+------------------------------------------------------------------------------------
+------------------------------------CHAPTER 3---------------------------------------
+------------------------------------------------------------------------------------
 
