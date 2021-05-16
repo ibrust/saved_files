@@ -581,7 +581,7 @@ ______________________________________________________
     <<str           - here document: standard input follows. str is any string, and used for termination - the next occurrence of str terminates the document 
     (...)           - runs commands in ... in a subshell 
     {...}           - runs commands in ... in the current shell (rarely used) 
-    '...'           - run commands inside ... and insert their output where '...' is 
+    `...`           - backquotes (`). run commands inside `...` and insert their output where `...` is 
     c1 && c2        - run c1, if successful run c2 
     c1 || c2        - run c1, if unsuccessful run c2
     $1, $2 etc.     - $1...$9 replaced by arguments to the shell script 
@@ -590,7 +590,7 @@ ______________________________________________________
     ${var}          - value of shell variable var - avoids confusion when concatenated with text
 
 -to escape the metacharacters use quotes or backslash (\)
--the shell interprts $, '...', and \ within double quotes, but not single quotes. so beware when escaping metacharacters 
+-the shell interprts $, `...`, and \ within double quotes, but not single quotes. so beware when escaping metacharacters 
 
     echo "$(echo "here")"               - outputs here
     echo '$(echo "there")'              - outputs '$(echo "there")' 
@@ -600,7 +600,7 @@ ______________________________________________________
     echo 'hello 
     there'
 
--the secondary prompt, default '> ', is displayed when you need to complete a command. It's stored in the shell environment variable PS2 
+-the secondary prompt, default '> ', is displayed when you need to complete a command. It's stored in the shell variable PS2 
 
 -backslash (\) at the end of a line allows the line to be continued - so you can pass long command lines to the shell 
 -note that the newline is discarded when preceded by a backslash, but retained when quotes are used 
@@ -612,12 +612,118 @@ ______________________________________________________
 
 ______________________________________________________
 
+-fundamentally a shell script is just a file with commands in it that is used as the shells standard input: 
 
+    echo 'date | wc' > datewc 
+    sh < datewc                                     - manual demo of using a file as the shells stdin 
 
+    sh datewc                                       - the shell takes a file argument (so you don't have to reroute the file input manually)
 
+-the shell spawns a sub-shell to execute the command. 
+-the two commands above are subtley different. when you manually reroute stdin, the input is passed from the parent shell to the subshell. 
+    but when you invoke sh with a file argument, the subshell takes the file input directly from the file 
 
+-because it's cumbersome to have to type sh to invoke the shell, the shell will automatically run a file as a shell script if it is executable
+    thus, to create a shell script, all you do is create a file of commands and make it executable: 
 
+    echo 'date | wc' > datewc
+    chmod +x datewc             - make the file executable 
+
+    datewc                      - execute the new shell command. this assumes the current directory is in your path, like it should be. if not, use PATH=$PATH:.
+
+-to make this newly created shell command accessible outside the current directory move it to somewhere in your path - such as /usr/<username>/bin, /bin, etc. 
 
 ______________________________________________________
 
--page 80, section 3.3
+-the numbers $1-$9 in the shell are the arguments passed to the file, in order:  
+
+    echo 'chmod +x $1' > xperm 
+    chmod +x xperm
+    xperm <file1>      
+
+-to allow 1-9 arguments (9 is the max) to be passed to the shell script there's a shorthand syntax: 
+
+    echo 'chmod +x $*' > xperm2                 -$* allows variable # of arguments 
+    chmod +x xperm2 
+    xperm2 <file1> ... <file9> 
+
+-arguments default to null if they are not specified 
+-there is a subtle bug in the above implementations. If you pass a quoted string as an argument and it contains a space, it will be interpreted by the 
+    sub-shell as two arguments. To prevent this, surround your argument with double quotes. The shell searches for $ in double quotes, & will insert it there: 
+
+    echo 'chmod +x "$1" "$2"' > xperm3              - doesn't work with $* (despite what the book says), but does work if the parameters are separately specified
+    chmod +x xperm3 
+    xperm2 "file name" "another file name" 
+
+-$0 in the script always refers to the name of the program invoked 
+
+______________________________________________________
+
+-the output of any program can be inserted into a command line by enclosing the invocation in backquotes `...`
+
+    echo "the time is `date`"                       - the time is Sat May 15 19:53:32 CDT 2021
+
+-you can have nested backquotes - backquotes within backquotes that the sub-shell will interpret & run, 
+    but you must escape (\) the inner backquotes to prevent the parent shell from running them
+
+______________________________________________________
+
+-when setting shell variables, there must be no space around the =
+
+    PATH=$PATH:. 
+
+-conventionally predefined shell variables are uppercase while your own shell variables are lowercase 
+
+    set                     - this command displays all shell variables and what they're set to 
+
+-the value of a variable is associated with the shell that creates it, and is not automatically passed to the shells children  
+
+    x=hello
+    sh                      - spawn a sub-shell 
+    echo $x
+    ctrl+d                  - exits from the sub-shell 
+    echo $x 
+
+-this means a shell script can't change the value of a variable, because it runs in the sub-shell 
+-to get around the shell provides a command '.' (dot) that executes the commands in a file in the current shell, rather than in a sub-shell 
+
+    . script1               - execute in the current shell, where it can set that shells variables 
+
+-the '.' (dot) command only superficially executes the script - it actually just reroutes the current shells stdin & reads in the file
+    this means you dont need execute permissions to run the script when you use '.' (dot) 
+-unfortunately scripts run with '.' (dot) commands cannot take command line arguments 
+
+-the export command makes the value of a variable accessible to its subshells (the book mentions no way of making a subshell variable accessible to the parent)
+
+    x=hello 
+    export x 
+    sh 
+    echo $x
+
+______________________________________________________
+
+there's supposed to be syntax for redirecting stdin, stdout, & stderr using numbers, but I haven't gotten it to work yet: 
+
+    time wc <filename> >wc.out 2>time.out           - supposed to redirect stderr into time.out (time outputs to stderr, so time.out should contain times output)
+    time wc <filename> >both.out 2>&1               - supposed to merge stderr into the stdout stream (so both.out should contain output from time and wc) 
+
+-you are also supposed to be able to use 1>&2 to merge stdout into the stderr stream (perhaps to prevent it from disappearing down a pipe) 
+
+-the idea of a here document is that input can be contained within the shell script, not routed into it:
+
+    grep "$*" <<term 
+    <giant dictionary>                  - dictionary input defined within a script that searches the dictionary 
+    term 
+
+-apparently the shell substitutes for $, `...`, and \ in a here document - unless the terminating string is quoted or backslashed, 
+    inwhich case the here document is taken literally:
+
+    <<'term'
+    ... 
+
+    <<\term2 
+    ... 
+
+______________________________________________________
+
+page 94, section 3.8
