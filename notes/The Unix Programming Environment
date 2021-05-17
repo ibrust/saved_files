@@ -655,7 +655,7 @@ ______________________________________________________
     chmod +x xperm3 
     xperm2 "file name" "another file name" 
 
--$0 in the script always refers to the name of the program invoked 
+-$0 in the script always refers to the name of the script
 
 ______________________________________________________
 
@@ -668,7 +668,7 @@ ______________________________________________________
 
 ______________________________________________________
 
--when setting shell variables, there must be no space around the =
+-when setting shell variables there must be no space around the =
 
     PATH=$PATH:. 
 
@@ -746,4 +746,19 @@ ______________________________________________________
 ------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 4---------------------------------------
 ------------------------------------------------------------------------------------
+
+-filters are a large class of UNIX programs that take input, transform it, and produce output. They can be pieced together in streams 
+-sed & awk are general purpose filters. 
+-sed & awk both follow a programming pattern similar to grep. They scan files in sequence looking for a pattern & taking an action: 
+
+    program <pattern-action> <filenames> 
+
+-sed is derived from ed (the UNIX editor). it takes a 'program' of editor commands and steams the files past them, applying the commands to the files 
+-awk includes arithmetic, variables, built in functions, and is vaguely similar to C 
+
+______________________________________________________
+
+page 102, 4.1
+
+______________________________________________________
 
