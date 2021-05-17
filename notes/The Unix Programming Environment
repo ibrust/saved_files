@@ -726,4 +726,24 @@ there's supposed to be syntax for redirecting stdin, stdout, & stderr using numb
 
 ______________________________________________________
 
-page 94, section 3.8
+-the shell has control flow statementsn like a typical programming language 
+
+-looping over a set of files is a common operation. this is one of the few control flow operations that are often done at the command line: 
+
+    for <var> in <file1> <file2> ... 
+    do 
+        <commands> 
+    done
+
+    for <var> in <file1> <file2> ...; do <commands>; done 
+
+-be careful not to use for if the command already supports multiple files 
+-note the difference between the following: 
+
+    for x in *; ...             - loops over all files in current directory 
+    for x in $*; ...            - loops over all arguments to the shell file 
+
+------------------------------------------------------------------------------------
+------------------------------------CHAPTER 4---------------------------------------
+------------------------------------------------------------------------------------
+
