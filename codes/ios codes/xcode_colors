@@ -1,0 +1,16 @@
+max productivity: 
+theme: default light 
+fontsize: 12 
+background: c2e07c
+primary font: georgia - i.e. plaintext
+secondary font: x - i.e. Strings
+tertiary font: x - i.e. Other Constants 
+
+plaintext color: 718762
+comments color: 419a52
+strings color: 0167a1
+characters / numbers color: 7226a6
+keywords color: b276e2s
+preprocessor related color: f12fba 
+project types color: f947e5
+other types color: 

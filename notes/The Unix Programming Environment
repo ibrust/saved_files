@@ -753,7 +753,7 @@ ______________________________________________________
 
     program <pattern-action> <filenames> 
 
--sed is derived from ed (the UNIX editor). it takes a 'program' of editor commands and steams the files past them, applying the commands to the files 
+-sed is derived from ed (the UNIX editor). it takes a 'program' of editor commands and streams the files past them, applying the commands to the files 
 -awk includes arithmetic, variables, built in functions, and is vaguely similar to C 
 
 ______________________________________________________
