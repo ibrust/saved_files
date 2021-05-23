@@ -754,11 +754,39 @@ ______________________________________________________
     program <pattern-action> <filenames> 
 
 -sed is derived from ed (the UNIX editor). it takes a 'program' of editor commands and streams the files past them, applying the commands to the files 
--awk includes arithmetic, variables, built in functions, and is vaguely similar to C 
+-awk includes arithmetic, variables, built in functions, and is vaguely similar to C
 
 ______________________________________________________
 
-page 102, 4.1
+-grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
+
+    file1="The Unix Programming Environment"
+    grep '^-awk' $file1                     - ^ looks for the pattern at the beginning of lines 
+    grep '$C' $file1                        - & looks for the pattern at the end of lines 
+    grep '[A-Z]' $file1                     - [A-Z] find linese with capitalized letters 
+    grep '[^0-9]' $file1                    - [^0-9] find lines without numerical digits 
+    grep '^.awk' $file1                     - . is the equivalent of ? in the shell - it matches one character 
+    grep '[a-zA-Z]*' $file1                 - * applies to the previous character or metacharacter, & matches any repeating number of them 
+
+    ls -l | grep '^.......rw'               - list all files where user has rw permissions  
+    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorails 
+
+-egrep and fgrep are modern updates of grep. both are alot faster than grep. 
+
+-fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
+-fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
+
+-egrep supports true regular exprssions, and as such has a few more operators: 
+    
+    parenthesis () can group expressions
+    | is an or operator
+    + matches 1 or more occurrences of the previous character (unlike * which matches 0 or more)
+    ? matches 0 or 1 of the previous character
+
+-the difference between egrep and grep isn't so obvious. grep has more options, but egrep is faster and has better regex support 
+
+-both egrep and fgrep have an -f option, where you can specify a file that contains a list of patterns to match (each line is a pattern)
+    since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
 
 ______________________________________________________
-
+-page 106, 4.2 
