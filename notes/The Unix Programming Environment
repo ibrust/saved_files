@@ -117,6 +117,7 @@ common sort options:
     -f, --ignore-case               - ignore case when sorting 
     -b, --ignore-leading-blanks     - ignore leading blank characters 
     -R, --random-sort               - random permutation of the inputs except that equal keys sort together. the hash function used for comparison is chosen randomly 
+    -d                              - only consider letters, numbers, & blanks in the sort 
 ______________________________________________________
 
     grep <pattern> <file ...>       - searches a file for a regex pattern, prints each lines occurrence
@@ -769,7 +770,7 @@ ______________________________________________________
     grep '[a-zA-Z]*' $file1                 - * applies to the previous character or metacharacter, & matches any repeating number of them 
 
     ls -l | grep '^.......rw'               - list all files where user has rw permissions  
-    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorails 
+    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorials
 
 -egrep and fgrep are modern updates of grep. both are alot faster than grep. 
 
@@ -789,4 +790,65 @@ ______________________________________________________
     since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
 
 ______________________________________________________
--page 106, 4.2 
+
+    ls | sort -f                    - sort files regardless of case 
+    ls -s | sort -n                 - sort with smallest files first 
+    ls -s | sort -nr                - sort with largest files first 
+
+-sort normally examines the entire line, but it can be told to target a specific field in the line using the +<number> syntax: 
+
+    ls -l | sort +4n                - sort by byte count (the 5th column), largest files first
+    ls -l | sort +0                 - sort by the first column 
+
+-sort can take multiple keys: 
+
+    sort +0f +0 -u <file>           - first sort regardless of case, then for any matching lines sort them by case, then discard any remaining duplicates
+
+-the u option discards duplicates, returning only unique lines 
+
+-the o option specifies a file for the output. This is useful if the file is also the input, apparently (though it seems the same as io redirection, maybe more efficient) 
+
+    sort file1 -o file1
+
+-the uniq command reads a file and discards adjacent duplicates - useful for eliminating duplicate whitespace: 
+
+    uniq "Git Essentials"           - eliminates duplicates from the file - eliminates similar whitespace, but doesn't work on varying whitespace
+
+-the comm command takes 2 sorted files (they have to be presorted) and prints in columns: lines only in file1, lines only in file2, lines in both files
+
+    sort file1 -o file1; sort file -o file2
+    comm file1 file2 
+    comm -12 file1 file2            - options 1, 2, 3 remove that column from the output. this will only output lines common to both 
+
+-the tr command translates characters in its input & outputs them. the most common use of tr is in case conversion: 
+
+    tr "A-Z" "a-z" < inputfile > outputfile             - translates all uppercase to lowercase. use double quotes - I've had strange behavior with single quotes  
+
+-the dd command copies stdin to stdout, aggregating multiple reads of data into condensed blocks for the output (dd is an old tape storage mechanism)
+-in modern times dd is useful in its ability to take the first N bytes of a stream, to overwrite or truncate a file at any point in the file 
+    (you can also use the truncate command for this), and to seek in a file. it's also suitable for handling binary data
+
+-with pipes the shell will allow you to chain multiple lines of input: 
+
+    ls | 
+    sort -f             - pipe used to separate commands across multiple lines
+
+______________________________________________________
+
+-ed is the old UNIX text editor
+-the only reason to understand ed is the fact vim, sed, the ex line editor, and grep were significantly influenced by ed 
+-read the man page / the following link if interested: https://blog.sanctum.geek.nz/actually-using-ed/
+
+______________________________________________________
+
+-the stream editor sed is derived from ed (UNIX editor)
+-sed is like a series of filters. It goes through the files line by line and applies the commands in order
+-you must use a temporary file as the output file - do not use the input file
+
+    sed <commands> <file1> <file2> ... > temp_output 
+
+-
+
+
+
+
