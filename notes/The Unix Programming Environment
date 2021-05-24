@@ -835,13 +835,95 @@ ______________________________________________________
 
 ______________________________________________________
 
--ed is the old UNIX text editor
+-ed is the old UNIX text editor, and is very primitive 
 -the only reason to understand ed is the fact vim, sed, the ex line editor, and grep were significantly influenced by ed 
--read the man page / the following link if interested: https://blog.sanctum.geek.nz/actually-using-ed/
+-the following sessions demonstrate eds usage: 
+
+// error messages 
+    ed                          - start up ed 
+    b                           - there is no b command, so you get an error 
+    ?
+    h                           - initially errors ar eonly presented as ?, but typing h will list an error description 
+    Unknown Command 
+    H                           - H will tell ed to always print error messages 
+    b 
+    ?
+    Unknown Command 
+
+// quitting 
+    q 
+    ? 
+    Warning: buffer modified
+    q                                           - q will prompt you if you have unsaved changes. If you type q a second time it will quit 
+
+    Q                                           - Q is a force quit 
+
+// command prompt 
+    ed -p$:                                     - p sets the symbol for a command prompt in ed. you can toggle it on and off with P 
+
+// basic text input     
+    $:a                                         - a, begin text input at the current line (the default behavior)
+    <lines of input text>
+    .                                           - . on its own line, end input  
+    
+    $:p                                         - p, print the current line
+    $:n                                         - n, print the current line & its line number 
+
+    $:1                                         - move to the specified line 
+    $:1n                                        - run the command at the specified line & move to that line (usually). this works with many commands 
+    $:.n                                        - . explicitly states to use the current line
+
+    $:c                                         - c, overwrite the current line 
+    <lines of input text>
+    .
+
+    $:2d                                        - d, delete line 
+    $:1,2j                                      - j, join lines 
+
+// ranges 
+    $:2,4n                                      - print lines 2 to 4 
+    $:1,$n                                      - all lines
+    $:,n                                        - all lines (shorthand syntax)
+    $:.,6n                                      - current line to line 6. note: many of these commands also change your current line 
+    $:.,$n                                      - current line to last line
+    $:-1,+1n                                    - previous line to next line (+/- specify relative lines)   
+
+    $:4kx                                       - k followed by any lowercase letter (x in this case) marks a line 
+    $:'xn                                       - you can then refer to the line using 'x in this case
+
+// moving & copying 
+    $:1,3m$                                     - move a line or range of lines to after a target line with m 
+    $:1t1                                       - copy a line or range of lines to after a target line with t
+
+// regex's 
+    $:g/<regex>/p                               - g operator selects lines using classical regex's. this command prints out the selected lines (greps precursor)
+    $:g/<regex>/n 
+    $:v/<regex>/n                               - v operator inverts the command, selecting lines that don't match the regex 
+    $:g/<regex>/m$                              - the operators following the regex can be anything. here we move the matching lines to the end of the file 
+
+// searching 
+    $:/<regex>                                  - move to the first matching line after your current line 
+    $:?<regex>                                  - move to the first matching line before your current line 
+
+// substituting 
+    $:1,3s/<regex>/x                    - substitute the first occurrence of <regex> with x (or any letter). works for a line, a range of lines, or all lines 
+    $:1,3s/<regex>/x/g                  - adding /g at the end substitutes all occurrences in the line, not just the first occurrence 
+
+// reading and writing 
+    $:w <filename>                      - write the current buffer to a file 
+    $:w                                 - after having written to a file once, you can omit the filename for the rest of the session 
+    $:1,3w <filename>                   - w can also be prefixed with a range to only write those lines 
+
+    $:W <filename>                      - W appends to the file instead 
+
+    $:r <filename>                      - read the contents of a file, inserting after the current line 
+    $:$r <filename>                     - read the contents of a file, inserting at the end of the file 
+
+    $:e <filename>                      - e or E just loads the file, overwriting the contents of the current buffer
 
 ______________________________________________________
 
--the stream editor sed is derived from ed (UNIX editor)
+-the stream editor sed is derived from ed (UNIX editor). many of seds commands are based on eds 
 -sed is like a series of filters. It goes through the files line by line and applies the commands in order
 -you must use a temporary file as the output file - do not use the input file
 
@@ -851,4 +933,4 @@ ______________________________________________________
 
 
 
-
+page 108, 4.3 
