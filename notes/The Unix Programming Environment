@@ -925,12 +925,80 @@ ______________________________________________________
 
 -the stream editor sed is derived from ed (UNIX editor). many of seds commands are based on eds 
 -sed is like a series of filters. It goes through the files line by line and applies the commands in order
--you must use a temporary file as the output file - do not use the input file
+-note: sed does not alter the original file, it simply outputs a new one
+-sed also prints the lines it matches by default
+-you must use a separate file as the output file - do not use the input file
 
     sed <commands> <file1> <file2> ... > temp_output 
+
+-sed commands should be surrounded in single quotes to protect the metacharacters
+-the s command substitutes one set of chars with another: 
+
+    <commands> = s/<regex>/<replacementregex>/<flags>
+
+    who am i | sed 's/ .*//'        -replace the first blank & everything following it with nothing 
+    who | sed 's/ .*  / /'          -replace the first blank & everything following it, up until 2 blanks, with just a blank
+
+-you can prefix a line matching pattern to the commands 
+
+    /<lineregex>/<commands>/
+
+    sed '/./s/-/##/' < "Git Essentials" > temp1         -the /./ only matches lines that start with an alphanumeric char
+
+-preceding the command with ! will cause the command NOT to run if the line matching prefix pattern is matched
+-carrot (^) matches the start of a line, dollar ($) matches the end of a line. ^$ matches lines with no characters 
+
+    sed '/^$/!s/^/##/' < "Git Essentials" > temp1       -insert ## at the start of every line, except if the line is empty 
+
+-multiple commands to sed must be on separate lines: 
+
+    sed '/s/-/++/
+        3q'                                             - 3q here means operate on the first 3 lines and then quit
+
+-you can also put sed commands in a file and execute them: 
+
+    sed -f <commandfile> <file1> <file2> ... 
+
+-sed commands overlap with ed commands in many ways: 
+
+    sed '/<lineregex>/q'                          - print up until <pattern> is found, then quit 
+    sed '/<lineregex>/d'                          - delete every line that contains <pattern>
+
+-you can disable the default printing with -n, and you can then reenable it for specific lines with the p command (what grep does): 
+
+    sed -n '/<lineregex>/p' 
+    sed -n '/<lineregex>/!p'                      - print lines not matching the pattern 
+
+-\n doesn't work for newline, but \ followed by pressing enter does:
+
+    sed 's/$/\
+        /'                      -insert a newline after each line - strange sed syntax
+
+-you can also specify a range of lines, similar to ed: 
+-it's not clear from the book, but it looks like the syntax for a regex is to surround it with /'s
+
+    sed -n '20,30p'             - print lines 20 to 30 
+    sed -n '1,/^$/p'            - print lines 1 up until the first empty line 
+    sed -n '/^$/,/^end/p'       - print from the first empty line up until a line starting with the word 'end' 
+
+-unlike ed, sed does not support relative line numbers (+ and - symbols) 
+-the w command can be used to write to an output file. there is a way to write to multiple output files:
+
+    sed -n '/<lineregex>/w output1                          - writes matches to output1 and non-matches to output2 
+            /<lineregex>/!w output2' <file1> <file2> ... 
+
+-sometimes you must do special things with quotes to get shell variables into the command: 
+
+    ls -t | sed '/^'$1'$/q'                     - list all files newer than the filename specified in the shell variable 
+    ls -t | sed "/^$1\$/q"                      - does the same thing 
+
+-sed is used for simple stream editing tasks like the ones we've shown. it has a simple syntax & can handle arbitrarily long inputs. 
+-sed doesn't remember lines, it just processes them & discards them. It's not equipped to manipulate numbers. It only makes 1 pass. 
+-while there are advanced ways of using sed, awk is more suited for complex stream editing. 
+-while sed is based on a text editor, awk is based on the C programming language 
+
+______________________________________________________
 
 -
 
 
-
-page 108, 4.3 
