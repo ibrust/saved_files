@@ -117,6 +117,7 @@ common sort options:
     -f, --ignore-case               - ignore case when sorting 
     -b, --ignore-leading-blanks     - ignore leading blank characters 
     -R, --random-sort               - random permutation of the inputs except that equal keys sort together. the hash function used for comparison is chosen randomly 
+    -d                              - only consider letters, numbers, & blanks in the sort 
 ______________________________________________________
 
     grep <pattern> <file ...>       - searches a file for a regex pattern, prints each lines occurrence
@@ -581,7 +582,7 @@ ______________________________________________________
     <<str           - here document: standard input follows. str is any string, and used for termination - the next occurrence of str terminates the document 
     (...)           - runs commands in ... in a subshell 
     {...}           - runs commands in ... in the current shell (rarely used) 
-    '...'           - run commands inside ... and insert their output where '...' is 
+    `...`           - backquotes (`). run commands inside `...` and insert their output where `...` is 
     c1 && c2        - run c1, if successful run c2 
     c1 || c2        - run c1, if unsuccessful run c2
     $1, $2 etc.     - $1...$9 replaced by arguments to the shell script 
@@ -590,7 +591,7 @@ ______________________________________________________
     ${var}          - value of shell variable var - avoids confusion when concatenated with text
 
 -to escape the metacharacters use quotes or backslash (\)
--the shell interprts $, '...', and \ within double quotes, but not single quotes. so beware when escaping metacharacters 
+-the shell interprts $, `...`, and \ within double quotes, but not single quotes. so beware when escaping metacharacters 
 
     echo "$(echo "here")"               - outputs here
     echo '$(echo "there")'              - outputs '$(echo "there")' 
@@ -600,7 +601,7 @@ ______________________________________________________
     echo 'hello 
     there'
 
--the secondary prompt, default '> ', is displayed when you need to complete a command. It's stored in the shell environment variable PS2 
+-the secondary prompt, default '> ', is displayed when you need to complete a command. It's stored in the shell variable PS2 
 
 -backslash (\) at the end of a line allows the line to be continued - so you can pass long command lines to the shell 
 -note that the newline is discarded when preceded by a backslash, but retained when quotes are used 
@@ -612,12 +613,392 @@ ______________________________________________________
 
 ______________________________________________________
 
+-fundamentally a shell script is just a file with commands in it that is used as the shells standard input: 
 
+    echo 'date | wc' > datewc 
+    sh < datewc                                     - manual demo of using a file as the shells stdin 
 
+    sh datewc                                       - the shell takes a file argument (so you don't have to reroute the file input manually)
 
+-the shell spawns a sub-shell to execute the command. 
+-the two commands above are subtley different. when you manually reroute stdin, the input is passed from the parent shell to the subshell. 
+    but when you invoke sh with a file argument, the subshell takes the file input directly from the file 
 
+-because it's cumbersome to have to type sh to invoke the shell, the shell will automatically run a file as a shell script if it is executable
+    thus, to create a shell script, all you do is create a file of commands and make it executable: 
 
+    echo 'date | wc' > datewc
+    chmod +x datewc             - make the file executable 
+
+    datewc                      - execute the new shell command. this assumes the current directory is in your path, like it should be. if not, use PATH=$PATH:.
+
+-to make this newly created shell command accessible outside the current directory move it to somewhere in your path - such as /usr/<username>/bin, /bin, etc. 
 
 ______________________________________________________
 
--page 80, section 3.3
+-the numbers $1-$9 in the shell are the arguments passed to the file, in order:  
+
+    echo 'chmod +x $1' > xperm 
+    chmod +x xperm
+    xperm <file1>      
+
+-to allow 1-9 arguments (9 is the max) to be passed to the shell script there's a shorthand syntax: 
+
+    echo 'chmod +x $*' > xperm2                 -$* allows variable # of arguments 
+    chmod +x xperm2 
+    xperm2 <file1> ... <file9> 
+
+-arguments default to null if they are not specified 
+-there is a subtle bug in the above implementations. If you pass a quoted string as an argument and it contains a space, it will be interpreted by the 
+    sub-shell as two arguments. To prevent this, surround your argument with double quotes. The shell searches for $ in double quotes, & will insert it there: 
+
+    echo 'chmod +x "$1" "$2"' > xperm3              - doesn't work with $* (despite what the book says), but does work if the parameters are separately specified
+    chmod +x xperm3 
+    xperm2 "file name" "another file name" 
+
+-$0 in the script always refers to the name of the script
+
+______________________________________________________
+
+-the output of any program can be inserted into a command line by enclosing the invocation in backquotes `...`
+
+    echo "the time is `date`"                       - the time is Sat May 15 19:53:32 CDT 2021
+
+-you can have nested backquotes - backquotes within backquotes that the sub-shell will interpret & run, 
+    but you must escape (\) the inner backquotes to prevent the parent shell from running them
+
+______________________________________________________
+
+-when setting shell variables there must be no space around the =
+
+    PATH=$PATH:. 
+
+-conventionally predefined shell variables are uppercase while your own shell variables are lowercase 
+
+    set                     - this command displays all shell variables and what they're set to 
+
+-the value of a variable is associated with the shell that creates it, and is not automatically passed to the shells children  
+
+    x=hello
+    sh                      - spawn a sub-shell 
+    echo $x
+    ctrl+d                  - exits from the sub-shell 
+    echo $x 
+
+-this means a shell script can't change the value of a variable, because it runs in the sub-shell 
+-to get around the shell provides a command '.' (dot) that executes the commands in a file in the current shell, rather than in a sub-shell 
+
+    . script1               - execute in the current shell, where it can set that shells variables 
+
+-the '.' (dot) command only superficially executes the script - it actually just reroutes the current shells stdin & reads in the file
+    this means you dont need execute permissions to run the script when you use '.' (dot) 
+-unfortunately scripts run with '.' (dot) commands cannot take command line arguments 
+
+-the export command makes the value of a variable accessible to its subshells (the book mentions no way of making a subshell variable accessible to the parent)
+
+    x=hello 
+    export x 
+    sh 
+    echo $x
+
+______________________________________________________
+
+there's supposed to be syntax for redirecting stdin, stdout, & stderr using numbers, but I haven't gotten it to work yet: 
+
+    time wc <filename> >wc.out 2>time.out           - supposed to redirect stderr into time.out (time outputs to stderr, so time.out should contain times output)
+    time wc <filename> >both.out 2>&1               - supposed to merge stderr into the stdout stream (so both.out should contain output from time and wc) 
+
+-you are also supposed to be able to use 1>&2 to merge stdout into the stderr stream (perhaps to prevent it from disappearing down a pipe) 
+
+-the idea of a here document is that input can be contained within the shell script, not routed into it:
+
+    grep "$*" <<term 
+    <giant dictionary>                  - dictionary input defined within a script that searches the dictionary 
+    term 
+
+-apparently the shell substitutes for $, `...`, and \ in a here document - unless the terminating string is quoted or backslashed, 
+    inwhich case the here document is taken literally:
+
+    <<'term'
+    ... 
+
+    <<\term2 
+    ... 
+
+______________________________________________________
+
+-the shell has control flow statementsn like a typical programming language 
+
+-looping over a set of files is a common operation. this is one of the few control flow operations that are often done at the command line: 
+
+    for <var> in <file1> <file2> ... 
+    do 
+        <commands> 
+    done
+
+    for <var> in <file1> <file2> ...; do <commands>; done 
+
+-be careful not to use for if the command already supports multiple files 
+-note the difference between the following: 
+
+    for x in *; ...             - loops over all files in current directory 
+    for x in $*; ...            - loops over all arguments to the shell file 
+
+------------------------------------------------------------------------------------
+------------------------------------CHAPTER 4---------------------------------------
+------------------------------------------------------------------------------------
+
+-filters are a large class of UNIX programs that take input, transform it, and produce output. They can be pieced together in streams 
+-sed & awk are general purpose filters. 
+-sed & awk both follow a programming pattern similar to grep. They scan files in sequence looking for a pattern & taking an action: 
+
+    program <pattern-action> <filenames> 
+
+-sed is derived from ed (the UNIX editor). it takes a 'program' of editor commands and streams the files past them, applying the commands to the files 
+-awk includes arithmetic, variables, built in functions, and is vaguely similar to C
+
+______________________________________________________
+
+-grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
+
+    file1="The Unix Programming Environment"
+    grep '^-awk' $file1                     - ^ looks for the pattern at the beginning of lines 
+    grep '$C' $file1                        - & looks for the pattern at the end of lines 
+    grep '[A-Z]' $file1                     - [A-Z] find linese with capitalized letters 
+    grep '[^0-9]' $file1                    - [^0-9] find lines without numerical digits 
+    grep '^.awk' $file1                     - . is the equivalent of ? in the shell - it matches one character 
+    grep '[a-zA-Z]*' $file1                 - * applies to the previous character or metacharacter, & matches any repeating number of them 
+
+    ls -l | grep '^.......rw'               - list all files where user has rw permissions  
+    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorials
+
+-egrep and fgrep are modern updates of grep. both are alot faster than grep. 
+
+-fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
+-fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
+
+-egrep supports true regular exprssions, and as such has a few more operators: 
+    
+    parenthesis () can group expressions
+    | is an or operator
+    + matches 1 or more occurrences of the previous character (unlike * which matches 0 or more)
+    ? matches 0 or 1 of the previous character
+
+-the difference between egrep and grep isn't so obvious. grep has more options, but egrep is faster and has better regex support 
+
+-both egrep and fgrep have an -f option, where you can specify a file that contains a list of patterns to match (each line is a pattern)
+    since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
+
+______________________________________________________
+
+    ls | sort -f                    - sort files regardless of case 
+    ls -s | sort -n                 - sort with smallest files first 
+    ls -s | sort -nr                - sort with largest files first 
+
+-sort normally examines the entire line, but it can be told to target a specific field in the line using the +<number> syntax: 
+
+    ls -l | sort +4n                - sort by byte count (the 5th column), largest files first
+    ls -l | sort +0                 - sort by the first column 
+
+-sort can take multiple keys: 
+
+    sort +0f +0 -u <file>           - first sort regardless of case, then for any matching lines sort them by case, then discard any remaining duplicates
+
+-the u option discards duplicates, returning only unique lines 
+
+-the o option specifies a file for the output. This is useful if the file is also the input, apparently (though it seems the same as io redirection, maybe more efficient) 
+
+    sort file1 -o file1
+
+-the uniq command reads a file and discards adjacent duplicates - useful for eliminating duplicate whitespace: 
+
+    uniq "Git Essentials"           - eliminates duplicates from the file - eliminates similar whitespace, but doesn't work on varying whitespace
+
+-the comm command takes 2 sorted files (they have to be presorted) and prints in columns: lines only in file1, lines only in file2, lines in both files
+
+    sort file1 -o file1; sort file -o file2
+    comm file1 file2 
+    comm -12 file1 file2            - options 1, 2, 3 remove that column from the output. this will only output lines common to both 
+
+-the tr command translates characters in its input & outputs them. the most common use of tr is in case conversion: 
+
+    tr "A-Z" "a-z" < inputfile > outputfile             - translates all uppercase to lowercase. use double quotes - I've had strange behavior with single quotes  
+
+-the dd command copies stdin to stdout, aggregating multiple reads of data into condensed blocks for the output (dd is an old tape storage mechanism)
+-in modern times dd is useful in its ability to take the first N bytes of a stream, to overwrite or truncate a file at any point in the file 
+    (you can also use the truncate command for this), and to seek in a file. it's also suitable for handling binary data
+
+-with pipes the shell will allow you to chain multiple lines of input: 
+
+    ls | 
+    sort -f             - pipe used to separate commands across multiple lines
+
+______________________________________________________
+
+-ed is the old UNIX text editor, and is very primitive 
+-the only reason to understand ed is the fact vim, sed, the ex line editor, and grep were significantly influenced by ed 
+-the following sessions demonstrate eds usage: 
+
+// error messages 
+    ed                          - start up ed 
+    b                           - there is no b command, so you get an error 
+    ?
+    h                           - initially errors ar eonly presented as ?, but typing h will list an error description 
+    Unknown Command 
+    H                           - H will tell ed to always print error messages 
+    b 
+    ?
+    Unknown Command 
+
+// quitting 
+    q 
+    ? 
+    Warning: buffer modified
+    q                                           - q will prompt you if you have unsaved changes. If you type q a second time it will quit 
+
+    Q                                           - Q is a force quit 
+
+// command prompt 
+    ed -p$:                                     - p sets the symbol for a command prompt in ed. you can toggle it on and off with P 
+
+// basic text input     
+    $:a                                         - a, begin text input at the current line (the default behavior)
+    <lines of input text>
+    .                                           - . on its own line, end input  
+    
+    $:p                                         - p, print the current line
+    $:n                                         - n, print the current line & its line number 
+
+    $:1                                         - move to the specified line 
+    $:1n                                        - run the command at the specified line & move to that line (usually). this works with many commands 
+    $:.n                                        - . explicitly states to use the current line
+
+    $:c                                         - c, overwrite the current line 
+    <lines of input text>
+    .
+
+    $:2d                                        - d, delete line 
+    $:1,2j                                      - j, join lines 
+
+// ranges 
+    $:2,4n                                      - print lines 2 to 4 
+    $:1,$n                                      - all lines
+    $:,n                                        - all lines (shorthand syntax)
+    $:.,6n                                      - current line to line 6. note: many of these commands also change your current line 
+    $:.,$n                                      - current line to last line
+    $:-1,+1n                                    - previous line to next line (+/- specify relative lines)   
+
+    $:4kx                                       - k followed by any lowercase letter (x in this case) marks a line 
+    $:'xn                                       - you can then refer to the line using 'x in this case
+
+// moving & copying 
+    $:1,3m$                                     - move a line or range of lines to after a target line with m 
+    $:1t1                                       - copy a line or range of lines to after a target line with t
+
+// regex's 
+    $:g/<regex>/p                               - g operator selects lines using classical regex's. this command prints out the selected lines (greps precursor)
+    $:g/<regex>/n 
+    $:v/<regex>/n                               - v operator inverts the command, selecting lines that don't match the regex 
+    $:g/<regex>/m$                              - the operators following the regex can be anything. here we move the matching lines to the end of the file 
+
+// searching 
+    $:/<regex>                                  - move to the first matching line after your current line 
+    $:?<regex>                                  - move to the first matching line before your current line 
+
+// substituting 
+    $:1,3s/<regex>/x                    - substitute the first occurrence of <regex> with x (or any letter). works for a line, a range of lines, or all lines 
+    $:1,3s/<regex>/x/g                  - adding /g at the end substitutes all occurrences in the line, not just the first occurrence 
+
+// reading and writing 
+    $:w <filename>                      - write the current buffer to a file 
+    $:w                                 - after having written to a file once, you can omit the filename for the rest of the session 
+    $:1,3w <filename>                   - w can also be prefixed with a range to only write those lines 
+
+    $:W <filename>                      - W appends to the file instead 
+
+    $:r <filename>                      - read the contents of a file, inserting after the current line 
+    $:$r <filename>                     - read the contents of a file, inserting at the end of the file 
+
+    $:e <filename>                      - e or E just loads the file, overwriting the contents of the current buffer
+
+______________________________________________________
+
+-the stream editor sed is derived from ed (UNIX editor). many of seds commands are based on eds 
+-sed is like a series of filters. It goes through the files line by line and applies the commands in order
+-note: sed does not alter the original file, it simply outputs a new one
+-sed also prints the lines it matches by default
+-you must use a separate file as the output file - do not use the input file
+
+    sed <commands> <file1> <file2> ... > temp_output 
+
+-sed commands should be surrounded in single quotes to protect the metacharacters
+-the s command substitutes one set of chars with another: 
+
+    <commands> = s/<regex>/<replacementregex>/<flags>
+
+    who am i | sed 's/ .*//'        -replace the first blank & everything following it with nothing 
+    who | sed 's/ .*  / /'          -replace the first blank & everything following it, up until 2 blanks, with just a blank
+
+-you can prefix a line matching pattern to the commands 
+
+    /<lineregex>/<commands>/
+
+    sed '/./s/-/##/' < "Git Essentials" > temp1         -the /./ only matches lines that start with an alphanumeric char
+
+-preceding the command with ! will cause the command NOT to run if the line matching prefix pattern is matched
+-carrot (^) matches the start of a line, dollar ($) matches the end of a line. ^$ matches lines with no characters 
+
+    sed '/^$/!s/^/##/' < "Git Essentials" > temp1       -insert ## at the start of every line, except if the line is empty 
+
+-multiple commands to sed must be on separate lines: 
+
+    sed '/s/-/++/
+        3q'                                             - 3q here means operate on the first 3 lines and then quit
+
+-you can also put sed commands in a file and execute them: 
+
+    sed -f <commandfile> <file1> <file2> ... 
+
+-sed commands overlap with ed commands in many ways: 
+
+    sed '/<lineregex>/q'                          - print up until <pattern> is found, then quit 
+    sed '/<lineregex>/d'                          - delete every line that contains <pattern>
+
+-you can disable the default printing with -n, and you can then reenable it for specific lines with the p command (what grep does): 
+
+    sed -n '/<lineregex>/p' 
+    sed -n '/<lineregex>/!p'                      - print lines not matching the pattern 
+
+-\n doesn't work for newline, but \ followed by pressing enter does:
+
+    sed 's/$/\
+        /'                      -insert a newline after each line - strange sed syntax
+
+-you can also specify a range of lines, similar to ed: 
+-it's not clear from the book, but it looks like the syntax for a regex is to surround it with /'s
+
+    sed -n '20,30p'             - print lines 20 to 30 
+    sed -n '1,/^$/p'            - print lines 1 up until the first empty line 
+    sed -n '/^$/,/^end/p'       - print from the first empty line up until a line starting with the word 'end' 
+
+-unlike ed, sed does not support relative line numbers (+ and - symbols) 
+-the w command can be used to write to an output file. there is a way to write to multiple output files:
+
+    sed -n '/<lineregex>/w output1                          - writes matches to output1 and non-matches to output2 
+            /<lineregex>/!w output2' <file1> <file2> ... 
+
+-sometimes you must do special things with quotes to get shell variables into the command: 
+
+    ls -t | sed '/^'$1'$/q'                     - list all files newer than the filename specified in the shell variable 
+    ls -t | sed "/^$1\$/q"                      - does the same thing 
+
+-sed is used for simple stream editing tasks like the ones we've shown. it has a simple syntax & can handle arbitrarily long inputs. 
+-sed doesn't remember lines, it just processes them & discards them. It's not equipped to manipulate numbers. It only makes 1 pass. 
+-while there are advanced ways of using sed, awk is more suited for complex stream editing. 
+-while sed is based on a text editor, awk is based on the C programming language 
+
+______________________________________________________
+
+-
+
+
