@@ -126,7 +126,7 @@ ______________________________________________________
 more noteworthy grep options: 
     -R, -r                      - recursively search subdirectories listed 
     --include-dir               - if -R is specified, only directories matching a given filename pattern are searched. 
-    --include                   - includes directories matching a given filename pattern from the search. 
+    --include                   - includes directories matching a given filename pattern in the search. 
     --exclude-dir               - if -R is specified it excludes directories matching a given filename pattern from the search. 
     --exclude                   - excludes directories matching a given filename pattern from the search. 
                                     --exclude patterns take priority over --include 
