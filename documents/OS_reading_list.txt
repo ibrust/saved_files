@@ -1,0 +1,16 @@
+1: unix environment
+1.5: Bash Cookbook (inserted)
+2: Windows 5 or higher (preferably 7 apparently)
+3: mac os X
+4: TCP/IP richard stevens series
+5: tiger
+6: linux bible
+7: network operating systems
+8: unix network administration
+9: networking textbook
+10: advanced programming in unix environment
+11: ubuntu server
+12: Windows 4
+13: system administration handbook
+14: trex
+15: UNIX network programming series
