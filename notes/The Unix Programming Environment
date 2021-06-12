@@ -125,11 +125,10 @@ ______________________________________________________
 
 more noteworthy grep options: 
     -R, -r                      - recursively search subdirectories listed 
-    --include-dir               - if -R is specified (for recursive), only directories matching a given filename pattern are searched. 
+    --include-dir               - if -R is specified, only directories matching a given filename pattern are searched. 
+    --include                   - includes directories matching a given filename pattern in the search. 
     --exclude-dir               - if -R is specified it excludes directories matching a given filename pattern from the search. 
-                                    --exclude-dir patterns take priority over --include-dir 
-    --include                   - if specified it includes directories matching a given filename pattern from the search. 
-    --exclude                   - if specified it excludes directories matching a given filename pattern from the search. 
+    --exclude                   - excludes directories matching a given filename pattern from the search. 
                                     --exclude patterns take priority over --include 
     -w, --word-regex            - the expression is searched for as a word (as if surrounded by [[:<:]] and [[:>:]])
     -E                          - interprets pattern as an extended regex - i.e. force grep to behave as egrep (why not just use egrep?)
@@ -140,6 +139,7 @@ more noteworthy grep options:
     -C <number>                 - print <number> lines of leading AND trailing context for each match 
     -U, --binary                - search binary files, but do not attempt to print them
     -m <number>                 - stop reading the file after <number> matches 
+    -o, --only-matching         - print only the matching part of the lines 
 
 there's also a zgrep series of functions that accept files compressed with gzip() or compress()
 GREP_OPTIONS environment variable can be used to specify default options 
@@ -150,6 +150,36 @@ grep exits with 0 if it found lines, 1 if it found nothing, >1 for error
     grep -v -e "foo" -e "bar <file>     - find all lines that don't contain foo or bar 
     egrep "19|20|25" <file>             - simple regex, look for any of those numbers 
 
+
+-grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
+
+    file1="The Unix Programming Environment"
+    grep '^-awk' $file1                     - ^ looks for the pattern at the beginning of lines 
+    grep '$C' $file1                        - & looks for the pattern at the end of lines 
+    grep '[A-Z]' $file1                     - [A-Z] find lines with capitalized letters 
+    grep '[^0-9]' $file1                    - [^0-9] find lines without numerical digits 
+    grep '^.awk' $file1                     - . is the equivalent of ? in the shell - it matches one character 
+    grep '[a-zA-Z]*' $file1                 - * applies to the previous character or metacharacter, & matches any repeating number of them 
+
+    ls -l | grep '^.......rw'               - list all files where user has rw permissions  
+    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorials
+
+-egrep and fgrep are modern updates of grep. both are alot faster than grep. 
+
+-fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
+-fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
+
+-egrep supports true regular exprssions, and as such has a few more operators: 
+    
+    parenthesis () can group expressions
+    | is an or operator
+    + matches 1 or more occurrences of the previous character (unlike * which matches 0 or more)
+    ? matches 0 or 1 of the previous character
+
+-the difference between egrep and grep isn't so obvious. grep has more options, but egrep is faster and has better regex support 
+
+-both egrep and fgrep have an -f option, where you can specify a file that contains a list of patterns to match (each line is a pattern)
+    since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
 ______________________________________________________
 
 cmp and diff are two commands used for comparing files. cmp works on binary, and is typically used to check that the files are the same. It's also faster than diff. 
@@ -759,38 +789,6 @@ ______________________________________________________
 
 ______________________________________________________
 
--grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
-
-    file1="The Unix Programming Environment"
-    grep '^-awk' $file1                     - ^ looks for the pattern at the beginning of lines 
-    grep '$C' $file1                        - & looks for the pattern at the end of lines 
-    grep '[A-Z]' $file1                     - [A-Z] find linese with capitalized letters 
-    grep '[^0-9]' $file1                    - [^0-9] find lines without numerical digits 
-    grep '^.awk' $file1                     - . is the equivalent of ? in the shell - it matches one character 
-    grep '[a-zA-Z]*' $file1                 - * applies to the previous character or metacharacter, & matches any repeating number of them 
-
-    ls -l | grep '^.......rw'               - list all files where user has rw permissions  
-    ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorials
-
--egrep and fgrep are modern updates of grep. both are alot faster than grep. 
-
--fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
--fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
-
--egrep supports true regular exprssions, and as such has a few more operators: 
-    
-    parenthesis () can group expressions
-    | is an or operator
-    + matches 1 or more occurrences of the previous character (unlike * which matches 0 or more)
-    ? matches 0 or 1 of the previous character
-
--the difference between egrep and grep isn't so obvious. grep has more options, but egrep is faster and has better regex support 
-
--both egrep and fgrep have an -f option, where you can specify a file that contains a list of patterns to match (each line is a pattern)
-    since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
-
-______________________________________________________
-
     ls | sort -f                    - sort files regardless of case 
     ls -s | sort -n                 - sort with smallest files first 
     ls -s | sort -nr                - sort with largest files first 
@@ -1001,4 +999,5 @@ ______________________________________________________
 
 -
 
+page 114, 4.4 awk 
 
