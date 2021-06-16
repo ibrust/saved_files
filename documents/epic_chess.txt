@@ -67,24 +67,58 @@ RUY LOPEZ
 SICILIAN AS WHITE
 ================================================================================================================
 ================================================================================================================
-1. e4 c5 2. Nf3 Nc6 3. Bb5 (Old Sicilian - Rossolimo Attack) 
-	3... g6 4. c3 (Rossolimo Attack - Fiancetto Variation w/ c3)		// I've chosen c3 over O-O. d3 and Bxc6 are also options
-		4... Nf6 5. Qe2 
-			5... e5 6. Bxc6 
-				6... bxc6 7. Nxe5 				// bxc6 is the only good move 
-					7... Bg7 8. d3 O-O 9. Bg5
-						9... h6 10. Bh4
-					7... Qe7 8. d4 
-				6... dxc6 
-			5... Bg7 
-			5... Qb6
-			5... a6 6. Bxc6 (side line)
-				6... bxc6
-				6... dxc6
-	3... d6 4. ? (transposes to Canal Attack)
-	3... e6 4. ? 
-	3... Nf6 4. ? 
-	3... a6 4. ? (side line)
+Old Sicilian - Rossolimo Attack
+1. e4 c5 2. Nf3 Nc6 3. Bb5 
+	3... g6 4. O-O (Rossolimo Attack - Fiancetto Variation)
+		4... Bg7 5. c3 (main line) 	
+			5... Nf6 6. Re1 O-O 7. h3 e5 8. d3 (main line) 		// do not take Bxf6 & try to take e5 pawn here
+		4... a6 5. Bxc6
+			5... dxc6 6. ? 
+			5... bxc6 6. ? 
+		4... Nf6 5. Nc3 (side line)
+			5... Bg7 6. e5
+				6... Ng4 7. Bxc6
+					7... dxc6 8. ? 
+					7... bxc6 8. ? 
+			5... Nd4 6. e5 
+				6... Nh5 7. Ba4			// only decent move
+				6... Nxb5 7. Nxb5 Nd5 8. Ng5
+		4... Nd4 5. Nxd4 cxd4 6. c3 Bg7 7. cxd4 (weak side line)
+			7... Bxd4 8. Qa4 
+----------------------
+	3... e6 4. O-O 
+		4... Nge7 5. Re1 (main line) 
+			5... a6 6. Bf1
+				6... d5 7. exd5 Nxd5 8. d4 
+			5... Ng6 6. c3
+		4... Qc7 5. c3 
+		4... Be7 5. Re1 
+			5... e6 6. ? 
+			5... Nf6 6. ? 
+			5... a6 6. Bf1 				// Bc4 was also an idea, provoking b5 and pawn weaknesses, but I think it's too much to remember
+			5... g6 6. ? 
+		4... d6
+----------------------
+	3... d6 4. O-O (Canal Attack)
+		4... Bd7 5. e5 
+			5... Nd7 6. exd6 
+				6... e6 7 ? 
+				6... e5 7. ? 
+				6... exd6 7. ? 
+			5... dxe5 6. Nxe5 
+			5... Ng4 6. ?  
+		4... a6 5. Bxc6 
+		4... Nf6 5. ?
+		4... e6 5. ?  
+----------------------
+	3... Nf6 4. Bxc6 
+		4... dxc6 5. ? 
+		4... bxc6 5. ?
+----------------------
+	3... a6 4. Bxc6 (side line)
+		4... dxc6 5. ? 
+		4... bxc6 5. ?
+----------------------
 	3... Nd4 4. Nxd4 cxd4 5. O-O (weak side line)
 ================================================================================================================
 1. e4 c5 2. Nf3 g6 3. ? (Sicilian - Hyperaccelerated Dragon)
@@ -109,8 +143,15 @@ SICILIAN AS WHITE
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. ? (Sicilian - Open Variation, Dragon - Yugoslav Attack)
 ================================================================================================================
 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 (Sicilian - Open Variation, Najdorf - English Attack) 
-	6... e6
-	6... e5 
+	6... e5 7. Nb3 (main line)
+		7... Be6 8. f4 		// I chose f4 - using engine & statistical win rates, it's not the most common move
+			8... exf4 9. Bxf4 
+				9... Nc6 10. 
+				9... Be7 10. 
+			8... Ng4 9. Bd2 exf4 10. Bxf4 
+			8... g6
+		7... Be7 
+	6... e6 7. ? 
 	6... Ng4 7. Bg5 h6 8. Bg4 g5 9. g3 (side line)
 ================================================================================================================
 1. e4 c5 2. Nf3 e6 3. ? (Sicilian - French)
@@ -167,7 +208,29 @@ MISC E4 OPENINGS
 ================================================================================================================
 1. e4 d5 2. exd5 Nf6 (Scandinavian - Modern Variation)
 ================================================================================================================
-1. e4 c6 2. ? (Caro-Kann)
+1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Be2 (Caro-Kann, Advanced - Short Variation)
+	5... Nd7 6. O-O 
+		6... Ne7 7. Nh4
+		6... h6 7. Nbd2
+		6... Bg6 7. Nbd2 
+	5... c4 6. Be3 
+		6... cxd4 7. Nxd4  
+		6... Qb6 7. Nc3 
+			7... Qxb2 8. Nb5 Bxc3 9. Qc1 
+		6... Nd7 
+	5... Ne7 6. O-O 
+		6... Nd7 7. Nh4 (transposes w/ 5... Nd7) 
+		6... c5 7. c4 
+			7... Nbc6 8. Nc3
+				8... dxc4 9. dxc5 		// best move for black 
+					9... Nd5 10. Nd4
+					9... Qxd1 Rxd1 
+						10... Nd5 11. Nb5 
+				8... a6 9. ? 
+================================================================================================================
+1. e4 c6 2. d4 d5 3. e5 c5 4. dxc5 (Caro-Kann, Advanced - Botvinnik-Carls Defense)
+	4... e6 5. Nf3 Bxc5 6. Bd3 
+	4... Nc6 5. Nf3 
 ================================================================================================================
 1. e4 d6 2. ? (Pirc Defense) 
 ================================================================================================================
