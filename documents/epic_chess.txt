@@ -151,7 +151,10 @@ Old Sicilian - Rossolimo Attack
 			8... Ng4 9. Bd2 exf4 10. Bxf4 
 			8... g6
 		7... Be7 
-	6... e6 7. ? 
+	6... e6 7. f3 (transposes to Scheveningen, English Attack w/ 7. f3)
+		7... b5 8. g4 
+			8... b4 9. Nce2
+				9... h6 10. c4
 	6... Ng4 7. Bg5 h6 8. Bg4 g5 9. g3 (side line)
 ================================================================================================================
 1. e4 c5 2. Nf3 e6 3. ? (Sicilian - French)
@@ -163,10 +166,29 @@ Old Sicilian - Rossolimo Attack
 MISC E4 OPENINGS
 ================================================================================================================
 ================================================================================================================
-1. e4 e5 2. Nf3 Nf6 3. ? (Petrov Defense) 
+// the opponent will have more experience if you go for the main line, and it's drawish anyway. 
+// The Steinitz attack is strong, has an even better winning percentage than the main line & leads to complications. 
+// it's also not that uncommon... so I think this is my choice. 
+1. e4 e5 2. Nf3 Nf6 3. d4 (Petrov Defense - Steinitz Attack)
+	3... Nxe4 4. dxe5 (Steinitz Attack, Symmetrical Variation)
+		4... d6 5. Qd5 (transposes to Philidor Defense, Nimzowitsch Variation, Rellstab Variation)
+		4... d5 5. Bd3 			// Bd3 apparently leads to more complications & more winning chances
+			5... Nc5 6. Be2 	// out of 5 comparable this was the chosen move, best at GM level, also most played. O-O / Nc3 were alternatives
+				6... Be7 7. O-O 
+				6... Bg4 7. O-O Bxf6 8. Bxf6 c6 9. c4		// white is significantly better
+		4... Bc5 5. Bc4 
+			6... Bxf2 6. Kf1
+				6... d5 7. Qxd5 
+			5... Nxf2 6. Bxf7+ 
+				6... Kxf7 7. Qd5+ 
+				6... Kf8 7. Qd5
+	3... d6 4. ? (transposes to Philidor Defense, Nimzowitsch Variation)
+	3... exd4 4. ?
 ================================================================================================================
 1. e4 e5 2. Nf3 d6 3. ? (Philador Defense) 
 ================================================================================================================
+// You have an advantage, just memorize the theory and you should be fine. 
+// hanging pawns advice (which I followed below) seems like it should be plenty considering he studied the theory 
 1. e4 e5 2. Nf3 f4 3. Nxe5 (Latvian Gambit)
 	3... Qf6 4. d4 (main line) 
 		4... d6 5. Nc4 fxe4 6. Nc3 (main line)
@@ -179,6 +201,7 @@ MISC E4 OPENINGS
 		4... Nc3 5. Nc3 Nxe5 6. Nd5 Qd8 7. dxe5 fxe4 8. Bg5 Be7 9. Nxe7 Nxe7 10. Qh5+ g6 11. Qh4 (bad line) 
 	3... Nf6 4. Bc4 Qe7 5. d4 Nc6 6. O-O Nxe5 7. dxe5 Qxe5 8. exf5 Qxf5 9. Nc3 (weak line)
 ================================================================================================================
+// a subtle transpositional defense. Luckily you can play 2.Nf3 the strongest move, transpose to Ruy Lopez & know the lines. 
 1. e4 Nc6 2. Nf3 (Nimzowitsch Defense Declined) 
 	2... e5 (transposes to Ruy Lopez)
 	2... d5 3. exd5 Qxd5 (transposes to Scandinavian - Mieses-Kotrc Variation w/ 3. Nf3 Nc6)
@@ -256,27 +279,103 @@ MISC E4 OPENINGS
 ================================================================================================================
 
 
-BLACK: 
-================================================================================================================
-1. e4 c5 2. ? (Sicilian) 
+BLACK VS E4: 
 ================================================================================================================
 ================================================================================================================
 ================================================================================================================
-1. d4 e6 2. e4 d5 (French Defense)
+SICILIAN
+1. d4 e6 2. e4 c5 3. Nf3 cxd4 4. Nxd4 Nc6 (Sicilian Defense, French Variation -> Taimanov Variation)
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+
+BLACK VS D4: 
+================================================================================================================
+================================================================================================================
+================================================================================================================
+	// wow, you actually transpose out of d4 into the sicilian French 
+1. d4 e6 2. e4 c5 3. Nf3 (transposes w/ Sicilian Defense, French Variation)
+================================================================================================================
+	// this is the strongest line for white after 2. e4 c5. it's strong, but I think it's comparable to the tarrasch french. Probably less people will know it, too...
+1. d4 e6 2. e4 c5 3. d5 Nf6 (Old Benoni, Franco-Benoni Defense)
+	4. Nc3 d6 
+		5. Bd3 Be7 
+			6. Nf3 exd5 
+				7. Nxd5 Nxd5 8. exd5 O-O 
+					9. O-O Bg4
+					9. h3 Bf6
+					9. Bf4
+					9. c4
+				7. exd5 
+			6. Bf4
+		5. Bb5+
+		5. Bf4
+		5. Nf3
+	4. dxe6 
+	4. Qd3 
+
+================================================================================================================
+================================================================================================================
 ================================================================================================================
 1. d4 e6 2. Bf4 ? 
 ================================================================================================================
-1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 (Nimzo-Indian Defense)
-	4. e3 O-O (main line)
-		5. Be3 c5 (main line - bishop attack)
-			6. Nf3 ?
-			6. Ne2 ?
-			6. a3 ?
-			6. h3 ?
-			6. Qc2 ?
-			6. d5 ?
-		5. Ne2 ? (main line - reshevsky variation)
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+NIMZO INDIAN
+================================================================================================================
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. e3 O-O 		Nimzo Indian, normal line
+			// c5 often transposes with d5
+	5. Bd3 d5 					normal line, Bishop Attack, Classical Defense
+		6. Nf3 c5 				Nimzo Indian, Ragozin, Gligoric System (transposes w/ the Ragozin)
+						// cxd4 is a sharp variation, gives white an isolated pawn, 
+						// & it scores just as good as the other systems if followed up by b6 (people just play it wrong - dont play Be7)
+			7. O-O dxc4 8. Bxc4 cxd4
+				9. exd4 b6			// exd4 is the only move that maintains an advantage for white - and players will avoid it 
+		6. cxd4 exd5
+			7. ? 
+		6. a3 Bxc3 7. bxc3 b6
+		6. Ne2 ?  
+	5. Ne2 d5 					normal line, Reshevsky variation
+		6. a3 Be7 		// main line
+			7. cxd5 exd5 			
+				8. Nd4 c6 		
+		6. Bd2 ? 
+		6. cxd5 ? 
+	5. Nf3 ?					normal line
+	5. Bd2 ?
+	5. Qc2 ?  
+	5. Qb3 ? 
+================================================================================================================
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. Qc2			Nimzo Indian, Classical Variation
+================================================================================================================
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. Nf3 			Nimzo Indian, Three Knights Variation
+================================================================================================================
+					// d5 controls the center early, which just seems desirable 
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. f3 d5			Nimzo Indian, Kmock Variation
+================================================================================================================
+					// b6 is a strong move that isn't common - you aren't playing into your opponents hands. most play h6 or c5 but b6 is as good
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. Bg5 b6			Nimzo Indian, Leningrad Variation
+================================================================================================================
+					// d5 is uncommon, but strong short term & only marginally lower score than the other lines. 
+					// again you aren't playing into the opponents hands, are attacking so need less theory, and white can be tempted to go wrong here too
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. g3 d5			Nimzo Indian, Romanishin-Kasparov System
+	5. Bg2 O-O 
+	5. Nf3 dxc4
+		6. ? 
+	5. cxd5 exd5 			// mistake, you have an advantage here
+================================================================================================================
+					// O-O will transpose with other lines & is the simplest approach to the line
+1. d4 e6 2. c4 Nf6 3. Nc3 Bb4 4. a3 Bxc3+ 5. bxc3 O-O
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
 ================================================================================================================ 
+SEMI SLAV
 1. d4 e6 2. c4 Nf6 3. Nf3 d4 4. Nc3 c6 (Semi Slav)
 	5. e3 Nbd7 (Semi Slav, main line)
 		6. Bd3 dxc4 7. Bxc4 b5 (Meran)
@@ -317,6 +416,9 @@ BLACK:
 		6. Qb3
 		6. Qc2
 ================================================================================================================
+================================================================================================================
+================================================================================================================
+QUEENS GAMBIT DECLINED - TRADITIONAL VARIATION
 1. d4 e6 2. c4 Nf6 3. Nf3 d4 4. Bg5 dxc4 (queens gambit declined - traditional variation w/ 4... dxc4) 
 	5. e4 b5
 	5. e3 b5
@@ -328,13 +430,71 @@ BLACK:
 		6. e3
 	5. Bxf6 Qxf6 
 ================================================================================================================
+================================================================================================================
+================================================================================================================
+CATALAN
 1. d4 e6 2. c4 Nf6 3. g3 ? (Catalan) 
 ================================================================================================================
 ================================================================================================================
 ================================================================================================================
+ENGLISH OPENING
 1. c4 ? (English Opening)
 ================================================================================================================
 ================================================================================================================
 ================================================================================================================
-================================================================================================================
-================================================================================================================
+
+
+some final notes: 
+ultimate combinations: 
+white - g3, black vs d4 AND e4: g6 (modern)
+another ultimate combination (for a repertoire): 
+white - nf3, black vs e4: nf6 (alekhine), black vs d4: g6
+another ultimate combination (for a repertoire): 
+white - b3, black vs e4: nf6 (alekhine), black vs d4: g6
+another ultimate combination (for a repertoire - but for some undefined reason):
+white - b3, black vs e4: d6 (pirc), black vs d4: g6 
+another ultimate combination (for a repertoire - but for some undefined reason): 
+white - e4, black vs e4: g3 (modern), black vs d4: f5
+combination I would most choose / like if I understood things: 
+white - c4, black vs e4: e6 (french), black vs d4: d5
+my favorite repertoire again: 
+white - nf3, black vs e4: nc6 (nimzowitsch variation), black vs d4: nf6
+most winning combination: 
+white - b3, black vs e4: c5 (sicilian), black vs. d4: d6
+most epic combination: 
+white - c4, black vs e4: d5 (scandinavian), black vs. d4: nf6 
+ultimate combo to get highest rating (broadly speaking):
+white - d4, black vs e4: c6 (caro-kahn), black vs d4: d5
+most dynamic combination: 
+white - Nf3, black vs e4: c6 (caro-kahn), black vs d4: e6
+most theoretical advantages up to the highest level: 
+white: b3, black vs e4: e5 (kings pawn), black vs d4: nf3
+my ultimate combination (for some undefined reason): 
+white: e4, black vs e4: e5 (kings pawn), black vs d4: f5
+ultimate moves that play to my personal strengths, as kasparov advised:
+white: d4, black vs e4: e5 (kings pawn), black vs d4: d6
+ultimate combination if I did was I am doing now, developing the theory and branching out: 
+white: nf3, black vs e4: c6 (caro-kahn), black vs d4: e6
+ultimate combination for me to actually learn and play (in real life, over the board etc.)
+white: d4, black vs e4: nf6 (alekhine), black vs d4: f5 
+ultimate moves to make it easy for me and hard for my opponents in the lines: 
+white: d4, black vs e4: g6 (modern), black vs d4: f5
+ultimate combo for me specifically to get highest rating: 
+white: b3, black vs e4: c6 (caro-kahn), black vs d4: e6
+again, the most lethal combination: 
+white: g3, black vs e4: c5 (sicilian), black vs d4: f5
+way to most crush my opponents as far as I desire to go in chess: 
+white: c4, bve4: d5 (scandinavian), bvd4: d5
+lines opponents most often don't know for a while: 
+white: b3, bve4: nc6 (reti), bvd4: d6
+maximum theoretical advantage for me for the highest elo possible: 
+Fwhite: nf3 (reti), bve4: nf6 (alekhine), bvd4: e6
+ultimate playbook, all things considered: 
+white: e4, bve4: d6 (pirc), bvd4: f5
+most theoretically crushing: 
+white: nf3, bve4: e5 (kings pawn), bvd4: e6
+most theoretically crushing repertoire: 
+white: d4, bve4: d5 (scandinavian), bvd4: nf6
+greatest advantage in the most practical terms: 
+white: g3, bve4: c6 (caro-kahn), bvd4: f5
+_____________________________
