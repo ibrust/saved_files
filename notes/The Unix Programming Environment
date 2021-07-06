@@ -1,8 +1,9 @@
 ------------------------------------------------------------------------------------
 ------------------------------------CHAPTER 1---------------------------------------
 ------------------------------------------------------------------------------------
-my testing in this book was conducted on a BSD system (Darwin, Mac OS X Catalina)
-
+my testing in this book was conducted on a BSD system (Darwin)
+______________________________________________________
+// TERMINAL CONTROL CHARACTERS
 control characters for the terminal: 
     ctrl+d - the shell instructs the running process that input is ended. it will actually terminate the shell process itself if you use it at the shell prompt 
     ctrl+g - rings a bell 
@@ -14,14 +15,29 @@ control characters for the terminal:
     ctrl+q - resume a processes output (again not sure of the details)
 
 ______________________________________________________
-misc UNIX terminal commands: 
+// MISC TERMINAL COMMANDS
     date
     who                 - who is using the computer
     who am i            - your username 
     mail                - can read mail apparently. not sure what email system is being used here. there are details if you're ever interested
 
-you can type-ahead while a prior command is running; your input may appear interleaved with output, but the system will interpret your command correctly 
+    cat <file1> <file2>         - cat can concatenate multiple files & print their contents 
+    less <filename>             - show the file in a scrollable form
+
+    wc <file1> <file2>          - print line, word, & character counts of file(s)
+        69760  140992 1998523 schema.json
+    wc -l                       - print only line counts 
+
+    tail -<number> <file>       - print the last <number> lines of a file, or default of 10 
+    tail +<number> <file>       - print the remainder of the file starting at line <number> 
+
+    cd                  - cd by itself returns you to your personal directory located in /usr 
+    rmdir <directory>   - this will only remove an empty directory 
+    pr <file>           - this prepares a file for printing by adding footers, headers, margins, & formatted text. read about its various options if you want to use it 
+    echo "print this"   - the echo command just outputs the argument to the console 
+
 ______________________________________________________
+// LS
 ls is an important UNIX function, and has about 40 commands, most of which are worth knowing:
     ls [options] [file/path]
     ls                  - list files in current directory 
@@ -35,10 +51,10 @@ ls is an important UNIX function, and has about 40 commands, most of which are w
                 // SORTING OPTIONS 
     ls -t               - sort by time last modified
     ls -rt              - reverses the order of a sort (combines with -t or -S)
-    ls -ut              - sort by time of last access (combines with -t)
-    ls -Ut              - sort by file creation time (combines with -t)
+    ls -ut              - sort by time of last access (always combined with -t)
+    ls -Ut              - sort by file creation time (always combined with -t)
+    ls -ct              - sort by time when file status was last changed (always combined with -t)
     ls -S               - sort by size 
-    ls -ct              - sort by time when file status was last changed (combines with -t)
 
                 // DIRECTORY RELATED OPTIONS 
     ls <pathname>       - list files at a specific path 
@@ -70,13 +86,13 @@ ls is an important UNIX function, and has about 40 commands, most of which are w
     ls -F               - display '/' after each directory path, * after each executable, @ after each link, = after each socket, % after each whiteout, | after each FIFO 
     ls -%               - display '%' after dataless files (whiteout?), and don't materialize dataless directories when listing them 
 
-                // LONG FORMAT SPECIFIC OPTIONS 
-    ls -lh              - use suffixes for unit sizes (i.e. kilobyte, megabyte) (must combine with -l)
-    ls -lO              - include the file flags (must combine with -l)
-    ls -l@              - display extended attribute keys and sizes (must combine with -l)
-    ls -le              - print the access control list (ACL) associated with the file, if present (must combine with -l)
-    ls -lo              - omit group id (must combine with -l)
-    ls -lT              - display complete date/time information (must combine with -l)
+                // LONG FORMAT SPECIFIC OPTIONS (must combine with -l)
+    ls -lh              - use suffixes for unit sizes (i.e. kilobyte, megabyte) 
+    ls -lO              - include the file flags 
+    ls -l@              - display extended attribute keys and sizes 
+    ls -le              - print the access control list (ACL) associated with the file, if present 
+    ls -lo              - omit group id 
+    ls -lT              - display complete date/time information
 
                 // MISC OPTIONS
     ls -i               - print the inode# for each file 
@@ -97,17 +113,7 @@ some example commands:
     drwxr-xr-x    4 vn51hvk  staff      128 May  3 20:51 Carthage
 
 ______________________________________________________
-
-    cat <file1> <file2>         - cat can concatenate multiple files & print their contents 
-    less <filename>             - show the file in a scrollable form
-
-    wc <file1> <file2>          - print line, word, & character counts of file(s)
-        69760  140992 1998523 schema.json
-    wc -l                       - print only line counts 
-
-    tail -<number> <file>       - print the last <number> lines of a file, or default of 10 
-    tail +<number> <file>       - print the remainder of the file starting at line <number> 
-
+// SORT 
     sort <filename>             - sorts the lines in the file alphabetically & prints them 
 
 common sort options: 
@@ -119,7 +125,7 @@ common sort options:
     -R, --random-sort               - random permutation of the inputs except that equal keys sort together. the hash function used for comparison is chosen randomly 
     -d                              - only consider letters, numbers, & blanks in the sort 
 ______________________________________________________
-
+// GREP
     grep <pattern> <file ...>       - searches a file for a regex pattern, prints each lines occurrence
     grep -v <pattern> <file ...>    - searches for all lines without the pattern 
 
@@ -132,8 +138,8 @@ more noteworthy grep options:
                                     --exclude patterns take priority over --include 
     -w, --word-regex            - the expression is searched for as a word (as if surrounded by [[:<:]] and [[:>:]])
     -E                          - interprets pattern as an extended regex - i.e. force grep to behave as egrep (why not just use egrep?)
-    -e, --regexp=<pattern>      - specify a pattern used during the search 
-    -S                          - if -R is specified, all symbolic links are followed. The default is to not follow symbolic links 
+    -e, --regexp=<pattern>      - specify a pattern used during the search (looks like this can be used to specify multiple regex's)
+    -S                          - if -R is also specified, all symbolic links are followed during the recursive search. The default is to not follow symbolic links 
     -s                          - silent mode. nonexistent and unreadable files are ignored & their error messages suppressed 
     -A <number>                 - print <number> lines of trailing context for each match 
     -C <number>                 - print <number> lines of leading AND trailing context for each match 
@@ -141,17 +147,12 @@ more noteworthy grep options:
     -m <number>                 - stop reading the file after <number> matches 
     -o, --only-matching         - print only the matching part of the lines 
 
-there's also a zgrep series of functions that accept files compressed with gzip() or compress()
-GREP_OPTIONS environment variable can be used to specify default options 
-grep exits with 0 if it found lines, 1 if it found nothing, >1 for error 
+-grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
 
     grep "ian" <file>                   - find all occurrences of my name in a file
     grep "\.jpg" <file>                 - quotation marks prevent shell from misinterpreting the pattern
     grep -v -e "foo" -e "bar <file>     - find all lines that don't contain foo or bar 
     egrep "19|20|25" <file>             - simple regex, look for any of those numbers 
-
-
--grep regex's overlap with some shell metacharacters, so enclose them in single quotes: 
 
     file1="The Unix Programming Environment"
     grep '^-awk' $file1                     - ^ looks for the pattern at the beginning of lines 
@@ -164,23 +165,28 @@ grep exits with 0 if it found lines, 1 if it found nothing, >1 for error
     ls -l | grep '^.......rw'               - list all files where user has rw permissions  
     ls | grep 'Push.*tutorials'             - * applies to the . here - any number of characters (including zero) can be between Push and tutorials
 
--egrep and fgrep are modern updates of grep. both are alot faster than grep. 
+-egrep and fgrep are modern updates of grep. both are alot faster than grep.
 
--fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
--fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
-
--egrep supports true regular exprssions, and as such has a few more operators: 
+-egrep supports true regular expressions:
     
     parenthesis () can group expressions
     | is an or operator
     + matches 1 or more occurrences of the previous character (unlike * which matches 0 or more)
     ? matches 0 or 1 of the previous character
 
--the difference between egrep and grep isn't so obvious. grep has more options, but egrep is faster and has better regex support 
-
 -both egrep and fgrep have an -f option, where you can specify a file that contains a list of patterns to match (each line is a pattern)
     since the file is not interpreted by the shell there is no need for single quotes around the patterns within it 
+
+-fgrep interprets no metacharacters, but can search efficiently for thousands of words in parallel
+-fgrep is typically used for things like searches of libraries, bibliographic references, databases, filesystems, etc. 
+
+-there's also a zgrep series of functions that accept files compressed with gzip() or compress()
+
+-GREP_OPTIONS environment variable can be used to specify default options 
+-grep exits with 0 if it found lines, 1 if it found nothing, >1 for error 
+
 ______________________________________________________
+// FILE COMPARISON 
 
 cmp and diff are two commands used for comparing files. cmp works on binary, and is typically used to check that the files are the same. It's also faster than diff. 
 diff works only on text and by default it prints out the line differences
@@ -221,6 +227,7 @@ when you run a command by typing its name, UNIX first searches the current direc
 these various UNIX user-level programs (ls, who, etc.) are located in /bin 
 
 ______________________________________________________
+// SHELL FILENAME MATCHING
 
 the shell supports regex's for use in filename matching
 
@@ -232,20 +239,10 @@ the shell supports regex's for use in filename matching
     ls \?               - bypass regex shell interpretation
     ls /usr/*/file      - regex's can be used within pathnames as well. * won't do a recursive search of folders, only on the level it's specified 
 
-
 the use of ls * also lists directory contents. It seems there is a special format ls uses for printing a directory 
 
 ______________________________________________________
-
-    cd                  - cd by itself returns you to your personal directory located in /usr 
-
-    rmdir <directory>   - this will only remove an empty directory 
-
-    pr <file>           - this prepares a file for printing by adding footers, headers, margins, & formatted text. read about its various options if you want to use it 
-
-    echo "print this"   - the echo command just outputs the argument to the console 
-
-______________________________________________________
+// SHELL IO REDIRECTION 
 
 output redirection w/ > will overwrite the contents of old files, so beware
 to append to the file, use >> instead of > 
@@ -275,12 +272,13 @@ the programs in a pipe all run simultaneously
 stderr was created to avoid passing errors along the pipeline. stderr isn't rerouted by pipes and is still printed to the terminal
 
 ______________________________________________________
+// RUNNING COMMANDS 
 
 separate two commands by semicolon (;) for the shell to run them sequentially: 
 
     who; date 
 
-run a process in the backgorund using ampersand (&) 
+run a process in the background using ampersand (&) 
 the command will run as a separate process from the shell, in the background, with its own PID. the PID is printed after running the command 
 w/ one ampersand (&), all commands in a pipeline will run on separate processes in the background. However, only one PID (the last process) will be printed to the terminal 
 it's often useful to combine this with > to redirect output into a file - so that its output wont interrupt you while you're doing other things 
@@ -309,10 +307,14 @@ to run your command at lower scheduling priority (so it won't block other comman
 you can also tell multiple commands to run at a specific time in the future using the at command 
 it's often useful to combine at with an input redirected file containing a list of commands: 
 
-    at 3am < file_listing_commands 
+    at 3am < file_listing_commands
+
+    at now + 1 minute                   
+    open /Applications/TextEdit.app         - at prompts for a series of commands       // I could not get this to actually run on mac - it's scheduled, just doesnt run
+    ctrl+d                                  - ctrl+d signals the end of input
 
 ______________________________________________________
-
+// FIND
 search for files with the find command: 
 
     find [-L | -P] [-Edsx] [-f path] [expression]
@@ -485,7 +487,7 @@ ______________________________________________________
     r--             <- with these directory permissions, users can run ls & see what's in the directory, but not use the contents 
 
 -chmod takes an octal number. you figure out the mode by adding 4 for read, 2 for write, & 1 for execute
--chmod can also take a +/= argument to set global permissions 
+-chmod can also take a +/- argument to set global permissions 
 
     chmod 777 <filename>            - all permissions 
     chmod +x <filename>             - enable execution for everyone 
