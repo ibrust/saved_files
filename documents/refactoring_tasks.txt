@@ -1,0 +1,12 @@
+1) for functions w/ arguments more than 2, bundle their arguments into an object 
+2) ensure functions have only 1 responsibility - break up functions into smaller functions
+3) group functions that share a purpose in similar files
+4) turn some of the globals into singletones 
+5) look over the function names and try to amend them 
+6) add comments to the code
+7) remove duplicate code
+8) avoid flags in your functions - split them up into separate functions instead (you can do this after you've split up the function into smaller functions) 
+9) avoid side effects in your functions (anything other than black box input / output). If you can't manage this than use singletons for the changed global variable
+10) see if you can use javascripts high level functions (map, reduce, etc.) to replace some of the code 
+11) see if you can extract conditional checks (like booleans) into a function that returns a boolean 
+12) 

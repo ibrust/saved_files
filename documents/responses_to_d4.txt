@@ -1,0 +1,19 @@
+in order of preference: 
+1) nimzo indian
+2) dutch
+3) trompowsky
+4) benoni
+5) queens gambit accepted
+6) semi slav
+7) queens indian
+8) kings indian
+9) queens gambit declined
+10) grunfeld
+===========================
+most dynamic, top level ruy-lopez or sicilian like equivalents: 
+['other', 'nimzo indian', 'grunfeld', 'semi slav', 'trompowsky', 'queens gambit declined', 'kings indian', 'queens indian', 'dutch', 'benoni']
+
+I might actually switch to the semi-slav. 
+The question is... would i have to learn the queens gambit declined, or can I reliably get into the semi-slav. 
+
+Going back to the benoni is another option. 
