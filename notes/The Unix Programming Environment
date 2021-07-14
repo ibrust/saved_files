@@ -497,7 +497,7 @@ ______________________________________________________
 -if a directory grants write permissions to a user they can delete the files, however, so beware who gets write permissions 
 
 ______________________________________________________
-
+// FILE SYSTEM COMMANDS (LN, CP, MV ...)
 -the permissions information is stored in the files inode
 -the inode also contains 3 times:
 
