@@ -1,0 +1,126 @@
+The math of music: 
+So first and foremost there’s the 1 dimensional, circular, self-referential pattern. 
+remember that Pi is a transcendental number, and that the circumference of a circle is literally the tracing of a self referential point – the 1 dimensional redux pattern.
+How do you calculate Pi? Rationally… one approach is to draw a box around the circle. And then draw another box orthogonal to the first box. And repeat… you eventually refine an approximation of Pi. 
+How about 2 dimensions? Lets say you have two points. Well, these points could fall anywhere along the same orbital. They have an orbital relationship. Lets think in idealized terms: the two points define a diameter of the least common circle between them. 
+So if diameter = 1, than circumference = Pi. What is 1 / Pi? That’s the transcendental value of the diameter in relation to Pi – the uncertainty in how those two points are related, and the continual approximation of their relationship. Right? Or is it how they are related in an idealized sense? 
+____________________
+Anyway… so lets say you have 3 points. Now you have relative measurement – this line is twice as big as that line. You could draw least common circles connecting the 3 sets of 2 dots. You could draw another least common circle that seems to approximate the ideal connection between all the dots. Of course you don't have to use least common circles; there’s uncertainty as to what the circle is (again, like with the 2 dimensional circle). The curve could turn out to be something different – there’s always this uncertainty. 
+______________________
+Where does that uncertainty come from? It doesn’t come from an idealized place. It comes from the unknown, right? The infinite unknown…? 
+Remember… you never actually reach the limit of infinite. 
+So this seems to cast doubt on any kind of idealized approximation of a pattern in music. You couldn't just deduce a perfect song, there is this uncertainty.
+But how do you reconcile the ideal with the real? By stratifying the probabilities of various unknowns somehow…
+__________________________
+So anyway… lets think about splines now. Splines are interesting because a series of notes – a riff – resembles a spline. Each step in the spline is a closer approximation of an idealized curve. So you are getting closer and closer to this idealized – transcendental – structure every note you add to the music. 
+But there’s also that uncertainty of what note will come next – and how the spline may be recontextualized. 
+_______________________________________
+now… in a d1 structure… the tracing of a circumference repeats itself. Right? It’s self-referential. 
+Is this a sound assumption? Doesn’t the concept of time break down here? 
+The concept of time breaks down at the 1 dimensional level – the idealized level. There is no difference with which to contextualize time, to distinguish 1 time from another. Right? It’s all just unified. 
+
+But in music… riffs repeat – or at least they seem to repeat. They don’t perfectly repeat, do they? 
+Let’s think of an idealized repeating spline (riff) – not a mathematically sound model and not how you would want to create music, but a starting point of sorts. So lets say you have a puzzle piece… the top & left sides have holes, the bottom & right have inserts. This puzzle piece… it is self-referential, it can be repeated indefinitely. In music… when a riff repeats, it is like an approximation of this idealized repeating spline, isn’t it? 
+________________________
+But an idealized repeating spline isn’t real… since there is always this uncertainty – time would break down and cease to pass if a true repeating spline were to just be played again and again indefinitely…. What do we have? What is this significance of this musically? 
+Remember… there is always that uncertainty, that stratification. Right? 
+In reality what you have a spline that is changing from one iteration to the next. It is partially the same, and yet partially changing. That’s a paradox, how is this paradox resolved? Some kind of probabilistic stratification…
+______________________________
+There is this variability, this uncertainty about the next note. 
+But there are certain patterns that emerge. So if you have a spline… lets say the next note turns out to be way off from your prediction. Instead of being along the predicted curve it was skewed far upward. Well… there’s a lot of variability in the curve which has now become apparent. The probability of the next note being skewed is now higher, isn’t it? Because you have this variability introduced. Probabilistic variability. 
+
+__________________________
+Does probability like this occur in levels? 
+What is the concept of a level? You have these repeating splines… 
+
+_____________
+And where does this uncertainty come from? A structure is never perfect. A spline always has a counter-spline – like antimatter. The only perfect structure is undefinable, it’s that extra-sensory transcendental realm. Right? That’s where the uncertainty comes from – the limitless unknown. 
+So… by defying the idealized curve – the curve that is mathematically calculated – we are actually approximating the true ideal? Is that the case…? 
+
+____________
+That doesn’t quite add up, because you approximate the rational ideal of Pi as you repeatedly calculate its value, right? 
+But with Pi.. Pi is an idealized model – you have 1 dimension. In splines… you have an endless number of dimensions. 
+One of these must be the limit of the other – infinitesimals and potentials… 
+So a spline is a bunch of infinitesimals. Right? Whereas with Pi… you have this potential that you are exploring, you’re getting closer and closer to refining an idealized representation of this potential. The potential is being manifest into the actual. 
+
+Splines do what, then? They take the actual and they what…? They randomize it into pure potential? Or they see the potential? They see the next note - what it potentially could be. They seem to defy predictability.
+___________________________
+And yet.. there is this notion of repetition in music – you have a spline, and then a slightly different spline. And you even have a pattern of this repetition occurring at a higher level… how is this all described mathematically? 
+_____________________________
+Levels… 
+When you are rationally approximating Pi.. you are adding more and more points – more and more complexity. The levels are increasing, aren’t they? You are stratifying an approximation of the circle – stratifying it from the top down. You're creating a hierarchical structure. 
+When you are riding a spline… you are really tracing your finger along the edge of Pi, trying to predict what the next value will be.
+_________________________________
+You want to take a different orientation with splines. Rather than increasing complexity and stratifying from the top down, you are starting on a local level and trying to work your way upward. You are moving toward refining this idealized spline... So would you say you are trying to tie the splines together? 
+The spline never actually repeats itself, it only approximates a repetition. And infact there is variability inherent in the spline. So you never reach an ideal spline, no... 
+So this is getting strange.
+___________________________________
+
+With a spline lets take the stratification – the complexity – as a given. The structure was stratified when Pi was rationally deduced. 
+But given that, there are these more significant points along the spline. Right? Because the structure is hierarchical. 
+
+So the spline is tied together with other potential splines through these significant points. Right? Yes… it must be – that’s how rhythm works, isn’t it? You have strong notes and weak notes. The strong notes tie in with strong notes of other splines. And that makes sense because, from a top down perspective, we're dealing with this hierarchical structure.
+______________________________________
+What is the question you’re trying to answer? 
+I get how to stratify a piece of music from the top down – I could do it in any number of ways. I could use duality, triality, squares and so fourth. Those are probably the most common. There may also be some probability distribution in how I choose these dimensions – infact… there must be. Because how do you explore potential? Potential is undefined. 
+_____________
+That introduces an interesting idea… so though the structure is stratified, how we choose to stratify it is free to vary. There’s a stratification process that involves uncertainty and probability
+___________
+Ok, what about this spline thing? 
+What is it I’m trying to do here? 
+What’s distinct about the spline is that it is actually traced – a spline is the actual trace of the circle. A spline is listened to, a spline is experienced…
+A spline experiences these changes in probability – the uncertainty, and the transcendental pattern of that uncertainty. 
+With the the stratification of Pi, the process involved… this at first glance seems to be a rational process. You can introduce uncertainty to it – and we have – in how the stratification occurs. 
+With splines… this seems to be an irrational process at first glance. You are riding this spline. What interval value comes next? It seems unpredictable. And yet… you find there is some emergent rationality to it. And you come to find this as you “repeat” – i.e. experience the stratification of Pi, as you ride your way across the circle and you see the semi-repeating patterns at different levels. You come to find out there is this emergent rationality. 
+So the spline, and the stratification process… they are both limits of one another, right? 
+________________________
+
+Hmm…. Yes, I think so. The question is now how to actually construct music using a model like this. 
+Splines in particular are needed. The top down stratificatoin is fairly easy. but if you had a purely stratified approach… your music is too mechanical. 
+
+You are trying to work your way up from the local level, and figure out how best to do that. It must involve some kind of randomness. But there has to be emergent order to the randomness.
+You need some combination of both approaches
+
+Would the splines emergent organization somehow drive the stratification process as well? 
+Well… you would have some ~combination~ of stratification and splines, we'll leave it at that for now. 
+______________________________
+I still haven’t figured out exactly the mechanism of the spline. I think it is uncertainty. The spline experiences this uncertainty. And I think that is actually central to it… there must be this unpredictability to the spline, it isn’t just something that repeats. So how do you define that uncertianty? That seems to be where I'm being hung up. 
+You can’t, if you try your music always sounds too mechanical. You need… uncertainty in your music.
+___________________________________
+When you talk about mathematically computing a pattern – writing music mathematically – you talk about being rational. But you need some irrational element – randomness – in the music as well. Right? So combine structure with randomness, and do so in a way that makes sense and is proportional. 
+______________________
+
+Maybe it is useful to think ok “pure spline” experience – the experience of what seems to be pure randomness. Actually… lets call it a transcendental experience. 
+Riding along a spline you are completely ignorant, and the patterns reveal themselves to you as you go along. Fundamentally, as a spline, you are ignorant and the world seems chaotic. 
+___________________________
+
+So… what is it that we are stratifying, exactly? Are we stratifying randomness itself…? The randomness that is allowed? 
+I think that may be what we are looking for. 
+_____________________________
+
+The points on the spline that are fundamental points, the ones that were stratified – like the first note in a riff, for example (almost seems like prime numbers). 
+So these fundamental points… these would be like control points. Points where the randomness was controlled at a higher level, and the rest of the splines behavior - randomness at the splines lower levels - is contingent on that higher level randomness. So this is stratified randomness on the spline level, it's based on these control points... these "prime number" points on the spline.
+_____________________________
+
+The contrast between the randomness experienced by a spline and the randomness in the stratification process is interesting. Likewise the control points in a spline, and stratified structure that emerges from deducing Pi… we are coming at the problem from different angles. 
+
+So then there may not be this perfect control point in the spline, right? Because the spline is actually organized in a way that is fundamentally separate from the stratified structure. One of these is the limit of the other. 
+________________
+
+So then the claim is that the splines control point is emergent. At the spline level the control point - the structure - is an emergent property of randomness. 
+_______________
+
+You’re trying to reconcile the fact that splines & stratified ideals are limits of one another.
+________________
+
+Top down stratification: fundamentally organized but the partitioning process itself can be made emergently random 
+Bottom up splining: fundamentally random with some emergent control points which are used in relating with / defining other splines
+_____________________
+
+Ok, that seems to be fairly clear. Now... if these two areas are limits of one another, how are they integrated with one another? 
+You could cut the structure in half, and call the spline half the 'inner level' and the top down stratified half the 'outer level'. 
+Then your focus becomes... at the point at which these two layers meet up, how do you integrate them? The splines top level emergent control points, the stratifications bottom level, random points... the two meet in the middle.  
+____________________
+So the question remains... how would you actually produce a mathematical structure where both these layers were integrated like that?
+You've got these emergent control points in the splines, you have these bottom level points in the stratification layer. They didn't form in coordination with one another. How do you form them so that they meet up? 
+____________________
