@@ -1,7 +1,7 @@
 Mostly these are just philosophical points
 _____________________________________________________
 -code rot spreads - not only by forming dependencies, it also sets a standard of laziness for the team 
--speak out what you're doing so that you can explain it to others
+-speak out what you're doing before conversing with others so that you can explain it better
 -think about questions very critically before you ask them (I think this depends on who you're asking but generally it's probably sound advice)
 -instead of proposing a big change, create a small change and show people a tangible result. You get them comfortable with it, sneaking your change in gradually.
 -Try to keep an eye on the big picture of your project, most software disasters occur when people lose track of the big picture / get tunnel vision
