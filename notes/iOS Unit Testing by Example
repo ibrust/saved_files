@@ -53,7 +53,7 @@ ________________________________________________________________________________
 -a technique is to embed values in the optional messages with string interpolation, i.e. "\(value)"
     XCTFail("test failed - value was: \(value)) 
 
--XCTestFail() is one of the best uses for the optional messages 
+-XCTFail() is one of the best uses for the optional messages. infact I think the message is required now
 -generally beware of adding optional messages that redundantly give information already printed by the test assertion
 -assertions with objects output the objects as strings
 -some objects have complicated string descriptions of themselves. you can control how an object is output as a string by implementing the CustomStringConvertible protocol 
@@ -96,11 +96,11 @@ CHAPTER 2
 -for any properties used in setUp() / tearDown(), declare them as vars & explicitly unwrapped: 
 
     private var property_name: class_name!
-    setUp(){                                        // this is always called before the test method, so explicit upwrapping is safe 
+    override func setUp(){                                        // this is always called before the test method, so explicit upwrapping is safe 
         super.setUp()
         property_name = class_name() 
     }
-    tearDown(){                                     // this is always called after the test method 
+    override func tearDown(){                                     // this is always called after the test method 
         property_name = nil 
         super.tearDown() 
     }
