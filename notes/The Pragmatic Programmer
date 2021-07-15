@@ -1,7 +1,8 @@
 Mostly these are just philosophical points
 _____________________________________________________
+CHAPTER 1 - PRAGMATIC PHIOSOPHY
 -code rot spreads - not only by forming dependencies, it also sets a standard of laziness for the team 
--speak out what you're doing so that you can explain it to others
+-speak out what you're doing before conversing with others so that you can explain it better
 -think about questions very critically before you ask them (I think this depends on who you're asking but generally it's probably sound advice)
 -instead of proposing a big change, create a small change and show people a tangible result. You get them comfortable with it, sneaking your change in gradually.
 -Try to keep an eye on the big picture of your project, most software disasters occur when people lose track of the big picture / get tunnel vision
@@ -10,4 +11,15 @@ _____________________________________________________
 -similarly, releasing early & getting user feedback is preferable to waiting for release (the author says this but there are quality standards to meet) 
 -you don't want to overembellish or overrefine your code, you should know when to stop adding complexity and move forward 
     he talks about 'feature bloat' (more features than you'd ever want) and mentions that with modularization (many layers) comes added complexity / time investment
+-for building knowledge the author suggested 2 novelties: participation in groups or seminars (i.e. pycon), and using dead time to laern (i.e. podcasts in car)
+-know the audience you're talking to & cater your explanations to what they are interested in - i.e. marketing people are interested in how a tech effects sales
+    though this varies depending on the individual you're talking with as well - i.e. parivesh understands programming
+-learn how to make documents of various forms - charts, word documents, documentation (i.e. confluence). prioritize documentation
+-when creating documentation engage others involved to get their feedback early on
+-make sure that you listen to people and they feel you are listening. do not overbear with your opinion. 
+-use comments, it unifies code & documentation. Make the comments about high level commentary, things beyond the code, documenting APIs, etc. 
+-avoid attacking people. only say it if you would say it in person, do not be desensitized to how you treat people online 
+-try not to quickly respond to things online before you read them thoroughly. you don't have to respond to everything, hold back until you know what to say 
+_____________________________________________________
+CHAPTER 2 - PRAGMATIC APPROACH 
 -
