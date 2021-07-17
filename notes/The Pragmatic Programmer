@@ -22,4 +22,21 @@ CHAPTER 1 - PRAGMATIC PHIOSOPHY
 -try not to quickly respond to things online before you read them thoroughly. you don't have to respond to everything, hold back until you know what to say 
 _____________________________________________________
 CHAPTER 2 - PRAGMATIC APPROACH 
--
+-ETC - easy to change. the author claims this is what fundamentally defines good design, and various design principles are all special cases of ETC 
+-ask yourself if your code could be easily replaced. If it is, it's ETC
+
+-code must change throughout the development process, so maintenance (i.e. refactoring) is a part of the development process from the beginning 
+-when you have duplication in the requirements, or in the code, this creates maintenance problems - you must make changes in multiple places
+-DRY - don't repeat yourself. 
+-If a change in one necessitates a change in the others than you have repeated yourself. 
+-if you have two functions with the same bodies but they represent different knowledge this does NOT violate DRY. 
+    you must recognize what knowledge the code represents to determine if it's duplicated. (this claim seems a little ambiguous)
+-the author even claims that you shouldn't have to change both code & its documentation separately, or a database schema & the structure holding it
+    any need for making changes in multiple places violates DRY, both on the code level & beyond 
+-redundant comments violate DRY 
+-redundant data structures can also duplicate knowledge & violate DRY. use computed properties / functions to avoid data structure duplication 
+-he says you may duplicate data when caching, but be sure to keep the cached object well encapsulated & managed by the class it's derived from  
+
+-use accessor functions to minimize coupling to the data structures. keep the data private. 
+
+-page 36, representational duplication
